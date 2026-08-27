@@ -20,7 +20,9 @@ import {
   Copy,
   ExternalLink,
   FileCode2,
+  FileDown,
   Github,
+  Linkedin,
   Mail,
   Menu,
   Play,
@@ -874,6 +876,17 @@ export default function ReferenceHome() {
                   <Github size={14} aria-hidden="true" /> {contact.githubHandle}
                   <ExternalLink size={11} aria-hidden="true" />
                 </a>
+                {contact.linkedin ? (
+                  <a href={contact.linkedin} target="_blank" rel="noreferrer">
+                    <Linkedin size={14} aria-hidden="true" /> LinkedIn
+                    <ExternalLink size={11} aria-hidden="true" />
+                  </a>
+                ) : null}
+                {contact.cv ? (
+                  <a href={contact.cv} download>
+                    <FileDown size={14} aria-hidden="true" /> Download CV
+                  </a>
+                ) : null}
               </div>
               <button type="button" className="ref-copy-button" onClick={copyEmail}>
                 {copied ? <Check size={13} aria-hidden="true" /> : <Copy size={13} aria-hidden="true" />}

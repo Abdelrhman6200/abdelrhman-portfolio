@@ -651,6 +651,14 @@ export const contact = {
   email: "abdelrhman.shoman62@gmail.com",
   github: "https://github.com/Abdelrhman6200",
   githubHandle: "Abdelrhman6200",
+  /**
+   * Drop the real URL in and it renders automatically — the contact card and
+   * footer already read this field and simply omit the link while it is empty.
+   * Left blank rather than guessed.
+   */
+  linkedin: "",
+  /** Put a PDF at client/public/cv.pdf and set this to "/cv.pdf". */
+  cv: "",
   location: "Cairo, Egypt",
   availability: "Available for selected opportunities",
 } as const;
