@@ -1,7 +1,12 @@
 /*
- * Generates client/public/sitemap.xml from the shared route list in
- * routes.mjs, so it can never disagree with the prerendered pages.
+ * Generates client/public/sitemap.xml and robots.txt from the shared route
+ * list in routes.mjs, so neither can disagree with the prerendered pages.
  * Runs as the first step of `npm run build`.
+ *
+ * robots.txt is generated rather than hand-written because it carries the
+ * sitemap's absolute URL: a hand-written one keeps pointing at the old host
+ * after a domain change, and the failure is silent — the site looks fine and
+ * the sitemap is simply never fetched.
  */
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -21,3 +26,14 @@ ${all
 
 writeFileSync(join(root, "client", "public", "sitemap.xml"), xml);
 console.log(`sitemap.xml: ${all.length} URLs`);
+
+/* Everything is public and everything should be indexed — there is no admin
+ * surface and no private route to keep out. */
+const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${origin}/sitemap.xml
+`;
+
+writeFileSync(join(root, "client", "public", "robots.txt"), robots);
+console.log(`robots.txt: sitemap at ${origin}/sitemap.xml`);

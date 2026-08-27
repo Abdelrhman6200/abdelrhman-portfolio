@@ -10,15 +10,19 @@ import { useLocation } from "wouter";
  * page, which instructs search engines to drop /system/* and /demo/*. These
  * tags are now rewritten per route, so each URL is self-referential.
  *
- * `origin` is injected at build time by the inject-site-url Vite plugin, so it
- * matches whatever domain the bundle was built for.
+ * The origin is read from the browser rather than baked in. This hook only
+ * runs in a browser, where window.location.origin is by definition the right
+ * answer — and it stays right on a preview deploy or a custom domain without
+ * a rebuild. Crawlers never reach this code: the prerendered shells already
+ * carry the correct static canonical for every route.
+ *
+ * It previously read a "__SITE_URL__" token said to be injected at build
+ * time. The Vite plugin that injects it uses transformIndexHtml, which
+ * rewrites HTML and not JavaScript, so the token shipped verbatim in the
+ * bundle and the fallback below was the only branch that ever ran.
  */
 
-const SITE_ORIGIN = "__SITE_URL__";
-
-/** The build-time token survives only if the plugin did not run (e.g. tests). */
 function origin(): string {
-  if (!SITE_ORIGIN.startsWith("__")) return SITE_ORIGIN;
   return typeof window === "undefined" ? "" : window.location.origin;
 }
 

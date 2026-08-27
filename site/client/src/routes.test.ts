@@ -9,7 +9,7 @@
  * weeks later. Asserting against the real content modules means a system or
  * demo added to the site must appear here or the suite fails.
  */
-import { existsSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { origin, routes } from "../../scripts/routes.mjs";
@@ -78,6 +78,26 @@ describe("route list", () => {
       expect(existsSync(file), `no card for ${route.path}: ${route.image}`).toBe(true);
       // A zero-byte or truncated PNG unfurls as a broken image.
       expect(statSync(file).size, route.image).toBeGreaterThan(10_000);
+    }
+  });
+
+  it("points robots.txt and the sitemap at the same origin", () => {
+    // robots.txt used to be hand-written with the host typed into it, so a
+    // domain change left it pointing at the old one. That fails silently:
+    // the site looks fine and the sitemap is simply never fetched.
+    const robots = readFileSync(join(process.cwd(), "client", "public", "robots.txt"), "utf8");
+    const sitemap = readFileSync(join(process.cwd(), "client", "public", "sitemap.xml"), "utf8");
+
+    expect(robots).toContain(`Sitemap: ${origin}/sitemap.xml`);
+    expect(sitemap).toContain(`<loc>${origin}/</loc>`);
+    // Nothing here is private, so nothing should be disallowed.
+    expect(robots).not.toMatch(/^Disallow:\s*\/\s*$/m);
+  });
+
+  it("lists every route in the generated sitemap", () => {
+    const sitemap = readFileSync(join(process.cwd(), "client", "public", "sitemap.xml"), "utf8");
+    for (const route of all) {
+      expect(sitemap, `missing from sitemap: ${route.path}`).toContain(`<loc>${origin}${route.path}</loc>`);
     }
   });
 
