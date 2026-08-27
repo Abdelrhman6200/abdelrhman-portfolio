@@ -1,0 +1,82 @@
+# Project TODO
+
+- [x] Reconfigure the project as a Windows desktop application with a secure desktop shell and documented run/package commands.
+- [x] Define persistent domain models for students, instructors, sessions, incidents, KPIs, anomaly investigations, data-quality issues, SOP versions, saved analyses, users, and audit events.
+- [x] Implement role-aware authorization for analyst, coordinator, manager, and administrator actions at the application boundary.
+- [x] Implement immutable audit-event persistence for all create, update, delete, approval, export, and status-transition actions.
+- [x] Seed deterministic, realistic synthetic data covering normal, missing, conflicting, overdue, and escalation scenarios.
+- [x] Build the Control Tower dashboard with KPI cards, Recharts trends, anomaly alerts, and cross-domain data-quality health.
+- [x] Build student lifecycle management with enrollment, status, milestones, risk flags, cohorts, filters, detail, and edit workflows.
+- [x] Build instructor management with profiles, availability, session load, performance ratings, and incident history.
+- [x] Build session management with creation, scheduling, updates, cancellation, attendance, outcome logging, validation, and conflict handling.
+- [x] Build incident management with intake, triage, assignment, escalation, resolution, timeline, and audit workflows.
+- [x] Build KPI definition and tracking with configurable targets, thresholds, owners, actual-versus-target Recharts visuals, and linked operational domains.
+- [x] Build anomaly investigation with drill-down evidence, root-cause notes, resolution state, and analyst attribution.
+- [x] Build data-quality monitoring with completeness, accuracy, freshness scores, issue logging, remediation assignment, and progress tracking.
+- [x] Build a versioned SOP library with search, category links to incident types or KPI domains, and active-version controls.
+- [x] Build saved-analysis management with named parameters, reusable result snapshots, provenance, and export.
+- [x] Build global search, contextual filters, saved views, CSV export, clear empty/loading/error/no-permission states, and keyboard-accessible controls.
+- [x] Add automated tests for critical validation, state transitions, authorization, audit immutability, SOP versioning, and calculation rules.
+- [x] Perform visual QA, accessibility review, final packaging verification, and complete setup/architecture documentation.
+- [x] Add cohort filters and surface student milestones in the student-detail workflow.
+- [x] Show instructor-linked incident history in instructor detail.
+- [x] Enforce instructor, room, and learner scheduling conflicts before session creation or rescheduling.
+- [x] Show incident-specific audit timeline and expose data-quality issue remediation controls in detail workspaces.
+- [x] Add contextual filters, saved views, and an explicit permission-denied panel rather than relying only on error toasts.
+- [x] Add automated tests for authorization, SOP version publication, KPI/data-quality calculations, and session conflict detection.
+- [x] Create and verify a distributable Windows release archive plus an explicit accessibility-review record.
+- [x] Audit product completeness across onboarding, work management, communications, integrations, governance, security, reporting, resilience, and supportability.
+- [x] Add a role-based onboarding checklist, configurable notification center, and approval/decision queue for operational follow-through.
+- [x] Add workspace-level configuration for reference values, threshold governance, retention policies, and integration readiness.
+- [x] Add a reporting center with operational snapshots, scheduled-export readiness, and traceable report definitions.
+- [x] Add a data-import control center with source registry, mapping templates, validation previews, import runs, and error remediation.
+- [x] Add a communication and follow-up log that links outreach, ownership, due dates, and outcomes to student, instructor, session, and incident records.
+- [x] Add a supportability console covering health checks, backup/export readiness, activity diagnostics, and privacy request intake.
+- [x] Expand tests, documentation, desktop packaging, and the feature-completeness review for the revised operating model.
+- [x] Implement role-based onboarding checklists with per-item completion state and an activation workspace.
+- [x] Add explicit integration-readiness configuration records and controlled settings fields.
+- [x] Add reproducible report snapshots, report-run history, and scheduled-export readiness workflow.
+- [x] Add import-run history, validation-preview results, failed-row remediation actions, and source health evidence.
+- [x] Implement report snapshots from live workspace data, including parameters, definition version, result rows, and deterministic summary evidence.
+- [x] Persist student import validation previews, created/duplicate/failed row outcomes, and remediation updates into the related source run history.
+- [x] Add report-definition revision fields and capture the revision within every persisted report snapshot and run history entry.
+- [x] Add distinct revisioned report-run history records and render the definition revision beside every generated snapshot.
+- [x] Render persisted generated snapshots in report detail and display the captured definition revision for every snapshot record.
+- [x] Audit enterprise readiness across identity, tenant/workspace governance, integrations, automation, collaboration, privacy, compliance, observability, resilience, release, and support operations.
+- [x] Add organization and workspace configuration with role matrix, team directories, operating calendars, and configurable reference data.
+- [x] Add reliable external integration connectors with credential readiness, synchronization queues, mapping validation, retries, source lineage, and manual reconciliation.
+- [x] Add workflow automation with configurable triggers, approvals, escalation rules, notifications, task routing, run history, and human override.
+- [x] Add collaboration capabilities including secure internal notes, mentions, handoff logs, file evidence metadata, and follow-up ownership.
+- [x] Add privacy, compliance, and security operations covering consent, retention, export/delete requests, access reviews, audit exports, and security-control tracking.
+- [x] Add analytics and planning capabilities including custom dashboards, metric exploration, forecasting scenarios, capacity planning, and target-to-actual operational planning.
+- [x] Add reliability and support operations including health monitoring, backup/restore readiness, incident communications, diagnostics bundles, and structured service reviews.
+- [x] Expand automated tests, desktop documentation, accessibility review, packaging, and release verification for the enterprise capability expansion.
+- [x] Implement connector mapping validation and manual reconciliation records for failed or partial integration runs.
+- [x] Make controlled automation runs create linked actions, notifications, and escalation records as stateful workflow effects.
+- [x] Add a dedicated security-control/compliance register and explicit enterprise audit-export workflow evidence.
+- [x] Build an analytics explorer and dashboard composer tied to planning scenarios and target-to-actual capacity data.
+- [x] Add diagnostics-bundle and structured service-review workflows to resilience and support operations.
+- [x] Update the accessibility review for every new enterprise workspace and interaction control.
+- [x] Create reconciliation records automatically from incomplete integration validation and provide evidence-linked investigation, resolution, and closure actions.
+- [x] Add interactive dashboard widget composition and scenario-driven metric exploration with saved selections and planning target-versus-actual analysis.
+- [x] Render dashboard cards from each saved widget composition and bind metric-exploration charts to the saved KPI and planning scenario selections.
+- [x] Diagnose current TypeScript, renderer, desktop-process, test, packaging, and release-archive errors.
+- [x] Repair all confirmed errors and re-verify the Windows application, automated tests, renderer build, and distributable archive.
+- [x] Capture clean post-fix renderer-console evidence and repeat corrected archive verification for release acceptance.
+- [x] Eliminate the Recharts zero-dimension warning and capture warning-free post-fix console and archive acceptance evidence.
+- [x] Map the supplied PRD to the current application and document the remaining canonical workflow gaps.
+- [x] Add canonical program, cohort, attendance, cancellation, feedback, transcript, rubric, evaluation, dataset, and business-review records with persistent history.
+- [x] Add governed import profiling, mapping validation, normalization, conflict handling, retry-safe commits, and source lineage.
+- [x] Add evidence-linked, rubric-versioned session evaluation with human calibration and auditable approval.
+- [x] Add a read-only grounded analyst workspace that exposes authorized scope, evidence, observed facts, interpretations, hypotheses, limitations, and recommended next steps.
+- [x] Add canonical weekly/monthly business-review generation with source metrics, action tracking, approval, and durable history.
+- [x] Add tests, accessibility states, documentation, hostile workflow validation, and Windows release packaging for the PRD-complete workflow.
+- [x] Assess packaging metadata, local secret boundaries, SIS/LMS connector architecture, and desktop accessibility acceptance gaps.
+- [x] Add Windows code-signing readiness configuration and a reproducible signed-release workflow that activates only when organization certificates are supplied.
+- [x] Add secure SIS/LMS connector configuration, credential validation, guarded sync execution, reconciliation handling, and offline-safe behavior.
+- [x] Add keyboard-focus, screen-reader, and high-contrast acceptance controls plus an NVDA/Narrator validation protocol for packaged Windows builds.
+- [x] Test, document, package, and verify the production-readiness update.
+- [x] Surface the remaining canonical record types as usable navigation, tables, and evidence-first detail workspaces.
+- [x] Enforce transcript evidence for evaluation creation and expose a session/rubric preparation workflow.
+- [x] Remove manual analyst-run mutation paths and support deterministic read-only safe-failure runs when local inference is unavailable.
+- [x] Add PRD-workflow accessibility implementation evidence in code and package-focused keyboard/screen-reader acceptance documentation.

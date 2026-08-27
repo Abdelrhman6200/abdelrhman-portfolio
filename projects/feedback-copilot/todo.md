@@ -1,0 +1,98 @@
+# Project TODO
+
+- [x] Establish the refined application shell, typography, color system, and responsive dashboard layout.
+- [x] Build class and student roster navigation with a compact search and selected-student state.
+- [x] Build the session selector and metadata summary for the selected student and date.
+- [x] Build a structured session evidence viewer for notes, observations, and artifacts.
+- [x] Implement the structured AI feedback generation contract with Strengths, Areas for Improvement, and Next Steps.
+- [x] Build an editable feedback editor with inline coordinator annotations and regeneration controls.
+- [x] Implement feedback quality safeguards, including exact status badges: draft, pending review, and approved.
+- [x] Build coordinator review controls for comments, approval, and rejection.
+- [x] Build a per-student feedback history log with status filtering.
+- [x] Implement server-side role enforcement and role-sensitive UI for teacher and coordinator.
+- [x] Add representative product data, database schema, query procedures, and automated tests.
+- [x] Verify responsiveness, interactions, TypeScript checks, automated tests, and visual quality.
+- [x] Replace preview-only workflow state with authenticated database queries and mutations.
+- [x] Add teacher-created student and session records without introducing fabricated learner data.
+- [x] Use authenticated role state for the production UI while retaining a clearly isolated visual-preview state.
+- [x] Persist feedback saves, review submissions, coordinator comments, approvals, and return-to-draft outcomes.
+- [x] Add status filtering to database-backed feedback history.
+- [x] Remove simulated generation fallback and surface stream failures to the teacher.
+- [x] Re-verify the completed role-sensitive flows and update automated tests.
+- [x] Provide a complete teacher onboarding flow that leads from student creation to a first saved session without dead ends.
+- [x] Replace remaining preview-only session details with selected saved session data throughout the workspace.
+- [x] Provide a complete feedback editing, save, review submission, and history-opening workflow with persistent state.
+- [x] Provide a complete coordinator oversight view for pending review feedback, comments, approval, and return-to-draft decisions.
+- [x] Add teacher and coordinator empty, loading, error, and success states across every primary workflow.
+- [x] Extend automated coverage for record creation, session evidence, persisted feedback edits, reviews, and history filtering.
+- [x] Verify the final end-to-end flows, responsive presentation, and production build before delivery.
+- [x] Add a complete student profile form with optional learning goals and level fields.
+- [x] Add a complete session evidence form with all session metadata and inline field validation.
+- [x] Add a focused structured feedback form with clear required-field guidance before saving or submitting.
+- [x] Add a coordinator review form that supports standalone comments, approval, and return-to-draft validation.
+- [x] Improve form success, validation, and loading feedback across teacher and coordinator workflows.
+- [x] Re-test form workflows across desktop and mobile before delivery.
+- [x] Add level and learning-goal fields to the in-workspace student creation form.
+- [x] Add intentional session date and session number fields to the session evidence form.
+- [x] Add per-field inline validation feedback to student and session forms.
+- [x] Add loading, error, empty, and pending states for sessions, history, and coordinator review queries/actions.
+- [x] Re-verify complete teacher and coordinator form journeys across desktop and mobile.
+- [x] Add explicit session, history, and review queue loading, error, empty, and action-pending states.
+- [x] Verify authenticated teacher and coordinator form submissions end to end on desktop and mobile.
+- [x] Add explicit pending progress states for coordinator comment, approve, and return actions.
+- [x] Verify live role-based form behavior without creating test learner records.
+- [x] Bind coordinator pending indicators to actual approve, return, and comment mutation lifecycles.
+- [x] Verify available live signed-in role behavior without creating learner records.
+- [x] Documented limitation: the live signed-in coordinator empty state was verified without creating records; a separate authenticated teacher session is needed to observe its live role view.
+- [x] Add clearly marked pseudo student groups and group membership to the prototype workspace.
+- [x] Add instructor group selection and group feedback submission forms.
+- [x] Add a group ranking view for instructors based on submitted group feedback.
+- [x] Add an administrator all-groups overview with cross-group ranking and submission status.
+- [x] Update role terminology and access controls for instructor and administrator experiences.
+- [x] Test group submission, instructor ranking, and administrator all-groups views on desktop and mobile.
+- [x] Clearly label instructor and administrator controls within the prototype group workflow, separate from authenticated application roles.
+- [x] Verify the local pseudo-group submission handler replaces a group’s prototype score and refreshes the rendered ranking state without using real student data.
+- [x] Make the group feedback and ranking workspace open in demo mode without sign-in.
+- [x] Provide a no-sign-in administrator demo view with all pseudo groups and rankings.
+- [x] Add clear demo-data language and reset guidance for unauthenticated visitors.
+- [x] Verify the no-sign-in instructor and administrator demo paths on desktop and mobile.
+- [x] Add visible demo reset guidance for unauthenticated visitors.
+- [x] Verify final no-sign-in instructor and administrator demo routes on mobile.
+- [x] Extract the attached Level 1 evaluation rubric criteria and certification thresholds.
+- [x] Add rubric criteria, ratings, and calculated certification status to pseudo-group demo data.
+- [x] Add instructor rubric assessment inputs to the group submission form.
+- [x] Add administrator rubric comparison and certification outcome views across all groups.
+- [x] Verify the rubric and certification demo flows on desktop and mobile.
+- [x] Clearly mark certification bands as prototype assumptions because the attached rubric provides no thresholds.
+- [x] Surface each group’s rubric total and prototype certification result in the group submission workflow.
+- [x] Verify rubric score changes recalculate certification outcomes for instructor and administrator demo views.
+- [x] Display the selected group’s rubric total and prototype certification result in the group submission workspace.
+- [x] Add automated coverage proving score changes update certification outcomes and ordering.
+- [x] Add a combined test proving a score update changes both certification outcome and group ranking order.
+- [x] Add pseudo groups and nested subgroups with collective assessment records.
+- [x] Replace direct rubric grading with a teacher form that selects either a group or a subgroup.
+- [x] Aggregate criterion ratings across subgroup assessments into collective scores.
+- [x] Calculate each subgroup’s position against its parent group and assign its strongest available collective grade.
+- [x] Add clear group/subgroup grade comparison and outcome views for teachers and administrators.
+- [x] Verify collective grading calculation, ranking, and grade-selection flows on desktop and mobile.
+- [x] Add an administrator all-groups collective view using subgroup rank and strongest-grade calculations.
+- [x] Verify the teacher grading calculation pipeline updates subgroup score, rank, and strongest available grade through automated coverage and responsive UI review.
+- [x] Add integration-level coverage for teacher form submission updating the visible subgroup score, rank, and strongest available grade.
+- [x] Add a component-level teacher form test that submits revised ratings and asserts the rendered score, rank, and grade outcome.
+- [x] Replace the five-domain instructor input with the full 15-criterion Level 1 rubric, grouped into its five evaluation sections.
+- [x] Calculate group, subgroup, certification, and strongest-grade outcomes solely from instructor-entered rubric ratings.
+- [x] Update the instructor and administrator outcome views and automated coverage for full-rubric scoring.
+- [x] Remove parent-group rubric evaluation so instructors assess only subgroups.
+- [x] Retain parent groups only as comparison cohorts for subgroup collective evidence, rank, and strongest-grade calculations.
+- [x] Update administrator messaging and tests to reflect subgroup-only certification outcomes.
+- [x] Remove the legacy home-page manual 0–100 group-score submission form and its prototype outcome card.
+- [x] Replace legacy group-score navigation with the subgroup-only full-rubric workflow.
+- [x] Delete the dormant legacy manual group-scoring types, state, seed data, submit handler, and workspace component from the home page.
+- [x] Replace legacy group-ranking tests with coverage of the unified subgroup assessment entry points.
+- [x] Make the no-sign-in subgroup assessment demo the default home-page experience.
+- [x] Replace named cohort demo groups with selectable numbered groups 1–1000, each containing subgroups A, B, C, and D.
+- [x] Update the administrator comparison, wording, and automated coverage for the numbered group/subgroup model.
+- [x] Add clear certificate-title categories, including the best available certificate outcome.
+- [x] Add searchable group-number selection and rubric-criterion filtering for instructors.
+- [x] Add equivalent search and certificate-category guidance to administrator comparison.
+- [x] Verify the enhanced certificate and search workflow with automated coverage and responsive checks.

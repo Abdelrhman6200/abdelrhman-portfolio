@@ -1,0 +1,26 @@
+{
+  "name": "edtech-operations-intelligence-os",
+  "version": "1.0.0",
+  "description": "Desktop operational command center for EdTech delivery teams.",
+  "author": "Northstar Learning Operations",
+  "main": "electron/main.cjs",
+  "build": {
+    "appId": "com.northstar.edtechops",
+    "productName": "EdTech Operations Intelligence OS",
+    "electronVersion": "43.4.0",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "/home/ubuntu/edtech-ops-release"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
+  }
+}

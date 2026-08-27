@@ -1,0 +1,14 @@
+# Normalise line endings in the repository to LF, so the history stays stable
+# regardless of which platform a contributor is on.
+* text=auto eol=lf
+
+# Binary assets Git should never try to normalise.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+*.zip binary

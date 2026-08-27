@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-label="Abstract course knowledge artwork">
+  <rect width="480" height="300" fill="#12241d"/>
+  <g stroke="#6ee7a8" stroke-width="2" fill="none" opacity=".5">
+    <path d="M0 90 C120 40 240 140 480 70"/>
+    <path d="M0 150 C120 100 240 200 480 130" opacity=".7"/>
+    <path d="M0 210 C120 160 240 260 480 190" opacity=".4"/>
+  </g>
+</svg>

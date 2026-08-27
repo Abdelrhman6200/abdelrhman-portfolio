@@ -1,0 +1,125 @@
+/*
+ * Global foundation for the portfolio.
+ *
+ * Two jobs only:
+ *   1. Define the design tokens once, in `@theme`, so both the hand-written
+ *      section stylesheets (reference.css, editorial.css) and the shadcn/ui
+ *      primitives read from the same palette.
+ *   2. Set base element defaults and the reduced-motion contract.
+ *
+ * Page-level layout lives in reference.css / editorial.css / reference-demo.css.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Surfaces — warm editorial canvas, not pure white. */
+  --color-background: #f1efeb;
+  --color-foreground: #161616;
+  --color-card: #fffdf9;
+  --color-card-foreground: #161616;
+  --color-popover: #202020;
+  --color-popover-foreground: #fffdf9;
+  --color-muted: #e5e2dc;
+  --color-muted-foreground: #77736d;
+
+  /* Signal — the warm coral that marks every interactive/emphasis moment. */
+  --color-primary: #f54b32;
+  --color-primary-foreground: #fffdf9;
+  --color-secondary: #202020;
+  --color-secondary-foreground: #fffdf9;
+  --color-accent: #ff7f3f;
+  --color-accent-foreground: #161616;
+  --color-destructive: #d13b22;
+  --color-destructive-foreground: #fffdf9;
+
+  --color-border: rgba(22, 22, 22, 0.14);
+  --color-input: rgba(22, 22, 22, 0.14);
+  --color-ring: #f54b32;
+
+  --radius: 0.75rem;
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Manrope", ui-sans-serif, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  /* Keeps in-page anchors clear of the sticky header. */
+  scroll-padding-top: 6rem;
+  background: var(--color-background);
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  background: var(--color-background);
+}
+button,
+a {
+  font: inherit;
+}
+button {
+  border: 0;
+  padding: 0;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip link — first tab stop, visible only when focused. */
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: var(--color-foreground);
+  color: var(--color-card);
+  font: 600 0.75rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  transform: translateY(-160%);
+  transition: transform 0.18s var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
