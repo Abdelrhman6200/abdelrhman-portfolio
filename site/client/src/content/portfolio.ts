@@ -282,14 +282,14 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "coral",
     stats: [
-      { value: "43", label: "automated tests" },
+      { value: "65", label: "automated tests" },
       { value: "4", label: "authorization roles" },
       { value: "append-only", label: "audit trail" },
     ],
     verifiable: [
       "Four authorization roles — analyst, coordinator, manager, administrator — enforced at the application boundary",
       "Immutable audit events recorded for create, update, delete, approval, export and status transitions",
-      "43 automated tests covering authorization, SOP version publication, KPI calculation, session-conflict detection and auth hardening",
+      "65 automated tests covering authorization, SOP version publication, KPI calculation, session-conflict detection, auth hardening, and the operations console rendering without the desktop bridge",
       "Login rate-limited per identity; sessions are httpOnly, SameSite-Lax signed JWTs",
       "Ships as a packaged Windows desktop application via an Electron shell",
     ],
@@ -334,7 +334,7 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "yellow",
     stats: [
-      { value: "34", label: "automated tests" },
+      { value: "54", label: "automated tests" },
       { value: "4", label: "persisted workflows" },
       { value: "evidence-first", label: "AI assistance" },
     ],

@@ -1,5 +1,6 @@
 /** DESIGN CONTEXT — Operational modules retain the Learning Ledger’s warm hierarchy while reading and writing persistent workspace data. */
 import { AIChatBox, type Message } from "@/components/AIChatBox";
+import { fmtDate, initials, titleCase } from "@/lib/format";
 import { trpc } from "@/lib/trpc";
 import {
   AlertCircle,
@@ -22,20 +23,6 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Link, useLocation, useRoute } from "wouter";
 
-const fmtDate = (value?: Date | null) =>
-  value
-    ? new Date(value).toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-      })
-    : "—";
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map(part => part[0])
-    .join("")
-    .slice(0, 2);
-const titleCase = (value: string) => value.replaceAll("_", " ");
 
 export function WorkspaceLoading() {
   return (

@@ -1,4 +1,5 @@
 /** DESIGN CONTEXT — The Learning Ledger control tower turns stored student signals into concise, traceable next actions. */
+import { initials } from "@/lib/format";
 import { trpc } from "@/lib/trpc";
 import {
   AlertCircle,
@@ -13,12 +14,6 @@ import {
 import { useLocation } from "wouter";
 import { WorkspaceLoading } from "./OperationsPages";
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .map(part => part[0])
-    .join("")
-    .slice(0, 2);
 const dateLabel = (value?: Date | null) =>
   value
     ? new Date(value).toLocaleDateString(undefined, {
