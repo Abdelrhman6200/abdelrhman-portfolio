@@ -138,18 +138,6 @@
 .ref-text-link:hover { gap: .65rem; color: var(--ref-coral-ink); border-color: var(--ref-coral); }
 
 .ref-hero-side { position: relative; display: grid; gap: 1.6rem; justify-items: center; }
-.ref-orbit-card { position: relative; display: grid; place-items: center; width: min(100%, 450px); aspect-ratio: 1; overflow: hidden; background: var(--ref-coral); border-radius: 48% 46% 38% 43%; box-shadow: 22px 22px 0 var(--ref-ink); transform: rotate(4deg); }
-.ref-orbit-card::before, .ref-orbit-card::after { content: ""; position: absolute; width: 24px; height: 24px; border: 5px solid var(--ref-ink); border-radius: 50%; }
-.ref-orbit-card::before { top: 16%; right: 19%; }
-.ref-orbit-card::after { bottom: 17%; left: 15%; width: 14px; height: 14px; border-width: 3px; background: var(--ref-yellow); }
-.ref-orbit-ring { position: absolute; border: 2px solid rgba(var(--ref-on-dark-rgb), .68); border-radius: 50%; transform: rotate(-21deg); }
-.ref-orbit-ring-one { width: 78%; height: 38%; border-left-color: transparent; border-right-color: transparent; }
-.ref-orbit-ring-two { width: 43%; height: 78%; border-top-color: transparent; border-bottom-color: transparent; }
-.ref-orbit-core { display: grid; place-items: center; width: 45%; aspect-ratio: 1; color: var(--ref-on-dark); background: var(--ref-panel); border: 8px solid rgba(var(--ref-on-dark-rgb), .22); border-radius: 50%; box-shadow: 0 0 0 16px rgba(var(--ref-on-dark-rgb), .11); transform: rotate(-4deg); }
-.ref-orbit-core span { font: 800 clamp(2rem, 4vw, 3.4rem)/.8 "Space Grotesk", sans-serif; letter-spacing: -.14em; }
-.ref-orbit-core small { margin-top: -.8rem; color: var(--ref-yellow); font: 600 .5rem/1 "IBM Plex Mono", monospace; letter-spacing: .1em; }
-.ref-orbit-label { position: absolute; padding: .42rem .58rem; color: var(--ref-ink); background: var(--ref-white); border-radius: 999px; font: 800 .5rem/1 "IBM Plex Mono", monospace; box-shadow: 4px 4px 0 rgba(var(--ref-ink-rgb), .2); }
-.ref-orbit-label-one { top: 23%; left: 10%; }.ref-orbit-label-two { top: 46%; right: 6%; }.ref-orbit-label-three { bottom: 16%; right: 18%; }
 .ref-hero-note { width: min(84%, 360px); padding: 1.25rem 1.35rem; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 24px; box-shadow: 10px 10px 0 rgba(var(--ref-ink-rgb), .08); transform: rotate(-3deg); }
 .ref-hero-note span, .ref-kicker { color: var(--ref-muted); font: 700 .55rem/1 "IBM Plex Mono", monospace; letter-spacing: .13em; text-transform: uppercase; }
 .ref-hero-note strong { display: block; margin: .7rem 0 .55rem; font: 800 1.35rem/.95 "Space Grotesk", sans-serif; letter-spacing: -.07em; }.ref-hero-note em { color: var(--ref-coral); }
@@ -187,7 +175,7 @@
 }
 
 @media (max-width: 680px) {
-  .ref-section { padding: 4.8rem 1rem; }.reference-header { padding-inline: 1rem; }.reference-brand strong { font-size: .61rem; }.reference-brand-mark { width: 34px; height: 34px; flex-basis: 34px; }.ref-hero { padding-top: 4.2rem; gap: 3.2rem; }.ref-hero h1 { font-size: clamp(4.6rem, 20vw, 7.6rem); }.ref-hero-copy > p { font-size: .92rem; }.ref-hero-side { grid-template-columns: 1fr; gap: 1rem; }.ref-orbit-card { width: min(88vw, 370px); box-shadow: 13px 13px 0 var(--ref-ink); }.ref-hero-note { width: 88%; justify-self: end; }.ref-hero-stats { grid-template-columns: 1fr; gap: .7rem; }.ref-intro-grid { grid-template-columns: 1fr; gap: 2rem; }.ref-intro h2, .ref-section-heading h2, .ref-dark-heading h2, .ref-contact h2, .ref-proof h2 { font-size: clamp(3rem, 14vw, 5.7rem); }.ref-dark-section, .ref-proof { margin-inline: .6rem; padding: 3rem 1.1rem; border-radius: 24px; }.ref-service-layout { grid-template-columns: 1fr; }.ref-service-tab:hover, .ref-service-tab.is-active { transform: none; }.ref-inspector-flow { margin-inline: -.2rem; padding-bottom: .8rem; }.ref-timeline-item { grid-template-columns: 48px 1fr auto; gap: .8rem; padding: .85rem; }.ref-timeline-mark { width: 42px; height: 42px; }.ref-timeline-copy h3 { font-size: 1.2rem; }.ref-proof-top { display: grid; gap: .8rem; }.ref-footer { display: grid; gap: .7rem; padding-inline: 1rem; line-height: 1.3; }
+  .ref-section { padding: 4.8rem 1rem; }.reference-header { padding-inline: 1rem; }.reference-brand strong { font-size: .61rem; }.reference-brand-mark { width: 34px; height: 34px; flex-basis: 34px; }.ref-hero { padding-top: 4.2rem; gap: 3.2rem; }.ref-hero h1 { font-size: clamp(4.6rem, 20vw, 7.6rem); }.ref-hero-copy > p { font-size: .92rem; }.ref-hero-side { grid-template-columns: 1fr; gap: 1rem; }.ref-hero-note { width: 88%; justify-self: end; }.ref-hero-stats { grid-template-columns: 1fr; gap: .7rem; }.ref-intro-grid { grid-template-columns: 1fr; gap: 2rem; }.ref-intro h2, .ref-section-heading h2, .ref-dark-heading h2, .ref-contact h2, .ref-proof h2 { font-size: clamp(3rem, 14vw, 5.7rem); }.ref-dark-section, .ref-proof { margin-inline: .6rem; padding: 3rem 1.1rem; border-radius: 24px; }.ref-service-layout { grid-template-columns: 1fr; }.ref-service-tab:hover, .ref-service-tab.is-active { transform: none; }.ref-inspector-flow { margin-inline: -.2rem; padding-bottom: .8rem; }.ref-timeline-item { grid-template-columns: 48px 1fr auto; gap: .8rem; padding: .85rem; }.ref-timeline-mark { width: 42px; height: 42px; }.ref-timeline-copy h3 { font-size: 1.2rem; }.ref-proof-top { display: grid; gap: .8rem; }.ref-footer { display: grid; gap: .7rem; padding-inline: 1rem; line-height: 1.3; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -875,3 +863,119 @@
 /* The record keeps the evidence tier on every row — it is the site's whole
    claim — but at row scale rather than card scale. */
 .ref-record-meta .ref-evidence { padding: .22rem .4rem; font-size: .42rem; letter-spacing: .06em; }
+
+/* ===========================================================================
+ * Hero system — the method as a running loop.
+ *
+ * SVG + CSS only: no JS timer, no animation library, no WebGL. Everything
+ * reads the palette tokens, so it is correct in both themes and covered by
+ * the existing contrast suite.
+ * ======================================================================== */
+.hero-system { display: grid; justify-items: center; gap: 1rem; width: min(100%, 420px); }
+.hero-system-svg { width: 100%; height: auto; overflow: visible; }
+
+/* The loop draws itself once, then holds. */
+.hero-ring {
+  fill: none;
+  stroke: var(--ref-line);
+  stroke-width: 1.5;
+  stroke-dasharray: 604;
+  stroke-dashoffset: 604;
+  animation: hero-draw 1.6s cubic-bezier(.23, 1, .32, 1) .2s forwards;
+}
+@keyframes hero-draw { to { stroke-dashoffset: 0; } }
+
+.hero-chords line {
+  stroke: var(--ref-coral);
+  stroke-width: .75;
+  opacity: 0;
+  animation: hero-chord 9s ease-in-out infinite;
+}
+@keyframes hero-chord {
+  0%, 70%, 100% { opacity: 0; }
+  12%, 26% { opacity: .16; }
+}
+
+.hero-node { fill: var(--ref-card); stroke: var(--ref-muted); stroke-width: 1.5; }
+.hero-node-halo { fill: var(--ref-coral); opacity: 0; }
+/* Each node lights as the pulse reaches it — the delay is its position on the loop. */
+.hero-nodes g { animation: hero-node-hit 8s linear infinite; }
+@keyframes hero-node-hit {
+  0%, 8%, 100% { opacity: 1; }
+}
+.hero-nodes g .hero-node-halo { animation: hero-halo 8s linear infinite; animation-delay: inherit; }
+@keyframes hero-halo {
+  0% { opacity: .45; r: 7; }
+  6% { opacity: 0; r: 13; }
+  100% { opacity: 0; r: 7; }
+}
+
+/* Rotation about the centre carries each dot around the ring. */
+.hero-pulses g {
+  transform-origin: 130px 130px;
+  animation: hero-orbit 8s linear infinite;
+}
+@keyframes hero-orbit { to { transform: rotate(360deg); } }
+.hero-pulse { fill: var(--ref-coral); }
+
+.hero-core { fill: var(--ref-card); stroke: var(--ref-line); stroke-width: 1.5; }
+.hero-core-mark {
+  fill: var(--ref-ink); text-anchor: middle;
+  font: 800 1.55rem/1 "Space Grotesk", sans-serif; letter-spacing: -.06em;
+}
+.hero-core-sub {
+  fill: var(--ref-muted); text-anchor: middle;
+  font: 700 .38rem/1 "IBM Plex Mono", monospace; letter-spacing: .22em;
+}
+
+.hero-system-caption {
+  display: grid; gap: .35rem; justify-items: center; text-align: center;
+  max-width: 34ch;
+  color: var(--ref-muted); font-size: .64rem; line-height: 1.6;
+}
+.hero-system-caption span {
+  color: var(--ref-coral-ink);
+  font: 700 .46rem/1 "IBM Plex Mono", monospace; letter-spacing: .14em;
+}
+
+/* Reduced motion: the diagram holds as a legible still — the ring drawn, the
+   chords visible, the pulses parked on the loop. Nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-ring { stroke-dashoffset: 0; animation: none; }
+  .hero-chords line { opacity: .14; animation: none; }
+  .hero-nodes g, .hero-nodes g .hero-node-halo, .hero-pulses g { animation: none; }
+  .hero-node-halo { opacity: 0; }
+}
+
+@media (max-width: 680px) { .hero-system { width: min(88vw, 340px); } }
+
+/* ===========================================================================
+ * Depth without WebGL.
+ *
+ * The app-window surfaces lift and tilt very slightly on hover — real 3D
+ * transforms, done by the compositor at no bundle cost. Kept subtle on
+ * purpose: it should register as material, not as a gimmick. Pointer-only
+ * (touch devices get no hover) and off entirely under reduced motion.
+ * ======================================================================== */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .ref-feature-stage,
+  .ref-file-stage {
+    perspective: 1100px;
+  }
+  .ref-feature-stage .app-window,
+  .ref-file-stage .app-window {
+    transition: transform .45s cubic-bezier(.23, 1, .32, 1), box-shadow .45s ease;
+    transform: rotateX(1.2deg) rotateY(-1.6deg);
+  }
+  .ref-feature-stage:hover .app-window,
+  .ref-file-stage:hover .app-window {
+    transform: rotateX(0) rotateY(0) translateY(-4px) scale(1.012);
+    box-shadow: 0 34px 70px -44px rgba(0, 0, 0, .62);
+  }
+
+  /* The feature rows alternate sides, so the mirrored row tilts the other way
+     — the two lean towards the reader rather than both leaning left. */
+  .ref-feature.is-flipped .ref-feature-stage .app-window {
+    transform: rotateX(1.2deg) rotateY(1.6deg);
+  }
+}

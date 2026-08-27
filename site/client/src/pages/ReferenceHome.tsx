@@ -51,6 +51,7 @@ import { simulationFor } from "@/content/simulations";
 import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
+import HeroSystem from "@/components/HeroSystem";
 import ThemeToggle from "@/components/ThemeToggle";
 import { slugFor } from "@/content/slugs";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -427,17 +428,8 @@ export default function ReferenceHome() {
           </div>
 
           <div className="ref-hero-side">
-            <div className="ref-orbit-card">
-              <div className="ref-orbit-ring ref-orbit-ring-one" />
-              <div className="ref-orbit-ring ref-orbit-ring-two" />
-              <div className="ref-orbit-core">
-                <span>AS</span>
-                <small>SYS // 001</small>
-              </div>
-              <span className="ref-orbit-label ref-orbit-label-one">SIGNAL</span>
-              <span className="ref-orbit-label ref-orbit-label-two">MAP</span>
-              <span className="ref-orbit-label ref-orbit-label-three">BUILD</span>
-            </div>
+            <HeroSystem />
+
             <div className="ref-hero-note">
               <span>01 / POSITION</span>
               <strong>

@@ -56,6 +56,21 @@ origin is injected into `index.html` at build time. Building for a custom
 domain: `SITE_URL=https://yourdomain.com npm run build`. Unset, it defaults to
 the primary deploy URL so link previews always work.
 
+## Why there is no 3D
+
+The original brief specified a Blender-cinematic 3D room; it was deliberately
+rebuilt as a no-3D editorial site, and that call stands. Three.js is roughly
+150 KB gzipped against a 96 KB entry bundle, WebGL is where mid-range phones
+on slow networks fail first, and a spinning hero object is the one thing on a
+page built around checkable evidence that proves nothing.
+
+The motion that exists instead does work. The hero renders the eight-stage
+method as the loop it is, with pulses circulating and each stage lighting as
+they pass — SVG and CSS only, no timer and no library, under 1 KB gzipped. The
+project cards run their real pipelines. The app windows tilt on hover using
+compositor transforms, which is genuine 3D at no bundle cost. All of it stops
+under prefers-reduced-motion, and the hero holds as a legible still.
+
 ## Theme
 
 Dark is the default. A control in the header cycles light, dark and system; the
