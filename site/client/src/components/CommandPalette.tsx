@@ -244,7 +244,7 @@ export default function CommandPalette() {
   let lastGroup = "";
 
   return (
-    <div className="cmdk-backdrop" onMouseDown={close} role="presentation">
+    <div className="reference-page cmdk-backdrop" onMouseDown={close} role="presentation">
       <div
         className="cmdk-panel"
         role="dialog"

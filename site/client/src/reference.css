@@ -1126,8 +1126,8 @@
    A dialog over the page rather than a route, so it opens from anywhere
    without losing where the reader was. The panel is deliberately narrow and
    monospaced: it reads as a tool, which is what it is. */
-.cmdk-backdrop { position: fixed; inset: 0; z-index: 120; display: grid; align-items: start; justify-items: center; padding: clamp(3rem, 12vh, 8rem) 1rem 1rem; background: rgba(var(--ref-bg-rgb), .72); backdrop-filter: blur(6px); animation: cmdk-fade .14s ease both; }
-.cmdk-panel { width: min(38rem, 100%); max-height: min(30rem, 72vh); display: flex; flex-direction: column; overflow: hidden; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 10px; box-shadow: 0 24px 60px rgba(var(--ref-ink-rgb), .22), 6px 6px 0 rgba(var(--ref-ink-rgb), .06); animation: cmdk-rise .18s var(--ease-out) both; }
+.cmdk-backdrop.reference-page { position: fixed; inset: 0; z-index: 120; min-height: 0; overflow: visible; display: grid; align-items: start; justify-items: center; padding: clamp(3rem, 12vh, 8rem) 1rem 1rem; background: rgba(var(--ref-bg-rgb), .86); backdrop-filter: blur(8px); animation: cmdk-fade .14s ease both; }
+.cmdk-panel { width: min(38rem, 100%); max-height: min(30rem, 72vh); display: flex; flex-direction: column; overflow: hidden; background: var(--ref-card); border: 1px solid rgba(var(--ref-ink-rgb), .28); border-radius: 10px; box-shadow: 0 30px 70px rgba(var(--ref-ink-rgb), .34); animation: cmdk-rise .18s var(--ease-out) both; }
 .cmdk-field { display: flex; align-items: center; gap: .6rem; padding: .85rem 1rem; border-bottom: 1px solid var(--ref-line); color: var(--ref-muted); }
 .cmdk-field input { flex: 1; min-width: 0; border: 0; outline: none; background: none; color: var(--ref-ink); font: 500 .92rem/1.4 "Manrope", sans-serif; }
 .cmdk-field input::placeholder { color: var(--ref-muted); }

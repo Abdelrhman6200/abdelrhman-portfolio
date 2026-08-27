@@ -159,6 +159,17 @@ describe("CommandPalette", () => {
     expect(window.location.pathname).toMatch(/^\/system\//);
   });
 
+  it("sits inside the class that declares the theme tokens", () => {
+    // The palette mounts beside the routed page rather than inside it, and
+    // every --ref-* token is declared on .reference-page. Without that class
+    // its colours resolve to nothing: a transparent panel over the page, no
+    // border, no highlight. jsdom does not cascade custom properties, so the
+    // scope itself is what gets asserted.
+    pressHotkey();
+    const backdrop = document.querySelector(".cmdk-backdrop");
+    expect(backdrop?.classList.contains("reference-page")).toBe(true);
+  });
+
   it("marks itself as a modal dialog for assistive technology", () => {
     pressHotkey();
     expect(screen.getByRole("dialog").getAttribute("aria-modal")).toBe("true");
