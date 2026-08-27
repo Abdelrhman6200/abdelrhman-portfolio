@@ -737,3 +737,10 @@
 .nf-copy svg { color: var(--ref-coral); transform: translateY(2px); flex: 0 0 auto; }
 .nf-routes { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
 .nf-strip { margin: .6rem 0 0; }
+
+@media (max-width: 760px) {
+  /* A wrapped pill reads as a blob; give the strip corners when it stacks. */
+  .ref-demo-strip { border-radius: 18px; }
+  .ref-feature { border-radius: 22px; }
+  .ref-feature-stats { gap: 1rem 1.6rem; }
+}

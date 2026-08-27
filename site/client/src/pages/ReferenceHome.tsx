@@ -49,7 +49,7 @@ import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
-import { slugFor } from "@/pages/SystemCaseFile";
+import { slugFor } from "@/content/slugs";
 import "../reference.css";
 
 const navItems = [

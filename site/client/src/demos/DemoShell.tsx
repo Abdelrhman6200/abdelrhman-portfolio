@@ -47,7 +47,8 @@ export default function DemoShell({
         </Link>
         <span className="demo-bar-honesty">
           <FlaskConical size={12} aria-hidden="true" />
-          LIVE DEMO / SYNTHETIC DATA / RUNS ENTIRELY IN YOUR BROWSER
+          <span className="demo-bar-honesty-long">LIVE DEMO / SYNTHETIC DATA / RUNS ENTIRELY IN YOUR BROWSER</span>
+          <span className="demo-bar-honesty-short" aria-hidden="true">LIVE DEMO / IN-BROWSER</span>
         </span>
         <ThemeToggle />
       </header>

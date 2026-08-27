@@ -16,13 +16,9 @@ import { simulationFor } from "@/content/simulations";
 import { demoPathFor } from "@/demos/registry";
 import "../reference.css";
 
-/** Stable, readable URL slug for a built system. */
-export function slugFor(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
+// Re-exported for existing imports; the implementation lives in content/slugs.
+import { slugFor } from "@/content/slugs";
+export { slugFor };
 
 export default function SystemCaseFile() {
   const [, params] = useRoute("/system/:slug");

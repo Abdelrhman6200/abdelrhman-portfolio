@@ -49,8 +49,8 @@ describe("demo registry", () => {
 });
 
 describe.each(demos.map((demo) => [demo.title, demo] as const))("%s demo", (_title, demo) => {
-  it("mounts with the honesty banner and a way back", () => {
-    const Demo = demo.component;
+  it("mounts with the honesty banner and a way back", async () => {
+    const { default: Demo } = await demo.load();
     render(<Demo />);
     expect(screen.getByText(/RUNS ENTIRELY IN YOUR BROWSER/i)).toBeDefined();
     expect(screen.getByRole("link", { name: /back to the work/i })).toBeDefined();
@@ -161,7 +161,7 @@ describe("demo chain", () => {
         <DemoPage />
       </Router>
     );
-    expect(a.getByRole("link", { name: new RegExp(`Next demo: ${demos[1].title}`) })).toBeDefined();
+    expect(await a.findByRole("link", { name: new RegExp(`Next demo: ${demos[1].title}`) })).toBeDefined();
     cleanup();
 
     // …and the last wraps back to the first.
@@ -171,6 +171,6 @@ describe("demo chain", () => {
         <DemoPage />
       </Router>
     );
-    expect(b.getByRole("link", { name: new RegExp(`Next demo: ${demos[0].title}`) })).toBeDefined();
+    expect(await b.findByRole("link", { name: new RegExp(`Next demo: ${demos[0].title}`) })).toBeDefined();
   });
 });
