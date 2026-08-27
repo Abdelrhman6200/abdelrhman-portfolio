@@ -41,10 +41,12 @@ courtesy; the boundary is `server/routers.ts`.
 told. There is no fallback to fabricated output — a plausible invented draft
 about a real student is worse than no draft.
 
-**Every transition is logged.** Each save, submission, approval, return and
+**Every transition is logged — and visible.** Each save, submission, approval, return and
 comment writes an append-only event with its actor to `feedbackEvents` —
 there is no API to update or delete a log row. `feedback.events` reads the
 trail back, scoped: a coordinator sees any entry, a teacher only their own.
+The `/workspace` route renders it: students → history → entry → timeline,
+with submit/approve/return actions per role.
 
 ## Authentication
 

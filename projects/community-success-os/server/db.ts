@@ -315,6 +315,30 @@ export async function createIntervention(user: { id: number; openId: string; rol
   return result;
 }
 
+/**
+ * The outcome-loop rule, pure so it can be pinned by tests directly: only a
+ * terminal status (completed/dismissed) with an explicit outcome produces a
+ * signal. An in-progress note is not evidence yet; a bare status change says
+ * nothing about what happened.
+ */
+export function outcomeSignalFor(
+  existing: { id: number; studentId: number; type: string },
+  input: { status: "open" | "in_progress" | "waiting" | "completed" | "dismissed"; outcome?: string }
+): typeof studentSignals.$inferInsert | null {
+  const finished = input.status === "completed" || input.status === "dismissed";
+  const outcome = input.outcome?.trim();
+  if (!finished || !outcome) return null;
+  return {
+    studentId: existing.studentId,
+    type: "intervention_outcome",
+    value: 0,
+    periodLabel: "intervention follow-up",
+    explanation: `${existing.type.replaceAll("_", " ")} intervention ${input.status}: ${outcome}`.slice(0, 500),
+    evidence: { interventionId: existing.id, status: input.status, outcome },
+    state: "open",
+  };
+}
+
 export async function updateIntervention(user: { id: number; openId: string; role: "user" | "admin" }, input: { id: number; status: "open" | "in_progress" | "waiting" | "completed" | "dismissed"; outcome?: string }) {
   const db = await getDb();
   if (!db) throw new Error("Database unavailable");
@@ -324,6 +348,12 @@ export async function updateIntervention(user: { id: number; openId: string; rol
   await assertStudentScope(db, organizationId, existing[0].studentId);
   await db.update(interventions).set({ status: input.status, outcome: input.outcome ?? existing[0].outcome }).where(eq(interventions.id, input.id));
   await db.insert(auditEvents).values({ organizationId, actorUserId: user.id, action: "intervention.updated", objectType: "intervention", objectId: input.id, details: { status: input.status } });
+
+  // A finished intervention with a recorded outcome re-enters the signal
+  // stream, so the next triage pass sees what was tried and how it ended.
+  const outcomeSignal = outcomeSignalFor(existing[0], input);
+  if (outcomeSignal) await db.insert(studentSignals).values(outcomeSignal);
+
   return { success: true };
 }
 

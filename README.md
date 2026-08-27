@@ -105,10 +105,10 @@ claim cannot quietly become false.
 
 | Project | Tests |
 | --- | --- |
-| `site` | 109 |
-| `projects/feedback-copilot` | 47 |
-| `projects/edtech-ops-intelligence-os` | 40 |
-| `projects/community-success-os` | 28 |
+| `site` | 145 |
+| `projects/feedback-copilot` | 51 |
+| `projects/edtech-ops-intelligence-os` | 43 |
+| `projects/community-success-os` | 34 |
 
 Run `npm test` in any of them.
 

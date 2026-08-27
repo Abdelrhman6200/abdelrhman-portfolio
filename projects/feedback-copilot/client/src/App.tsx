@@ -7,12 +7,14 @@ import CollectiveGradingDemo from "./pages/CollectiveGradingDemo";
 import CollectiveAdminDemo from "./pages/CollectiveAdminDemo";
 import SignIn from "./pages/SignIn";
 import NotFound from "./pages/NotFound";
+import Workspace from "./pages/Workspace";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/sign-in"} component={SignIn} />
+      <Route path={"/workspace"} component={Workspace} />
       <Route path={"/"} component={CollectiveGradingDemo} />
       <Route path={"/rubric"} component={CollectiveGradingDemo} />
       <Route path={"/grading-admin"} component={CollectiveAdminDemo} />

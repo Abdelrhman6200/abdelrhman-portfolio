@@ -1,0 +1,1 @@
+ALTER TABLE `studentSignals` MODIFY COLUMN `type` enum('engagement_drop','renewal_opportunity','top_performer','community_contributor','onboarding_gap','data_quality','intervention_outcome') NOT NULL;

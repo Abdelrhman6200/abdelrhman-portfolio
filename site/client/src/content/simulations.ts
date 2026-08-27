@@ -53,7 +53,7 @@ export const simulations: Record<string, SimulationSpec> = {
       { label: "Student 360", detail: "Signals are assembled into one view of the learner, not five dashboards." },
       { label: "Risk", detail: "The view is scored — but the evidence behind the score stays attached to it." },
       { label: "Intervene", detail: "A human picks the action. The system supplies the reasons, not the decision." },
-      { label: "Renew", detail: "The outcome feeds back into which signals count as risk next time." },
+      { label: "Renew", detail: "A recorded outcome writes a signal back onto the student — the loop closes with data." },
     ],
   },
 

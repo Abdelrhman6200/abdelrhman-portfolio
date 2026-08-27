@@ -243,8 +243,8 @@ export default function SuccessDemo() {
                   ))}
                 </ol>
                 <p className="demo-hint">
-                  The shipped app persists each outcome against its intervention, so the record of what was tried
-                  — and whether it worked — stays attached to the student.
+                  In the shipped app, a finished intervention with a recorded outcome writes a signal back onto the
+                  student — what was tried, and how it ended, re-enters the same stream the next triage reads.
                 </p>
               </div>
             )}

@@ -10,7 +10,8 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
 const ROUTES = [
-  { href: "/", label: "Grading workspace" },
+  { href: "/", label: "Grading demo" },
+  { href: "/workspace", label: "Feedback workspace" },
   { href: "/grading-admin", label: "Coordinator review" },
   { href: "/sign-in", label: "Sign in" },
 ];

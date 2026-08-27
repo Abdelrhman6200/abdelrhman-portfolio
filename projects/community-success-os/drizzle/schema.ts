@@ -131,7 +131,7 @@ export const communityEvents = mysqlTable("communityEvents", {
 export const studentSignals = mysqlTable("studentSignals", {
   id: int("id").autoincrement().primaryKey(),
   studentId: int("studentId").notNull(),
-  type: mysqlEnum("type", ["engagement_drop", "renewal_opportunity", "top_performer", "community_contributor", "onboarding_gap", "data_quality"]).notNull(),
+  type: mysqlEnum("type", ["engagement_drop", "renewal_opportunity", "top_performer", "community_contributor", "onboarding_gap", "data_quality", "intervention_outcome"]).notNull(),
   value: int("value").default(0).notNull(),
   periodLabel: varchar("periodLabel", { length: 64 }).notNull(),
   explanation: varchar("explanation", { length: 500 }).notNull(),
