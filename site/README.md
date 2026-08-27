@@ -49,6 +49,13 @@ its own tests, so the demos are pinned demonstrations rather than animations.
 Every demo states, in the same banner, that it runs on synthetic data entirely
 in the browser.
 
+## Deployment origin
+
+Social scrapers require absolute `og:image` and `og:url`, so the deployment
+origin is injected into `index.html` at build time. Building for a custom
+domain: `SITE_URL=https://yourdomain.com npm run build`. Unset, it defaults to
+the primary deploy URL so link previews always work.
+
 ## Theme
 
 Dark is the default. A control in the header cycles light, dark and system; the

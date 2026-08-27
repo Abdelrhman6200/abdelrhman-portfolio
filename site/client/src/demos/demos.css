@@ -752,3 +752,17 @@
 .ag-honesty p { color: var(--ref-muted); font-size: .7rem; line-height: 1.6; }
 
 @media (prefers-reduced-motion: reduce) { .ag-source-bar i { transition: none; } }
+
+/* Demo-to-demo chain. */
+.demo-next {
+  display: flex; align-items: center; gap: .8rem;
+  padding: .8rem 1rem; border-radius: 999px;
+  border: 1px dashed var(--ref-line);
+}
+.demo-next span { color: var(--ref-muted); font: 700 .46rem/1 "IBM Plex Mono", monospace; letter-spacing: .11em; }
+.demo-next a {
+  display: inline-flex; align-items: center; gap: .4rem;
+  color: var(--ref-coral-ink); font: 700 .62rem/1 "IBM Plex Mono", monospace; letter-spacing: .03em;
+  transition: gap .18s ease;
+}
+.demo-next a:hover { gap: .65rem; text-decoration: underline; }

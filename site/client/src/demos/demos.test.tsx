@@ -147,3 +147,30 @@ describe("validation demo import", () => {
     expect(active.getAttribute("aria-label")).toMatch(/row \d+$/);
   });
 });
+
+describe("demo chain", () => {
+  it("routes each demo to the next, wrapping at the end", async () => {
+    const { Router } = await import("wouter");
+    const { memoryLocation } = await import("wouter/memory-location");
+    const { default: DemoPage } = await import("@/pages/DemoPage");
+
+    // First demo links to the second…
+    const first = memoryLocation({ path: `/demo/${demos[0].slug}` });
+    const a = render(
+      <Router hook={first.hook}>
+        <DemoPage />
+      </Router>
+    );
+    expect(a.getByRole("link", { name: new RegExp(`Next demo: ${demos[1].title}`) })).toBeDefined();
+    cleanup();
+
+    // …and the last wraps back to the first.
+    const last = memoryLocation({ path: `/demo/${demos[demos.length - 1].slug}` });
+    const b = render(
+      <Router hook={last.hook}>
+        <DemoPage />
+      </Router>
+    );
+    expect(b.getByRole("link", { name: new RegExp(`Next demo: ${demos[0].title}`) })).toBeDefined();
+  });
+});

@@ -7,10 +7,19 @@
  */
 import type { ReactNode } from "react";
 import { ArrowLeft, ArrowUpRight, FlaskConical } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useRoute } from "wouter";
 import ThemeToggle from "@/components/ThemeToggle";
+import { demos } from "./registry";
 import "../reference.css";
 import "./demos.css";
+
+/** The demo after this one, so finishing a demo never dead-ends. */
+function useNextDemo() {
+  const [, params] = useRoute("/demo/:slug");
+  const index = demos.findIndex((demo) => demo.slug === params?.slug);
+  if (index < 0) return null;
+  return demos[(index + 1) % demos.length];
+}
 
 export default function DemoShell({
   title,
@@ -25,6 +34,7 @@ export default function DemoShell({
   caseFileSlug?: string;
   children: ReactNode;
 }) {
+  const nextDemo = useNextDemo();
   return (
     <div className="reference-page demo-root">
       <a className="skip-link" href="#demo-main">
@@ -49,6 +59,15 @@ export default function DemoShell({
         </div>
 
         {children}
+
+        {nextDemo ? (
+          <nav className="demo-next" aria-label="Next demo">
+            <span>KEEP GOING</span>
+            <Link href={`/demo/${nextDemo.slug}`}>
+              Next demo: {nextDemo.title} <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
+          </nav>
+        ) : null}
 
         {caseFileSlug ? (
           <footer className="demo-foot">
