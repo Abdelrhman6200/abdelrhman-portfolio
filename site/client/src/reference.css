@@ -168,7 +168,7 @@
 .ref-contact { padding-top: clamp(5rem, 9vw, 8rem); padding-bottom: clamp(5rem, 10vw, 9rem); }.ref-contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .5fr); gap: 4rem; margin-top: 2rem; }.ref-contact h2 { margin-bottom: 1rem; }.ref-contact p { max-width: 350px; color: var(--ref-muted); font-size: .9rem; line-height: 1.6; }.ref-contact .ref-button { margin-top: 1.7rem; }.ref-contact-card { align-self: end; padding: 1.5rem; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 24px; box-shadow: 11px 11px 0 rgba(var(--ref-ink-rgb), .08); }.ref-contact-card > span { color: var(--ref-coral-ink); font: 700 .53rem/1.3 "IBM Plex Mono", monospace; letter-spacing: .09em; }.ref-contact-card strong { display: block; margin-top: .55rem; font: 800 1.4rem/.9 "Space Grotesk", sans-serif; }.ref-contact-lines { display: grid; gap: .7rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--ref-line); }.ref-contact-lines span { display: flex; align-items: center; gap: .5rem; color: var(--ref-muted); font: 600 .61rem/1 "IBM Plex Mono", monospace; }.ref-contact-lines svg { color: var(--ref-coral); }.ref-contact-card small { display: block; margin-top: 1.2rem; color: var(--ref-muted); font-size: .64rem; line-height: 1.45; }
 .ref-footer { display: flex; justify-content: space-between; gap: 1rem; max-width: 1280px; margin: 0 auto; padding: 1.2rem clamp(1rem, 5.8vw, 5rem) 1.8rem; color: var(--ref-muted); border-top: 1px solid var(--ref-line); font: 700 .52rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; }
 
-.ref-reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }.ref-reveal.is-visible { opacity: 1; transform: translateY(0); }
+
 
 @media (max-width: 980px) {
   .reference-header { grid-template-columns: auto auto; justify-content: space-between; }.reference-header nav { position: absolute; top: calc(100% + .4rem); right: 1rem; left: 1rem; display: none; flex-direction: column; align-items: stretch; padding: .55rem; border-radius: 20px; }.reference-header nav.is-open { display: flex; }.reference-header nav a { padding: .85rem 1rem; }.reference-header-cta { display: none; }.reference-menu { display: inline-flex; }
@@ -182,7 +182,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reference-page *, .reference-page *::before, .reference-page *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .ref-reveal { opacity: 1; transform: none; }
 }
 
 /* Supplied-project visual language: operational dashboards, validation traces, and compact archive index. */
@@ -331,7 +330,8 @@
 }
 .ref-copy-button:hover { background: rgba(var(--ref-ink-rgb), .1); }
 .ref-copy-button svg { color: var(--ref-coral); }
-/* Announced to screen readers; never occupies layout. */
+/* Announced to screen readers; never occupies layout. See also .sr-only,
+   which is the same treatment applied to the counting figures. */
 .ref-copy-live {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip-path: inset(50%); white-space: nowrap;
@@ -1271,3 +1271,103 @@
    uses, so the visible state and the announced state cannot drift apart. */
 .reference-header nav a[aria-current] { color: var(--ref-on-dark); background: rgba(var(--ref-on-dark-rgb), .13); }
 .reference-header nav a[aria-current]::after { content: ""; display: block; height: 2px; margin-top: .28rem; border-radius: 2px; background: var(--ref-coral); }
+
+/* --- The motion system -----------------------------------------------------
+ * Three primitives, used everywhere, rather than a bespoke animation per
+ * component: things arrive (reveal), surfaces respond to where you are
+ * (tilt), and the document says how far through it you are (progress).
+ * Every one of them is inert under prefers-reduced-motion, which is handled
+ * once at the bottom of this block instead of in each rule.
+ * ========================================================================= */
+
+/* Visually hidden but read: used by the counting figures, whose accessible
+   name must always be the true value rather than the frame's. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reveal. `lift` slides up; `depth` also rotates up into the page, which is
+   what stops a long scroll from reading as a flat list of panels sliding. */
+.ref-reveal {
+  opacity: 0;
+  transition:
+    opacity .7s var(--ease-out) var(--reveal-delay, 0ms),
+    transform .7s var(--ease-out) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.ref-reveal-lift { transform: translate3d(0, 22px, 0); }
+.ref-reveal-depth {
+  transform: perspective(1200px) translate3d(0, 26px, -40px) rotateX(6deg);
+  transform-origin: 50% 100%;
+}
+.ref-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+/* Once it has arrived it never moves again, so stop paying for the hint. */
+.ref-reveal.is-visible { will-change: auto; }
+
+/* Tilt. The stage is the perspective camera; the surface inside it leans
+   towards the pointer, and a soft highlight tracks the same position so the
+   panel reads as lit from where you are rather than uniformly bright. */
+.tilt-stage {
+  perspective: 1000px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --tilt-px: 50%;
+  --tilt-py: 50%;
+}
+.tilt-stage > * {
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform .35s var(--ease-out);
+}
+/* While the pointer is on the surface the transition is short, so the lean
+   tracks rather than lags; leaving restores the longer settle above. */
+.tilt-stage:hover > * { transition: transform .12s linear; }
+
+.tilt-stage .app-window { position: relative; }
+.tilt-stage .app-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+  background: radial-gradient(
+    38% 50% at var(--tilt-px) var(--tilt-py),
+    rgba(var(--ref-on-dark-rgb), .13),
+    transparent 70%
+  );
+}
+.tilt-stage:hover .app-window::after { opacity: 1; }
+
+/* Document progress, drawn along the bottom edge of the sticky header. */
+.scroll-progress {
+  position: absolute;
+  right: 0; bottom: 0; left: 0;
+  height: 2px;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--scroll-progress, 0));
+  background: linear-gradient(90deg, var(--ref-coral), var(--ref-yellow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ref-reveal,
+  .ref-reveal-lift,
+  .ref-reveal-depth {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tilt-stage > * { transform: none; transition: none; }
+  .tilt-stage .app-window::after { display: none; }
+  .scroll-progress { transition: none; }
+}

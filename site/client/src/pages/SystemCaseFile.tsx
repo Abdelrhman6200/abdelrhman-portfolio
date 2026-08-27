@@ -9,7 +9,9 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowUpRight, Check, FileCode2, Github } from "lucide-react";
 import { Link, useRoute } from "wouter";
+import Reveal from "@/components/Reveal";
 import SystemSimulation from "@/components/SystemSimulation";
+import TiltStage from "@/components/TiltStage";
 import ThemeToggle from "@/components/ThemeToggle";
 import { builtSystems, evidenceLabels } from "@/content/portfolio";
 import { simulationFor } from "@/content/simulations";
@@ -123,12 +125,13 @@ export default function SystemCaseFile() {
             <p className="case-stage-detail">{stage?.detail}</p>
           </div>
 
-          <div className="case-sim-slot">
+          <TiltStage className="case-sim-slot">
             <SystemSimulation spec={sim} label={`${project.title} pipeline`} />
-          </div>
+          </TiltStage>
         </section>
 
         {project.verifiable ? (
+          <Reveal variant="depth">
           <section className="case-verifiable" aria-labelledby="case-checks">
             <h2 id="case-checks">What you can check in the source.</h2>
             <p className="case-verifiable-lead">
@@ -144,6 +147,7 @@ export default function SystemCaseFile() {
               ))}
             </ul>
           </section>
+          </Reveal>
         ) : null}
 
         {project.screenshots?.length ? (
@@ -175,6 +179,7 @@ export default function SystemCaseFile() {
           </section>
         ) : null}
 
+        <Reveal variant="depth">
         <section className="case-foot">
           <div>
             <span className="ref-kicker">SOURCE</span>
@@ -193,6 +198,7 @@ export default function SystemCaseFile() {
             </span>
           )}
         </section>
+        </Reveal>
       </main>
     </div>
   );

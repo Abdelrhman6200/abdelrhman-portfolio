@@ -790,3 +790,25 @@
   .app-window-bar { flex-wrap: wrap; row-gap: .45rem; }
   .app-window-meta { margin-left: 0; flex-basis: 100%; justify-content: flex-start; }
 }
+
+/* --- Arrival ---------------------------------------------------------------
+   A demo is a lazily-loaded chunk: it pops into an empty page the moment its
+   JavaScript lands, which reads as a jump. The window settles in instead —
+   once, on mount, in CSS, so there is nothing to run afterwards and nothing
+   to interfere with the interactive content inside it. */
+.demo-root .demo-head { animation: demo-arrive .55s var(--ease-out) both; }
+.demo-root .app-window { animation: demo-arrive .6s var(--ease-out) .08s both; }
+.demo-root .demo-next,
+.demo-root .demo-foot { animation: demo-arrive .6s var(--ease-out) .16s both; }
+
+@keyframes demo-arrive {
+  from { opacity: 0; transform: perspective(1200px) translate3d(0, 20px, -30px) rotateX(4deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-root .demo-head,
+  .demo-root .app-window,
+  .demo-root .demo-next,
+  .demo-root .demo-foot { animation: none; }
+}

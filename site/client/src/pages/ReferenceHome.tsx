@@ -55,6 +55,10 @@ import SystemSimulation from "@/components/SystemSimulation";
 import HeroSystem from "@/components/HeroSystem";
 import ThemeToggle from "@/components/ThemeToggle";
 import { openCommandPalette } from "@/components/CommandPalette";
+import Reveal from "@/components/Reveal";
+import TiltStage from "@/components/TiltStage";
+import CountUp from "@/components/CountUp";
+import ScrollProgress from "@/components/ScrollProgress";
 import { slugFor } from "@/content/slugs";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -109,33 +113,6 @@ function countIn(category: Category): number {
 }
 
 /** Reveals children once on first intersection. No-ops under reduced motion via CSS. */
-function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.08 }
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={ref} className={`ref-reveal ${visible ? "is-visible" : ""} ${className}`}>
-      {children}
-    </div>
-  );
-}
-
 function EvidenceBadge({ project }: { project: Project }) {
   const { label, note } = evidenceLabels[project.evidence];
   return (
@@ -174,7 +151,7 @@ function MethodSection() {
 
   return (
     <section id="method" className="ref-method ref-section">
-      <div className="ref-section-heading">
+      <Reveal variant="depth" className="ref-section-heading">
         <div>
           <div className="ref-kicker">02 / THE METHOD</div>
           <h2>
@@ -187,7 +164,7 @@ function MethodSection() {
           Eight stages, run in a loop. Select any stage to see it applied across three unrelated problems — an
           operations backlog, an AI workflow, a data-quality failure. The domain changes; the stage does not.
         </p>
-      </div>
+      </Reveal>
 
       <div className="ref-method-loop" role="tablist" aria-label="Method stages" onKeyDown={onKeyDown}>
         {methodStages.map((item, index) => (
@@ -311,7 +288,7 @@ function BuiltSystemFeature({ project, flipped }: { project: Project; flipped: b
         </div>
       </div>
 
-      <div className="ref-feature-stage">
+      <TiltStage className="ref-feature-stage">
         <AppWindow name={`${project.title} — live model`}>
           <div className="ref-feature-sim">
             <SystemSimulation
@@ -320,7 +297,7 @@ function BuiltSystemFeature({ project, flipped }: { project: Project; flipped: b
             />
           </div>
         </AppWindow>
-      </div>
+      </TiltStage>
     </article>
   );
 }
@@ -433,6 +410,7 @@ export default function ReferenceHome() {
         >
           {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
+        <ScrollProgress />
       </header>
 
       <main id="main">
@@ -477,23 +455,23 @@ export default function ReferenceHome() {
           {/* Each figure below is checkable on this page: counts, not claims. */}
           <div className="ref-hero-stats">
             <span>
-              <b>{builtSystems.length}</b> applications with source you can read
+              <b><CountUp value={builtSystems.length} /></b> applications with source you can read
             </span>
             <span>
-              <b>{demos.length}</b> live demos you can run right here
+              <b><CountUp value={demos.length} /></b> live demos you can run right here
             </span>
             <span>
-              <b>{allProjects.length}</b> systems documented in the index
+              <b><CountUp value={allProjects.length} /></b> systems documented in the index
             </span>
             <span>
-              <b>{methodStages.length}</b> stages in the method, run as a loop
+              <b><CountUp value={methodStages.length} /></b> stages in the method, run as a loop
             </span>
           </div>
         </section>
 
         <section id="about" className="ref-intro ref-section">
           <div className="ref-kicker">01 / THE BUILDER</div>
-          <div className="ref-intro-grid">
+          <Reveal variant="depth" className="ref-intro-grid">
             <h2>
               I&rsquo;m interested in
               <br />
@@ -515,7 +493,7 @@ export default function ReferenceHome() {
                 See how that runs in practice <ArrowRight size={15} />
               </a>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <MethodSection />
@@ -569,7 +547,7 @@ export default function ReferenceHome() {
         </section>
 
         <section id="work" className="ref-work ref-section">
-          <div className="ref-section-heading">
+          <Reveal variant="depth" className="ref-section-heading">
             <div>
               <div className="ref-kicker">04 / BUILT SOFTWARE</div>
               <h2>
@@ -582,7 +560,7 @@ export default function ReferenceHome() {
               Three full applications — role-aware authorization, persistent state, audit trails and automated
               tests. Everything claimed below is checkable in the code rather than asserted here.
             </p>
-          </div>
+          </Reveal>
 
           {/* Every demo, one strip — the fastest route to proof. */}
           <div className="ref-demo-strip" role="navigation" aria-label="Live demos">
@@ -618,7 +596,7 @@ export default function ReferenceHome() {
 
           <div className="ref-feature-list">
             {builtSystems.map((item, index) => (
-              <Reveal key={item.number}>
+              <Reveal key={item.number} variant="depth" delay={index * 90}>
                 <BuiltSystemFeature project={item} flipped={index % 2 === 1} />
               </Reveal>
             ))}
@@ -626,7 +604,7 @@ export default function ReferenceHome() {
         </section>
 
         <section id="case-files" className="ref-work ref-section ref-work-secondary">
-          <div className="ref-section-heading">
+          <Reveal variant="depth" className="ref-section-heading">
             <div>
               <div className="ref-kicker">05 / OPERATIONAL CASE FILES</div>
               <h2>
@@ -639,7 +617,7 @@ export default function ReferenceHome() {
               Systems built inside operating companies, where the output was a working process rather than a
               public repository. Figures here are reported by the operator, and labelled as such.
             </p>
-          </div>
+          </Reveal>
 
           {/* One selector, one panel. Five full cards — each running its own
               simulation — competed with the built-software rows above and made
@@ -715,7 +693,7 @@ export default function ReferenceHome() {
               </div>
             </div>
 
-            <div className="ref-file-stage">
+            <TiltStage className="ref-file-stage">
               <AppWindow name={`${project.title} — live model`}>
                 <div className="ref-feature-sim">
                   <SystemSimulation
@@ -724,12 +702,12 @@ export default function ReferenceHome() {
                   />
                 </div>
               </AppWindow>
-            </div>
+            </TiltStage>
           </div>
         </section>
 
         <section id="index" className="ref-project-index ref-section">
-          <div className="ref-section-heading">
+          <Reveal variant="depth" className="ref-section-heading">
             <div>
               <div className="ref-kicker">06 / THE REST OF THE RECORD</div>
               <h2>
@@ -743,7 +721,7 @@ export default function ReferenceHome() {
               grouped by what they were for, so the progression from infrastructure to organizational control
               to AI is readable at a glance rather than buried in a wall of cards.
             </p>
-          </div>
+          </Reveal>
 
           <div className="ref-index-toolbar">
             <div className="ref-filter-list" role="group" aria-label="Filter by domain">
@@ -779,8 +757,13 @@ export default function ReferenceHome() {
                     <i>{rows.length}</i>
                   </h3>
                   <ul>
-                    {rows.map((item) => (
-                      <li key={item.number} className={`ref-record-row ref-card-${item.accent}`}>
+                    {rows.map((item, index) => (
+                      <Reveal
+                        as="li"
+                        key={item.number}
+                        delay={Math.min(index, 6) * 55}
+                        className={`ref-record-row ref-card-${item.accent}`}
+                      >
                         <span className="ref-record-num">{item.number}</span>
                         <span className="ref-record-body">
                           <b>{item.title}</b>
@@ -800,7 +783,7 @@ export default function ReferenceHome() {
                             ) : null}
                           </span>
                         </span>
-                      </li>
+                      </Reveal>
                     ))}
                   </ul>
                 </section>
@@ -816,7 +799,7 @@ export default function ReferenceHome() {
         </section>
 
         <section id="experience" className="ref-experience ref-section">
-          <div className="ref-section-heading">
+          <Reveal variant="depth" className="ref-section-heading">
             <div>
               <div className="ref-kicker">07 / THE PROGRESSION</div>
               <h2>
@@ -829,10 +812,15 @@ export default function ReferenceHome() {
               Each chapter added a layer: evidence, computation, coordination, automation, intelligence — and the
               need to make the whole loop understandable to someone else.
             </p>
-          </div>
+          </Reveal>
           <div className="ref-timeline">
-            {experiences.map((item) => (
-              <article key={item.number} className={`ref-timeline-item ref-timeline-${item.accent}`}>
+            {experiences.map((item, index) => (
+              <Reveal
+                as="article"
+                key={item.number}
+                delay={index * 120}
+                className={`ref-timeline-item ref-timeline-${item.accent}`}
+              >
                 <div className="ref-timeline-mark">
                   <span>{item.number}</span>
                   <i />
@@ -843,7 +831,7 @@ export default function ReferenceHome() {
                   <p>{item.body}</p>
                 </div>
                 <ArrowUpRight size={16} aria-hidden="true" />
-              </article>
+              </Reveal>
             ))}
           </div>
         </section>
@@ -853,7 +841,7 @@ export default function ReferenceHome() {
             <div className="ref-kicker ref-kicker-light">08 / HOW I PRESENT WORK</div>
             <span>NO TESTIMONIALS / EVIDENCE FIRST</span>
           </div>
-          <div className="ref-proof-grid">
+          <Reveal variant="depth" className="ref-proof-grid">
             <h2>
               Labelled honestly.
               <br />
@@ -873,12 +861,12 @@ export default function ReferenceHome() {
                 <span>AI</span>
               </div>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         <section id="contact" className="ref-contact ref-section">
           <div className="ref-kicker">09 / CONTACT</div>
-          <div className="ref-contact-grid">
+          <Reveal variant="depth" className="ref-contact-grid">
             <div>
               <h2>
                 Have a complex
@@ -927,7 +915,7 @@ export default function ReferenceHome() {
                 {copied ? "Email address copied to clipboard" : ""}
               </span>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
 
