@@ -6,6 +6,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import CollectiveGradingDemo from "./pages/CollectiveGradingDemo";
 import CollectiveAdminDemo from "./pages/CollectiveAdminDemo";
 import SignIn from "./pages/SignIn";
+import NotFound from "./pages/NotFound";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -15,7 +16,9 @@ function Router() {
       <Route path={"/"} component={CollectiveGradingDemo} />
       <Route path={"/rubric"} component={CollectiveGradingDemo} />
       <Route path={"/grading-admin"} component={CollectiveAdminDemo} />
-      <Route component={CollectiveGradingDemo} />
+      {/* A bad URL previously rendered the grading demo, so a mistyped or
+          truncated link silently looked like a working page. */}
+      <Route component={NotFound} />
     </Switch>
   );
 }

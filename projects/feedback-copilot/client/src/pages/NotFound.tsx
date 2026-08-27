@@ -1,52 +1,50 @@
+/*
+ * 404.
+ *
+ * Previously unrouted: the catch-all rendered the grading demo, so a mistyped
+ * or truncated link silently looked like a working page. Now it is the
+ * fallback, and it names the real routes rather than offering a bare "home".
+ */
+import { AlertCircle, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Home } from "lucide-react";
-import { useLocation } from "wouter";
+
+const ROUTES = [
+  { href: "/", label: "Grading workspace" },
+  { href: "/grading-admin", label: "Coordinator review" },
+  { href: "/sign-in", label: "Sign in" },
+];
 
 export default function NotFound() {
-  const [, setLocation] = useLocation();
-
-  const handleGoHome = () => {
-    setLocation("/");
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-100 rounded-full animate-pulse" />
-              <AlertCircle className="relative h-16 w-16 text-red-500" />
-            </div>
-          </div>
+    <main className="flex min-h-screen w-full items-center justify-center bg-background p-8">
+      <div className="w-full max-w-md">
+        <AlertCircle className="mb-5 h-10 w-10 text-destructive" aria-hidden="true" />
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">Page not found</h1>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          That address does not match any page in this workspace. If you followed a link, it may have been
+          cut short.
+        </p>
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
-
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            Page Not Found
-          </h2>
-
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            Sorry, the page you are looking for doesn't exist.
-            <br />
-            It may have been moved or deleted.
-          </p>
-
-          <div
-            id="not-found-button-group"
-            className="flex flex-col sm:flex-row gap-3 justify-center"
-          >
-            <Button
-              onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
+        <nav aria-label="Available pages" className="mt-6 flex flex-col gap-2">
+          {ROUTES.map((route) => (
+            <Link
+              key={route.href}
+              href={route.href}
+              className="text-sm text-foreground underline underline-offset-4 hover:no-underline"
             >
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+              {route.label}
+            </Link>
+          ))}
+        </nav>
+
+        <Button asChild className="mt-7">
+          <Link href="/">
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+            Back to the workspace
+          </Link>
+        </Button>
+      </div>
+    </main>
   );
 }
