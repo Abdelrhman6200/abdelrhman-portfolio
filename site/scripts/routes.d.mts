@@ -21,6 +21,8 @@ export type Route = {
   description: string;
   /** Sitemap priority, "0.0" to "1.0". */
   priority: string;
+  /** Social card, site-root-relative. Every route has one. */
+  image: string;
   /** Absent on the home page, which is covered by the shell's Person block. */
   schema?: RouteSchema;
 };

@@ -44,12 +44,14 @@ export function routes() {
       title: "Abdelrhman Shoman — Systems Builder",
       description: HOME_DESCRIPTION,
       priority: "1.0",
+      image: "/og.png",
     },
     ...systems.map((system) => ({
       path: `/system/${slugFor(system.title)}`,
       title: `${system.title} — case file — Abdelrhman Shoman`,
       description: system.summary,
       priority: "0.8",
+      image: `/og/system-${slugFor(system.title)}.png`,
       // A case file is about a piece of software, so say so in the markup a
       // crawler reads rather than leaving it to infer from prose.
       schema: {
@@ -66,6 +68,7 @@ export function routes() {
       description:
         "Abdelrhman Shoman — systems builder. Shipped applications, operational systems and the record behind them, each labelled by evidence tier.",
       priority: "0.9",
+      image: "/og/cv.png",
       schema: { "@type": "ProfilePage", name: "Curriculum vitae — Abdelrhman Shoman" },
     },
     ...demos.map((demo) => ({
@@ -73,6 +76,7 @@ export function routes() {
       title: `${demo.title} — live demo — Abdelrhman Shoman`,
       description: `Live in-browser demo of ${demo.title}: the system's core logic re-implemented client-side, on synthetic data, driven by you.`,
       priority: "0.7",
+      image: `/og/demo-${demo.slug}.png`,
       schema: {
         "@type": "WebApplication",
         name: `${demo.title} — live demo`,

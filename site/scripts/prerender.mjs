@@ -50,7 +50,9 @@ function shellFor(route) {
     .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`)
     .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${title}$2`)
     .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${description}$2`)
-    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`);
+    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(<meta property="og:image" content=")[^"]*(")/, `$1${origin}${route.image}$2`)
+    .replace(/(<meta name="twitter:image" content=")[^"]*(")/, `$1${origin}${route.image}$2`);
 }
 
 let written = 0;

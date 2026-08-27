@@ -9,6 +9,8 @@
  * weeks later. Asserting against the real content modules means a system or
  * demo added to the site must appear here or the suite fails.
  */
+import { existsSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { origin, routes } from "../../scripts/routes.mjs";
 import { builtSystems } from "@/content/portfolio";
@@ -59,6 +61,24 @@ describe("route list", () => {
     expect(typeFor("/cv")).toBe("ProfilePage");
     // The home page is the Person, which the shell already carries.
     expect(typeFor("/")).toBeUndefined();
+  });
+
+  it("gives every route its own social card, and one that exists on disk", () => {
+    // All twelve routes shared a single og.png until these were generated, so
+    // a shared case-file link and a shared demo link previewed identically.
+    // The PNGs are committed — sharp is optional and the build never runs the
+    // generator — so a missing file here is a card that 404s in every
+    // unfurler, with nothing at build time to catch it.
+    const images = all.map((route) => route.image);
+    expect(new Set(images).size).toBe(all.length);
+
+    for (const route of all) {
+      expect(route.image.startsWith("/"), route.path).toBe(true);
+      const file = join(process.cwd(), "client", "public", route.image);
+      expect(existsSync(file), `no card for ${route.path}: ${route.image}`).toBe(true);
+      // A zero-byte or truncated PNG unfurls as a broken image.
+      expect(statSync(file).size, route.image).toBeGreaterThan(10_000);
+    }
   });
 
   it("produces an origin with no trailing slash, so paths concatenate cleanly", () => {
