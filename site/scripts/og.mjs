@@ -9,8 +9,17 @@ import sharp from "sharp";
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { LOGO_PATH, LOGO_STROKE, LOGO_TERMINAL } from "./logo.mjs";
 
 const out = join(dirname(fileURLToPath(import.meta.url)), "..", "client", "public", "og.png");
+
+/** The mark, placed on a card. One geometry, stated once, used everywhere. */
+const brandMark = (x, y, scale, ink, accent) => `
+  <g transform="translate(${x},${y}) scale(${scale})">
+    <path d="${LOGO_PATH}" fill="none" stroke="${ink}" stroke-width="${LOGO_STROKE}"
+          stroke-linecap="butt" stroke-linejoin="miter"/>
+    <circle cx="${LOGO_TERMINAL.cx}" cy="${LOGO_TERMINAL.cy}" r="${LOGO_TERMINAL.r}" fill="${accent}"/>
+  </g>`;
 
 const svg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
@@ -21,8 +30,7 @@ const svg = `
     <circle cx="1100" cy="90" r="210"/>
     <circle cx="1100" cy="90" r="140"/>
   </g>
-  <circle cx="1100" cy="90" r="70" fill="#1a1a1c" stroke="#3a3a3f" stroke-width="2"/>
-  <text x="1100" y="108" font-family="Arial, sans-serif" font-size="52" font-weight="800" fill="#ece9e3" text-anchor="middle" letter-spacing="-3">AS</text>
+  ${brandMark(1030, 22, 1.38, "#ece9e3", "#ff6a52")}
 
   <text x="90" y="150" font-family="Arial, sans-serif" font-size="27" font-weight="700" fill="#8d8880" letter-spacing="6">ABDELRHMAN SHOMAN — SYSTEMS BUILDER</text>
 
@@ -47,21 +55,9 @@ await sharp(Buffer.from(svg)).png().toFile(out);
 const meta = await sharp(out).metadata();
 console.log(`wrote ${out} — ${meta.width}x${meta.height}`);
 
-/* Touch icon and PNG favicon fallback — same mark, so the tab, the home screen
- * and the social card stay one identity. Older Safari and some feed readers do
- * not render an SVG favicon. */
-const mark = `
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="112" fill="#121213"/>
-  <text x="256" y="330" font-family="Arial, sans-serif" font-size="215" font-weight="800"
-        fill="#ece9e3" text-anchor="middle" letter-spacing="-12">AS</text>
-</svg>`;
-
-for (const [name, size] of [["apple-touch-icon.png", 180], ["favicon-96.png", 96]]) {
-  const file = join(dirname(fileURLToPath(import.meta.url)), "..", "client", "public", name);
-  await sharp(Buffer.from(mark)).resize(size, size).png().toFile(file);
-  console.log(`wrote ${name} — ${size}x${size}`);
-}
+/* The favicon and touch icon used to be generated here from an "AS" text
+ * mark. They are now drawn from the real logo geometry by scripts/logo.mjs,
+ * which owns every file-on-disk version of the mark — run `npm run logo`. */
 
 /* --- Per-route cards -------------------------------------------------------
  * Until now all twelve routes shared this one image, so a shared case-file
@@ -144,9 +140,7 @@ const routeCard = (name, kicker, blurb) => {
     <circle cx="1105" cy="92" r="205"/>
     <circle cx="1105" cy="92" r="136"/>
   </g>
-  <circle cx="1105" cy="92" r="68" fill="#1a1a1c" stroke="#3a3a3f" stroke-width="2"/>
-  <text x="1105" y="110" font-family="Arial, sans-serif" font-size="50" font-weight="800"
-        fill="#ece9e3" text-anchor="middle" letter-spacing="-3">AS</text>
+  ${brandMark(1035, 26, 1.32, "#ece9e3", "#ff6a52")}
 
   <text x="90" y="132" font-family="Arial, sans-serif" font-size="24" font-weight="700"
         fill="#ff6a52" letter-spacing="6">${escapeXml(kicker)}</text>

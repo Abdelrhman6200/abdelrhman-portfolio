@@ -53,6 +53,7 @@ import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
 import HeroSystem from "@/components/HeroSystem";
+import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import { openCommandPalette } from "@/components/CommandPalette";
 import Reveal from "@/components/Reveal";
@@ -362,7 +363,9 @@ export default function ReferenceHome() {
 
       <header className="reference-header">
         <a className="reference-brand" href="#top" onClick={closeMenu}>
-          <span className="reference-brand-mark">AS</span>
+          <span className="reference-brand-mark">
+            <Logo size={22} />
+          </span>
           <span>
             <strong>Abdelrhman Shoman</strong>
             <small>Systems Builder</small>

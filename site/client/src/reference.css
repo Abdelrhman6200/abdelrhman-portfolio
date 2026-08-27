@@ -110,7 +110,12 @@
 
 .reference-header { position: sticky; top: 0; z-index: 50; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem; max-width: 1280px; margin: 0 auto; padding: 1rem clamp(1rem, 4vw, 3.3rem); background: rgba(var(--ref-bg-rgb), .92); backdrop-filter: blur(18px); }
 .reference-brand { display: inline-flex; align-items: center; gap: .65rem; min-width: 0; }
-.reference-brand-mark { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; color: var(--ref-on-accent); background: var(--ref-coral); border-radius: 50%; font: 800 .7rem/1 "IBM Plex Mono", monospace; letter-spacing: -.08em; box-shadow: 5px 5px 0 var(--ref-ink); }
+.reference-brand-mark { display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px; color: var(--ref-on-accent); background: var(--ref-coral); border-radius: 50%; box-shadow: 5px 5px 0 var(--ref-ink); }
+/* The path takes the plate ink; the terminal inverts to the plate itself, so
+   the mark reads the same way on coral as it does on paper or on dark. */
+.brand-logo { display: block; }
+.brand-logo-terminal { fill: currentColor; }
+.reference-brand-mark .brand-logo-terminal { fill: var(--ref-coral); stroke: var(--ref-on-accent); stroke-width: 6; paint-order: stroke; }
 .reference-brand span:last-child { display: grid; gap: .22rem; }
 .reference-brand strong { font: 800 .72rem/1 "Space Grotesk", sans-serif; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
 .reference-brand small { color: var(--ref-muted); font: 600 .51rem/1 "IBM Plex Mono", monospace; letter-spacing: .13em; text-transform: uppercase; }
@@ -1020,11 +1025,10 @@
   50% { box-shadow: 0 0 0 22px rgba(var(--ref-coral-rgb), .02); }
 }
 
-.hero-core-mark {
-  color: var(--ref-ink);
-  font: 800 1.5rem/1 "Space Grotesk", sans-serif;
-  letter-spacing: -.06em;
-}
+/* The core carries the mark itself. It takes the page ink, and the terminal
+   takes the accent — one drawing, correct in both palettes. */
+.hero-core .brand-logo { color: var(--ref-ink); }
+.hero-core .brand-logo-terminal { fill: var(--ref-coral); }
 .hero-core-sub {
   color: var(--ref-muted);
   font: 700 .38rem/1 "IBM Plex Mono", monospace;

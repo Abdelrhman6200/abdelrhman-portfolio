@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "og": "node scripts/og.mjs",
-    "sitemap": "node scripts/sitemap.mjs"
+    "sitemap": "node scripts/sitemap.mjs",
+    "logo": "node scripts/logo.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.453.0",

@@ -5,6 +5,7 @@
 import { Suspense, lazy, useMemo } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, useRoute } from "wouter";
+import Logo from "@/components/Logo";
 import { demoBySlug } from "@/demos/registry";
 import "../reference.css";
 
@@ -13,7 +14,7 @@ export function PageLoading() {
   return (
     <div className="reference-page">
       <div className="page-loading" role="status" aria-label="Loading">
-        <span className="page-loading-mark">AS</span>
+        <span className="page-loading-mark"><Logo size={30} /></span>
         <span className="page-loading-text">LOADING…</span>
       </div>
     </div>

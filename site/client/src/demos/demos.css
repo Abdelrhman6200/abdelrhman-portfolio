@@ -774,10 +774,10 @@
 }
 .page-loading-mark {
   display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%;
-  color: var(--ref-white); background: var(--ref-coral);
-  font: 800 1rem/1 "Space Grotesk", sans-serif; letter-spacing: -.06em;
+  color: var(--ref-on-accent); background: var(--ref-coral);
   animation: page-loading-pulse 1.1s ease-in-out infinite;
 }
+.page-loading-mark .brand-logo-terminal { fill: var(--ref-coral); stroke: var(--ref-on-accent); stroke-width: 6; paint-order: stroke; }
 .page-loading-text { color: var(--ref-muted); font: 700 .5rem/1 "IBM Plex Mono", monospace; letter-spacing: .14em; }
 @keyframes page-loading-pulse { 50% { transform: scale(.88); opacity: .75; } }
 @media (prefers-reduced-motion: reduce) { .page-loading-mark { animation: none; } }

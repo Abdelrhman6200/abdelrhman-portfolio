@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#161616"/>
-  <text x="32" y="43" font-family="'Space Grotesk',ui-sans-serif,system-ui,sans-serif" font-size="27"
-        font-weight="700" letter-spacing="-2" fill="#f1efeb" text-anchor="middle">AS</text>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" rx="18" fill="#121213"/>
+  <g transform="translate(6,6) scale(0.88)">
+    <path d="M72 26 L34 26 L34 50 L66 50 L66 74 L28 74 M28 74 L28 62" fill="none" stroke="#fffdf9" stroke-width="10"
+          stroke-linecap="butt" stroke-linejoin="miter"/>
+    <circle cx="72" cy="26" r="10" fill="#ff6a52"/>
+  </g>
 </svg>

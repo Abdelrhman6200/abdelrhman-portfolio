@@ -105,7 +105,7 @@ claim cannot quietly become false.
 
 | Project | Tests |
 | --- | --- |
-| `site` | 206 |
+| `site` | 215 |
 | `projects/feedback-copilot` | 55 |
 | `projects/edtech-ops-intelligence-os` | 69 |
 | `projects/community-success-os` | 58 |

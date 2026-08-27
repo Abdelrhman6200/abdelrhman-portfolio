@@ -23,6 +23,7 @@
  * that still, so stopping the animation is all it takes.
  */
 import type { CSSProperties } from "react";
+import Logo from "@/components/Logo";
 import { methodStages } from "@/content/portfolio";
 
 /** Degrees between neighbouring stages on the orbit. */
@@ -67,7 +68,7 @@ export default function HeroSystem() {
 
           {/* Inside the 3D context, so satellites genuinely pass behind it. */}
           <div className="hero-core">
-            <span className="hero-core-mark">AS</span>
+            <Logo size={34} />
             <span className="hero-core-sub">THE LOOP</span>
           </div>
         </div>
