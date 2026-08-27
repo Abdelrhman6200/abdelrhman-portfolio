@@ -53,7 +53,7 @@ export default function Workspace() {
 
   if (loading || !user) {
     return (
-      <main className="grid min-h-screen place-items-center bg-background text-muted-foreground">
+      <main id="main" className="grid min-h-screen place-items-center bg-background text-muted-foreground">
         Opening the workspace…
       </main>
     );
@@ -62,7 +62,7 @@ export default function Workspace() {
   const entry = history.data?.find((item) => item.id === entryId) ?? null;
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main" className="min-h-screen bg-background text-foreground">
       <header className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
         <h1 className="text-lg font-semibold tracking-tight">Feedback workspace</h1>
         <nav className="flex items-center gap-4 text-sm text-muted-foreground" aria-label="Workspace">

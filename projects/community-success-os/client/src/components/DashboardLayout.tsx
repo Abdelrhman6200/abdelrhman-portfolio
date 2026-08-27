@@ -203,7 +203,7 @@ export default function DashboardLayout({
             </button>
           </div>
         </header>
-        <main className="workspace-shell">{children}</main>
+        <main id="main" className="workspace-shell">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

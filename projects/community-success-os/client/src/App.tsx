@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import DashboardLayout from "@/components/DashboardLayout";
 import ErrorBoundary from "./components/ErrorBoundary";
+import SkipLink from "@/components/SkipLink";
 import SignIn from "./pages/SignIn";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -104,7 +105,7 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
-        <TooltipProvider>
+        <TooltipProvider><SkipLink />
           <Toaster position="bottom-right" richColors />
           <Router />
         </TooltipProvider>

@@ -282,14 +282,14 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "coral",
     stats: [
-      { value: "65", label: "automated tests" },
+      { value: "69", label: "automated tests" },
       { value: "4", label: "authorization roles" },
       { value: "append-only", label: "audit trail" },
     ],
     verifiable: [
       "Four authorization roles — analyst, coordinator, manager, administrator — enforced at the application boundary",
       "Immutable audit events recorded for create, update, delete, approval, export and status transitions",
-      "65 automated tests covering authorization, SOP version publication, KPI calculation, session-conflict detection, auth hardening, and the operations console rendering without the desktop bridge",
+      "69 automated tests covering authorization, SOP version publication, KPI calculation, session-conflict detection, auth hardening, and the operations console rendering without the desktop bridge",
       "Login rate-limited per identity; sessions are httpOnly, SameSite-Lax signed JWTs",
       "Ships as a packaged Windows desktop application via an Electron shell",
     ],
@@ -308,7 +308,7 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "orange",
     stats: [
-      { value: "51", label: "automated tests" },
+      { value: "55", label: "automated tests" },
       { value: "2", label: "enforced roles" },
       { value: "3-state", label: "approval machine" },
     ],
@@ -316,7 +316,7 @@ export const builtSystems: Project[] = [
       "Every status transition persisted as an append-only event with its actor, and rendered as a timeline in the workspace — nothing updates or deletes log rows",
       "Explicit status machine — draft to pending review to approved, with return-to-draft",
       "Teacher and coordinator roles enforced server-side, not only hidden in the UI",
-      "51 automated tests across the approval machine, role boundaries, auth hardening and the transition log",
+      "55 automated tests across the approval machine, role boundaries, auth hardening and the transition log",
       "Streaming generation failures surface to the teacher rather than silently falling back to fabricated output",
     ],
   },
@@ -334,7 +334,7 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "yellow",
     stats: [
-      { value: "54", label: "automated tests" },
+      { value: "58", label: "automated tests" },
       { value: "4", label: "persisted workflows" },
       { value: "evidence-first", label: "AI assistance" },
     ],

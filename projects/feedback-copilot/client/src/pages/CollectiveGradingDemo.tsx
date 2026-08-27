@@ -171,7 +171,7 @@ export default function CollectiveGradingDemo() {
           </Link>
         </div>
       </header>
-      <main className="mx-auto max-w-[1380px] px-5 py-7 md:px-8">
+      <main id="main" className="mx-auto max-w-[1380px] px-5 py-7 md:px-8">
         <div className="mb-6">
           <p className="section-label">Teacher subgroup grading</p>
           <h1 className="mt-2 font-display text-[35px] tracking-[-.03em]">

@@ -18,7 +18,7 @@ const ROUTES = [
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen w-full items-center justify-center bg-background p-8">
+    <main id="main" className="flex min-h-screen w-full items-center justify-center bg-background p-8">
       <div className="w-full max-w-md">
         <AlertCircle className="mb-5 h-10 w-10 text-destructive" aria-hidden="true" />
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">Page not found</h1>

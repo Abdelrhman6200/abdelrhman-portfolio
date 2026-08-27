@@ -2256,7 +2256,7 @@ export default function OperationsConsole() {
             </button>
           </div>
         </aside>
-        <main className="min-w-0 flex-1">
+        <main id="main" className="min-w-0 flex-1">
           <header className="sticky top-0 z-20 flex h-[70px] items-center justify-between border-b border-slate-800 bg-[#0a1020]/80 px-5 backdrop-blur-xl lg:px-8">
             <div className="flex min-w-0 items-center gap-3">
               <div className="grid h-9 w-9 place-items-center rounded-lg border border-slate-800 bg-[#111b2e] lg:hidden">

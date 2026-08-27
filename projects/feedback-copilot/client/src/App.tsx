@@ -1,7 +1,6 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import SkipLink from "./components/SkipLink";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import CollectiveGradingDemo from "./pages/CollectiveGradingDemo";
 import CollectiveAdminDemo from "./pages/CollectiveAdminDemo";
@@ -37,10 +36,8 @@ function App() {
         defaultTheme="light"
         // switchable
       >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
+        <SkipLink />
+        <Router />
       </ThemeProvider>
     </ErrorBoundary>
   );

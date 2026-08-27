@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import SkipLink from "./components/SkipLink";
 import OperationsConsole from "./components/OperationsConsole";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import SignIn from "./pages/SignIn";
@@ -23,6 +24,7 @@ function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
+          <SkipLink />
           <Router />
         </TooltipProvider>
       </ThemeProvider>

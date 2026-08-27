@@ -98,7 +98,7 @@ export default function CollectiveAdminDemo() {
           </Link>
         </div>
       </header>
-      <main className="mx-auto max-w-[1380px] px-5 py-7 md:px-8">
+      <main id="main" className="mx-auto max-w-[1380px] px-5 py-7 md:px-8">
         <p className="section-label">No-sign-in administrator demo</p>
         <h1 className="mt-2 font-display text-[35px] tracking-[-.03em]">
           Searchable subgroup outcomes
