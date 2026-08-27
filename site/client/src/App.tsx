@@ -3,6 +3,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import RouteAnnouncer from "./components/RouteAnnouncer";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ReferenceHome from "@/pages/ReferenceHome";
 
@@ -24,6 +25,7 @@ const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 function Router() {
   return (
     <WouterRouter base={routerBase}>
+      <RouteAnnouncer />
       <Switch>
         <Route path={"/"} component={ReferenceHome} />
         <Route path={"/system/:slug"}>

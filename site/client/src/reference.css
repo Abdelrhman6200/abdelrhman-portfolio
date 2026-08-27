@@ -744,3 +744,10 @@
   .ref-feature { border-radius: 22px; }
   .ref-feature-stats { gap: 1rem 1.6rem; }
 }
+
+/* Error boundary */
+.eb-shell { display: grid; gap: 1.3rem; align-content: center; min-height: 76vh; max-width: 780px; }
+.eb-shell h1 { font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: .92; font-weight: 800; }
+.eb-shell .ref-kicker { display: inline-flex; align-items: center; gap: .4rem; }
+.eb-copy { max-width: 56ch; color: var(--ref-muted); font-size: .92rem; line-height: 1.65; }
+.eb-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }

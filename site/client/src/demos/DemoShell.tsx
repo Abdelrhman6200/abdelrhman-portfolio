@@ -10,6 +10,7 @@ import { ArrowLeft, ArrowUpRight, FlaskConical } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import ThemeToggle from "@/components/ThemeToggle";
 import { demos } from "./registry";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
 import "./demos.css";
 
@@ -35,6 +36,7 @@ export default function DemoShell({
   children: ReactNode;
 }) {
   const nextDemo = useNextDemo();
+  useDocumentMeta({ title: `${title} — live demo`, description: lede });
   return (
     <div className="reference-page demo-root">
       <a className="skip-link" href="#demo-main">

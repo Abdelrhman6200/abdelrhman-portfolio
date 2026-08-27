@@ -118,9 +118,9 @@ export default function AgentDemo() {
                 <span className="ag-answer-label">
                   {result.confidence === "strong" ? "PROCEDURE FOUND" : "CLOSEST PROCEDURE — LOW CONFIDENCE"}
                 </span>
-                <h3>
+                <h2>
                   {top.sop.id} — {top.sop.title}
-                </h3>
+                </h2>
                 <blockquote>
                   <Highlighted text={top.snippet} matched={top.matched} />
                 </blockquote>
@@ -152,7 +152,7 @@ export default function AgentDemo() {
                     close
                   </button>
                 </header>
-                <h4>{reading.title}</h4>
+                <h3>{reading.title}</h3>
                 <p>
                   <Highlighted text={reading.body} matched={top?.matched ?? []} />
                 </p>

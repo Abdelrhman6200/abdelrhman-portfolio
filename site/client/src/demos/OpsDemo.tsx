@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Activity, Pause, Play, Search, StepForward } from "lucide-react";
 import DemoShell from "./DemoShell";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import AppWindow from "./AppWindow";
 import {
   resolve,
@@ -31,19 +32,13 @@ const NEXT_READING: Record<string, (latest: number, week: number) => number> = {
 
 const statusText = { "on-target": "ON TARGET", watch: "WATCH", breach: "BREACH" } as const;
 
-function prefersReducedMotion() {
-  return (
-    typeof window !== "undefined" &&
-    Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)
-  );
-}
-
 export default function OpsDemo() {
   const [state, setState] = useState<OpsState>(() => sweep(seedOps));
   const [week, setWeek] = useState(6);
   const [auto, setAuto] = useState(false);
   const [rootCause, setRootCause] = useState("");
   const [resolveError, setResolveError] = useState<string | null>(null);
+  const reducedMotion = useReducedMotion();
   const weekRef = useRef(week);
   weekRef.current = week;
 
@@ -62,11 +57,11 @@ export default function OpsDemo() {
 
   // AUTO: one week every 2s. Never starts on its own under reduced motion.
   useEffect(() => {
-    if (!auto) return;
+    if (!auto || reducedMotion) return;
     const timer = window.setInterval(advanceWeek, 2000);
     return () => window.clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auto]);
+  }, [auto, reducedMotion]);
 
   const investigating = state.anomalies.find((anomaly) => anomaly.status === "investigating");
   const open = state.anomalies.filter((anomaly) => anomaly.status === "open");
@@ -246,7 +241,7 @@ export default function OpsDemo() {
         </div>
       </AppWindow>
 
-      {prefersReducedMotion() && (
+      {reducedMotion && (
         <p className="demo-hint">Reduced motion is on, so the clock only moves when you press STEP.</p>
       )}
     </DemoShell>

@@ -14,6 +14,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { builtSystems, evidenceLabels } from "@/content/portfolio";
 import { simulationFor } from "@/content/simulations";
 import { demoPathFor } from "@/demos/registry";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
 
 // Re-exported for existing imports; the implementation lives in content/slugs.
@@ -25,16 +26,26 @@ export default function SystemCaseFile() {
   const project = builtSystems.find((item) => slugFor(item.title) === params?.slug);
   const [activeStage, setActiveStage] = useState(0);
 
+  useDocumentMeta({
+    title: project ? `${project.title} — case file` : "Case file not found",
+    description:
+      project?.summary ??
+      "That case file does not exist. Browse the built software on the portfolio instead.",
+  });
+
   if (!project) {
     return (
       <div className="reference-page">
-        <section className="ref-section case-missing">
-          <div className="ref-kicker">404 / NO SUCH SYSTEM</div>
-          <h1>That case file does not exist.</h1>
-          <Link className="ref-text-link" href="/#work">
-            <ArrowLeft size={15} aria-hidden="true" /> Back to the work
-          </Link>
-        </section>
+      <a className="skip-link" href="#case-main">
+        Skip to content
+      </a>
+      <main id="case-main" className="ref-section case-missing">
+        <div className="ref-kicker">404 / NO SUCH SYSTEM</div>
+        <h1>That case file does not exist.</h1>
+        <Link className="ref-text-link" href="/#work">
+          <ArrowLeft size={15} aria-hidden="true" /> Back to the work
+        </Link>
+      </main>
       </div>
     );
   }

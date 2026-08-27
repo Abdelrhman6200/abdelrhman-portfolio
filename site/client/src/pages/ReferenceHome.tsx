@@ -50,6 +50,7 @@ import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
 import { slugFor } from "@/content/slugs";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
 
 const navItems = [
@@ -299,6 +300,11 @@ function BuiltSystemFeature({ project, flipped }: { project: Project; flipped: b
 }
 
 export default function ReferenceHome() {
+  useDocumentMeta({
+    title: "",
+    description:
+      "I build the systems behind complex work — operations, automation, AI, data and computational workflows. Different problems. Same approach.",
+  });
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState<ServiceKey>("operations");
   const [activeProject, setActiveProject] = useState(0);

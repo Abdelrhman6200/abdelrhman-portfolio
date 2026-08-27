@@ -30,13 +30,16 @@ export default function DemoPage() {
   if (!entry || !Demo) {
     return (
       <div className="reference-page">
-        <section className="ref-section case-missing">
-          <div className="ref-kicker">404 / NO SUCH DEMO</div>
-          <h1>That demo does not exist.</h1>
-          <Link className="ref-text-link" href="/#work">
-            <ArrowLeft size={15} aria-hidden="true" /> Back to the work
-          </Link>
-        </section>
+      <a className="skip-link" href="#demo-main">
+        Skip to content
+      </a>
+      <main id="demo-main" className="ref-section case-missing">
+        <div className="ref-kicker">404 / NO SUCH DEMO</div>
+        <h1>That demo does not exist.</h1>
+        <Link className="ref-text-link" href="/#work">
+          <ArrowLeft size={15} aria-hidden="true" /> Back to the work
+        </Link>
+      </main>
       </div>
     );
   }

@@ -8,10 +8,15 @@
 import { ArrowLeft, ArrowUpRight, Compass } from "lucide-react";
 import { Link } from "wouter";
 import { demos } from "@/demos/registry";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
 import "../demos/demos.css";
 
 export default function NotFound() {
+  useDocumentMeta({
+    title: "Page not found",
+    description: "That path leads nowhere. The work, the method and every live demo are one hop away.",
+  });
   return (
     <div className="reference-page">
       <main className="ref-section nf-shell">

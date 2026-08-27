@@ -6,7 +6,7 @@
  * useful — a working contact route, evidence labelling, and the method section.
  */
 import { afterEach, describe, expect, it, beforeAll } from "vitest";
-import { cleanup, render, screen, within } from "@/testUtils";
+import { cleanup, fireEvent, render, screen, within } from "@/testUtils";
 import ReferenceHome from "./ReferenceHome";
 import { allProjects, builtSystems, contact, methodStages } from "@/content/portfolio";
 import { demos } from "@/demos/registry";
@@ -137,5 +137,80 @@ describe("built software section", () => {
     const strip = container.querySelector(".ref-demo-strip");
     expect(strip).not.toBeNull();
     expect(strip!.querySelectorAll("a")).toHaveLength(demos.length);
+  });
+});
+
+describe("per-route document metadata", () => {
+  it("sets a distinct title and a self-referential canonical", async () => {
+    // The shell ships a single static title and a root canonical; before this
+    // hook every deep route declared itself a duplicate of the home page.
+    document.head.innerHTML =
+      '<meta name="description" content=""><meta property="og:url" content="/"><link rel="canonical" href="/">';
+
+    const { default: SystemCaseFile } = await import("./SystemCaseFile");
+    const { Router } = await import("wouter");
+    const { memoryLocation } = await import("wouter/memory-location");
+    const { slugFor } = await import("@/content/slugs");
+    const project = builtSystems[0];
+    const path = `/system/${slugFor(project.title)}`;
+
+    const { hook } = memoryLocation({ path });
+    render(
+      <Router hook={hook}>
+        <SystemCaseFile />
+      </Router>
+    );
+
+    expect(document.title).toContain(project.title);
+    expect(document.title).not.toBe("Abdelrhman Shoman — Systems Builder");
+    expect(document.head.querySelector('link[rel="canonical"]')?.getAttribute("href")).toContain(path);
+    expect(document.head.querySelector('meta[property="og:url"]')?.getAttribute("content")).toContain(path);
+  });
+});
+
+describe("method tablist keyboard navigation", () => {
+  // The README claims the WAI-ARIA tabs pattern with arrow/Home/End keys.
+  // That claim had no test until now.
+  const tabs = () =>
+    within(screen.getByRole("tablist", { name: /method stages/i })).getAllByRole("tab");
+  const selected = () => tabs().findIndex((tab) => tab.getAttribute("aria-selected") === "true");
+
+  it("moves selection with ArrowRight and ArrowLeft", () => {
+    render(<ReferenceHome />);
+    expect(selected()).toBe(0);
+
+    fireEvent.keyDown(tabs()[0], { key: "ArrowRight" });
+    expect(selected()).toBe(1);
+
+    fireEvent.keyDown(tabs()[1], { key: "ArrowLeft" });
+    expect(selected()).toBe(0);
+  });
+
+  it("wraps at both ends", () => {
+    render(<ReferenceHome />);
+    const last = tabs().length - 1;
+
+    fireEvent.keyDown(tabs()[0], { key: "ArrowLeft" });
+    expect(selected()).toBe(last);
+
+    fireEvent.keyDown(tabs()[last], { key: "ArrowRight" });
+    expect(selected()).toBe(0);
+  });
+
+  it("jumps to first and last with Home and End", () => {
+    render(<ReferenceHome />);
+    fireEvent.keyDown(tabs()[0], { key: "End" });
+    expect(selected()).toBe(tabs().length - 1);
+
+    fireEvent.keyDown(tabs()[tabs().length - 1], { key: "Home" });
+    expect(selected()).toBe(0);
+  });
+
+  it("keeps a roving tabindex — exactly one tab is reachable by Tab", () => {
+    const { container } = render(<ReferenceHome />);
+    const reachable = tabs().filter((tab) => tab.getAttribute("tabindex") === "0");
+    expect(reachable).toHaveLength(1);
+    expect(reachable[0].getAttribute("aria-selected")).toBe("true");
+    expect(container).toBeDefined();
   });
 });

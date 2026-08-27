@@ -14,6 +14,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, CircleUserRound, CornerDownLeft, Send, Sparkles } from "lucide-react";
 import DemoShell from "./DemoShell";
 import AppWindow from "./AppWindow";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   canSubmit,
   initialFeedback,
@@ -76,10 +77,8 @@ function useReveal() {
   const [progress, setProgress] = useState<number | null>(null); // chars revealed
   const timer = useRef<number | null>(null);
 
-  const instant =
-    import.meta.env.MODE === "test" ||
-    (typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
+  const reduced = useReducedMotion();
+  const instant = import.meta.env.MODE === "test" || reduced;
 
   const start = (totalChars: number) => {
     if (instant) return;

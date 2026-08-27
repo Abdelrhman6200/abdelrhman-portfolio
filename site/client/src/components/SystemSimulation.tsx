@@ -19,6 +19,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type SimulationStage = {
   /** Short stage name, shown under the rail. */
@@ -45,16 +46,12 @@ type Token = { id: number; stage: number };
 /** Tokens in flight at once. Enough to read as a flow, few enough to stay calm. */
 const MAX_TOKENS = 4;
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
 export default function SystemSimulation({ spec, label }: { spec: SimulationSpec; label: string }) {
   const { stages, tickMs = 1100, startCount = 0, accent = "coral" } = spec;
   const lastStage = stages.length - 1;
 
-  const reduced = useMemo(prefersReducedMotion, []);
+  // Live, not frozen: turning the OS setting on mid-session stops the clock.
+  const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
   const [completed, setCompleted] = useState(startCount);

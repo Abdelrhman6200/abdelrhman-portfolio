@@ -243,7 +243,8 @@ export default function SuccessDemo() {
                   ))}
                 </ol>
                 <p className="demo-hint">
-                  In the real product, recorded outcomes feed back into which signals count as risk.
+                  The shipped app persists each outcome against its intervention, so the record of what was tried
+                  — and whether it worked — stays attached to the student.
                 </p>
               </div>
             )}
