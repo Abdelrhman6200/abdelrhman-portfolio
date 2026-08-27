@@ -1,9 +1,13 @@
 /*
- * The site claims four security modules are byte-identical across all three
- * applications. That is the strongest claim on the page — it is checkable with
- * a checksum — so it must not be allowed to quietly become false.
+ * Four security modules are byte-identical across all three applications.
  *
- * If someone edits one app's auth core without the others, this fails.
+ * The site used to say so on the home page. That panel is gone — file names
+ * and line counts are trivia to the people the site is written for — but the
+ * property is still worth enforcing: patching auth in one app and forgetting
+ * the other two is a real bug, and a silent one.
+ *
+ * So this is now a drift guard rather than evidence for a claim. If someone
+ * edits one app's auth core without the others, it fails.
  */
 import { describe, expect, it } from "vitest";
 import { createHash } from "node:crypto";

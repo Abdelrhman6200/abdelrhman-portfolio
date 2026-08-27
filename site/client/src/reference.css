@@ -737,26 +737,6 @@
 .eb-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
 
 /* Shared application core — the same-approach claim, in code. */
-.ref-shared-core {
-  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(230px, .7fr);
-  gap: clamp(1.2rem, 3vw, 2.4rem); align-items: center;
-  margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
-  padding: clamp(1.2rem, 2.5vw, 1.8rem);
-  border: 1px dashed var(--ref-line); border-radius: 24px;
-}
-.ref-shared-core-copy p {
-  margin-top: .7rem; max-width: 62ch;
-  color: var(--ref-muted); font-size: .86rem; line-height: 1.65;
-}
-.ref-shared-core-copy strong { color: var(--ref-ink); }
-.ref-shared-core-files { display: grid; gap: .35rem; margin: 0; padding: 0; list-style: none; }
-.ref-shared-core-files li {
-  padding: .45rem .65rem; border-radius: 8px;
-  background: rgba(var(--ref-ink-rgb), .05);
-  font: 700 .6rem/1 "IBM Plex Mono", monospace; letter-spacing: .02em;
-}
-.ref-shared-core-files span { color: var(--ref-muted); font-weight: 500; }
-@media (max-width: 940px) { .ref-shared-core { grid-template-columns: minmax(0, 1fr); } }
 
 /* ===========================================================================
  * Case files — one compact picker, one focused panel.

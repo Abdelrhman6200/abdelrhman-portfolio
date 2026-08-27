@@ -23,7 +23,6 @@ import {
   methodStages,
   projectArchive,
   services,
-  sharedCore,
 } from "@/content/portfolio";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
@@ -94,8 +93,7 @@ export default function Curriculum() {
         <section className="cv-section">
           <h2>Shipped applications</h2>
           <p className="cv-section-note">
-            {evidenceLabels.code.note} All three share one authentication core — {sharedCore.files.length}{" "}
-            files, {sharedCore.lines} lines in <code>{sharedCore.path}</code>, written once and reused.
+            {evidenceLabels.code.note}
           </p>
           {builtSystems.map((project) => (
             <article key={project.number} className="cv-entry">

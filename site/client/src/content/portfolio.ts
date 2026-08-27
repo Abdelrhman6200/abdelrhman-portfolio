@@ -583,13 +583,22 @@ export const projectArchive: Project[] = [
  * thesis demonstrated in code rather than in operations anecdotes, and unlike
  * most claims here a reader can check it with a checksum.
  */
+/*
+ * The authentication core the three applications share.
+ *
+ * This used to be rendered on the home page and in the CV — file names, a
+ * line count, "byte-identical" — which is implementation trivia to everyone
+ * the site is written for, so the panel was removed.
+ *
+ * It stays here because sharedCore.test.ts still checksums these files across
+ * all three apps on every run. That is no longer a claim being backed up; it
+ * is a drift guard. Someone patching auth in one app and not the others is a
+ * real bug, and this is what catches it.
+ */
 export const sharedCore = {
   files: ["password.ts", "session.ts", "rateLimit.ts", "cookies.ts"],
   lines: 288,
   appCount: 3,
-  path: "server/_core/",
-  claim:
-    "scrypt password hashing, stateless session JWTs, a sliding-window rate limiter and the cookie policy — 288 lines, byte-identical in all three applications.",
 } as const;
 
 export const allProjects: Project[] = [...builtSystems, ...featuredProjects, ...projectArchive];
