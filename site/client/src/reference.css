@@ -39,6 +39,7 @@
   --ref-dark-deep: #171717;
   --ref-white: #fffdf9;
   --ref-coral: #f54b32;
+  --ref-coral-rgb: 245, 75, 50;
   /* Deeper coral for small text: the brand coral is 3.08:1 on paper, under AA. */
   --ref-coral-ink: #d1270e;
   --ref-orange: #ff7f3f;
@@ -85,6 +86,7 @@
   --ref-white: #1a1a1c;
   /* Warmed slightly so the accents do not vibrate against a dark ground. */
   --ref-coral: #ff6a52;
+  --ref-coral-rgb: 255, 106, 82;
   /* On a dark ground the brand coral already clears AA — no separate ink needed. */
   --ref-coral-ink: #ff6a52;
   --ref-orange: #ff9257;
@@ -642,15 +644,16 @@
  * Built software — full feature rows, alternating sides.
  * ======================================================================== */
 .ref-demo-strip {
-  display: flex; align-items: center; gap: .45rem; flex-wrap: wrap;
+  display: flex; align-items: center; gap: .4rem .3rem; flex-wrap: wrap;
   margin: 1.6rem 0 2.2rem;
-  padding: .7rem .9rem;
-  border: 1px solid var(--ref-line); border-radius: 999px;
+  padding: .75rem .85rem;
+  border: 1px solid var(--ref-line); border-radius: 16px;
   background: var(--ref-card);
 }
 .ref-demo-strip-label {
   display: inline-flex; align-items: center; gap: .4rem;
-  padding: 0 .5rem;
+  margin-right: .35rem; padding: .45rem .6rem;
+  border-right: 1px solid var(--ref-line);
   color: var(--ref-coral-ink);
   font: 700 .5rem/1 "IBM Plex Mono", monospace; letter-spacing: .1em;
 }
@@ -717,8 +720,6 @@
 .nf-strip { margin: .6rem 0 0; }
 
 @media (max-width: 760px) {
-  /* A wrapped pill reads as a blob; give the strip corners when it stacks. */
-  .ref-demo-strip { border-radius: 18px; }
   .ref-feature { border-radius: 22px; }
   .ref-feature-stats { gap: 1rem 1.6rem; }
 }
@@ -871,80 +872,185 @@
  * reads the palette tokens, so it is correct in both themes and covered by
  * the existing contrast suite.
  * ======================================================================== */
-.hero-system { display: grid; justify-items: center; gap: 1rem; width: min(100%, 420px); }
-.hero-system-svg { width: 100%; height: auto; overflow: visible; }
+.hero-system { display: grid; justify-items: center; gap: 1.15rem; width: min(100%, 420px); }
 
-/* The loop draws itself once, then holds. */
-.hero-ring {
-  fill: none;
-  stroke: var(--ref-line);
-  stroke-width: 1.5;
-  stroke-dasharray: 604;
-  stroke-dashoffset: 604;
-  animation: hero-draw 1.6s cubic-bezier(.23, 1, .32, 1) .2s forwards;
-}
-@keyframes hero-draw { to { stroke-dashoffset: 0; } }
-
-.hero-chords line {
-  stroke: var(--ref-coral);
-  stroke-width: .75;
-  opacity: 0;
-  animation: hero-chord 9s ease-in-out infinite;
-}
-@keyframes hero-chord {
-  0%, 70%, 100% { opacity: 0; }
-  12%, 26% { opacity: .16; }
+/* The camera. A shallow perspective would fish-eye the near satellites; this
+   is far enough back to read as depth rather than as distortion. */
+.hero-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  perspective: 1100px;
+  perspective-origin: 50% 42%;
 }
 
-.hero-node { fill: var(--ref-card); stroke: var(--ref-muted); stroke-width: 1.5; }
-.hero-node-halo { fill: var(--ref-coral); opacity: 0; }
-/* Each node lights as the pulse reaches it — the delay is its position on the loop. */
-.hero-nodes g { animation: hero-node-hit 8s linear infinite; }
-@keyframes hero-node-hit {
-  0%, 8%, 100% { opacity: 1; }
-}
-.hero-nodes g .hero-node-halo { animation: hero-halo 8s linear infinite; animation-delay: inherit; }
-@keyframes hero-halo {
-  0% { opacity: .45; r: 7; }
-  6% { opacity: 0; r: 13; }
-  100% { opacity: 0; r: 7; }
+/* The orbital plane, tilted away from the viewer. Everything inside shares
+   one 3D space, so the browser sorts the satellites against the core by real
+   depth — no z-index anywhere in this diagram. */
+.hero-plane {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(64deg);
 }
 
-/* Rotation about the centre carries each dot around the ring. */
-.hero-pulses g {
-  transform-origin: 130px 130px;
-  animation: hero-orbit 8s linear infinite;
+/* The orbit itself, a circle in the plane — an ellipse once tilted. */
+.hero-disc {
+  position: absolute;
+  inset: 11%;
+  border: 1px solid var(--ref-line);
+  border-radius: 50%;
+  transform-style: preserve-3d;
 }
-@keyframes hero-orbit { to { transform: rotate(360deg); } }
-.hero-pulse { fill: var(--ref-coral); }
+.hero-disc-inner {
+  inset: 27%;
+  border-style: dashed;
+  opacity: .55;
+}
 
-.hero-core { fill: var(--ref-card); stroke: var(--ref-line); stroke-width: 1.5; }
+/* One turn of the loop. Duration is deliberately slow: this is a system
+   running, not a spinner. */
+.hero-spin {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: hero-spin 32s linear infinite;
+}
+@keyframes hero-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* A satellite is carried to its slot on the ring; its face is counter-rotated
+   back to the camera, so the number stays upright and readable the whole way
+   round rather than tumbling with the orbit. */
+.hero-sat {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  /* Rotated about the plane centre, then pushed out to the disc radius. The
+     39% resolves against this box, which is why it fills the plane. */
+  transform: rotate(var(--angle)) translateX(39%);
+}
+@keyframes hero-depth {
+  0%   { opacity: .78; }
+  25%  { opacity: 1; }
+  50%  { opacity: .78; }
+  75%  { opacity: .34; }
+  100% { opacity: .78; }
+}
+
+/* The inverse of the plane tilt and of the orbit angle, so the face is square
+   to the camera. The base transform is the still: with animation off, this is
+   already correct. */
+.hero-sat-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  gap: .2rem;
+  width: 3.4rem;
+  /* Depth cue on top of the perspective the browser already applies: the far
+     side of the orbit reads back. Opacity here rather than on the carrier —
+     a translucent element flattens its own 3D children, and the carrier has
+     one it must keep. */
+  animation: hero-unspin 32s linear infinite, hero-depth 32s linear infinite;
+  /* The counter-spin may never be delayed: it tracks the live orbit, and an
+     offset of even a second sets the numbers tumbling. Only the depth cue
+     carries this satellite phase. */
+  animation-delay: 0s, calc(var(--phase) * 32s);
+  transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle))) rotateX(-64deg);
+}
+/* Undoes the plane tilt, this satellite angle, and the live spin — so the net
+   rotation is identity and the label is square to the camera all the way
+   round. Same duration as the orbit, so the two stay locked. */
+@keyframes hero-unspin {
+  from { transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle))) rotateX(-64deg); }
+  to   { transform: translate(-50%, -50%) rotate(calc(-1 * var(--angle) - 360deg)) rotateX(-64deg); }
+}
+
+.hero-sat-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--ref-card);
+  border: 1.5px solid var(--ref-muted);
+  box-shadow: 0 0 0 0 rgba(var(--ref-coral-rgb), .5);
+  animation: hero-sat-hit 32s linear infinite;
+  animation-delay: calc(var(--phase) * 32s);
+}
+/* The near point of the orbit is where the work is being touched — the dot
+   takes the accent as it passes the front. */
+@keyframes hero-sat-hit {
+  0%, 100% { background: var(--ref-card); border-color: var(--ref-muted); box-shadow: 0 0 0 0 rgba(var(--ref-coral-rgb), 0); }
+  20% { background: var(--ref-card); border-color: var(--ref-muted); }
+  25% { background: var(--ref-coral); border-color: var(--ref-coral); box-shadow: 0 0 0 6px rgba(var(--ref-coral-rgb), .16); }
+  32% { background: var(--ref-card); border-color: var(--ref-muted); box-shadow: 0 0 0 0 rgba(var(--ref-coral-rgb), 0); }
+}
+
+.hero-sat-num {
+  color: var(--ref-muted);
+  font: 700 .44rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: .12em;
+}
+
+/* The core sits in the same 3D space, turned back to face the camera, so
+   satellites at the near side of the orbit occlude it and satellites at the
+   far side are occluded by it. That occlusion is the whole point of the
+   scene being three-dimensional rather than merely tilted. */
+.hero-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  gap: .1rem;
+  width: 33%;
+  aspect-ratio: 1;
+  margin: -16.5% 0 0 -16.5%;
+  border-radius: 50%;
+  background: var(--ref-card);
+  border: 1.5px solid var(--ref-line);
+  box-shadow: 0 0 0 14px rgba(var(--ref-coral-rgb), .05);
+  transform: rotateX(-64deg);
+  animation: hero-core-breathe 6s ease-in-out infinite;
+}
+@keyframes hero-core-breathe {
+  0%, 100% { box-shadow: 0 0 0 14px rgba(var(--ref-coral-rgb), .05); }
+  50% { box-shadow: 0 0 0 22px rgba(var(--ref-coral-rgb), .02); }
+}
+
 .hero-core-mark {
-  fill: var(--ref-ink); text-anchor: middle;
-  font: 800 1.55rem/1 "Space Grotesk", sans-serif; letter-spacing: -.06em;
+  color: var(--ref-ink);
+  font: 800 1.5rem/1 "Space Grotesk", sans-serif;
+  letter-spacing: -.06em;
 }
 .hero-core-sub {
-  fill: var(--ref-muted); text-anchor: middle;
-  font: 700 .38rem/1 "IBM Plex Mono", monospace; letter-spacing: .22em;
+  color: var(--ref-muted);
+  font: 700 .38rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: .22em;
 }
 
 .hero-system-caption {
   display: grid; gap: .35rem; justify-items: center; text-align: center;
-  max-width: 34ch;
-  color: var(--ref-muted); font-size: .64rem; line-height: 1.6;
+  max-width: 40ch;
+  color: var(--ref-muted); font-size: .6rem; line-height: 1.7;
 }
 .hero-system-caption span {
   color: var(--ref-coral-ink);
   font: 700 .46rem/1 "IBM Plex Mono", monospace; letter-spacing: .14em;
 }
 
-/* Reduced motion: the diagram holds as a legible still — the ring drawn, the
-   chords visible, the pulses parked on the loop. Nothing moves. */
+/* Reduced motion: the scene holds as a legible tilted still. The base
+   transforms already describe it, so nothing needs restating — the
+   animations simply stop, and the depth cue resolves to full opacity. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-ring { stroke-dashoffset: 0; animation: none; }
-  .hero-chords line { opacity: .14; animation: none; }
-  .hero-nodes g, .hero-nodes g .hero-node-halo, .hero-pulses g { animation: none; }
-  .hero-node-halo { opacity: 0; }
+  .hero-spin,
+  .hero-sat,
+  .hero-sat-face,
+  .hero-sat-dot,
+  .hero-core { animation: none; }
+  .hero-sat-face { opacity: 1; }
 }
 
 @media (max-width: 680px) { .hero-system { width: min(88vw, 340px); } }
