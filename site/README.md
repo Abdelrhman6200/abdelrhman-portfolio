@@ -22,6 +22,30 @@ different domains and sees it repeat.
 
 Everything else on the page is arranged to support or qualify that claim.
 
+## Live demos
+
+Six projects carry a working demo under `/demo/*` — not walkthroughs, but the
+project's core logic re-implemented client-side and driven by the visitor:
+
+- **feedback** — the draft → review → approve machine, with role enforcement.
+  Switch to coordinator mid-draft and the controls are dead, because the
+  machine forbids it, not the UI.
+- **ops** — KPI thresholds raise anomalies; resolution requires a recorded
+  root cause; the audit log is append-only.
+- **success** — live risk scoring where the score never appears without the
+  rules that produced it.
+- **validation** — an editable sheet running the full rule engine on every
+  keystroke.
+- **sessions** — the naming convention, encoding and decoding, plus the batch
+  run.
+- **report** — a self-validating questionnaire that only fills the template
+  from clean answers.
+
+Each logic module lives in `client/src/demos/logic/` as pure functions with
+its own tests, so the demos are pinned demonstrations rather than animations.
+Every demo states, in the same banner, that it runs on synthetic data entirely
+in the browser.
+
 ## Theme
 
 Dark is the default. A control in the header cycles light, dark and system; the

@@ -7,12 +7,13 @@
  * method the rest of the site argues for.
  */
 import { useState } from "react";
-import { ArrowLeft, Check, FileCode2, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, FileCode2, Github } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
 import { builtSystems, evidenceLabels } from "@/content/portfolio";
 import { simulationFor } from "@/content/simulations";
+import { demoPathFor } from "@/demos/registry";
 import "../reference.css";
 
 /** Stable, readable URL slug for a built system. */
@@ -124,6 +125,21 @@ export default function SystemCaseFile() {
                 </li>
               ))}
             </ul>
+          </section>
+        ) : null}
+
+        {demoPathFor(project.kind) ? (
+          <section className="case-demo-callout">
+            <div>
+              <span className="ref-kicker">TRY IT</span>
+              <p>
+                This system has a live demo — its core logic re-implemented in the browser, on synthetic
+                data, so you can work the actual gates rather than read about them.
+              </p>
+            </div>
+            <Link className="ref-button ref-button-accent" href={demoPathFor(project.kind)!}>
+              Run the live demo <ArrowUpRight size={15} aria-hidden="true" />
+            </Link>
           </section>
         ) : null}
 

@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ReferenceHome from "@/pages/ReferenceHome";
 import SystemCaseFile from "@/pages/SystemCaseFile";
+import DemoPage from "@/pages/DemoPage";
 
 
 /**
@@ -23,6 +24,7 @@ function Router() {
       <Switch>
         <Route path={"/"} component={ReferenceHome} />
         <Route path={"/system/:slug"} component={SystemCaseFile} />
+        <Route path={"/demo/:slug"} component={DemoPage} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

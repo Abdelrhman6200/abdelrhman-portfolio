@@ -47,6 +47,8 @@ still frame under `prefers-reduced-motion`. Nothing they show is only available
 as animation — the stage names, the active stage's explanation and the counters
 are all rendered as text.
 
+Six projects carry working in-browser demos under `/demo/*` — each project's core logic re-implemented client-side, tested, and driven by the visitor on synthetic data.
+
 Dark is the default. A control in the header cycles light, dark and system; the
 choice persists, and "system" follows the OS live. The theme is resolved by an
 inline script before first paint, so there is no flash of the wrong one.
@@ -82,7 +84,7 @@ story about software.
 
 | Project | Tests |
 | --- | --- |
-| `site` | 71 |
+| `site` | 109 |
 | `projects/feedback-copilot` | 34 |
 | `projects/edtech-ops-intelligence-os` | 32 |
 | `projects/community-success-os` | 20 |

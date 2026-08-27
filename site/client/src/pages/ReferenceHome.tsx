@@ -44,6 +44,7 @@ import {
 } from "@/content/portfolio";
 import { Link } from "wouter";
 import { simulationFor } from "@/content/simulations";
+import { demoPathFor, demos } from "@/demos/registry";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
 import { slugFor } from "@/pages/SystemCaseFile";
@@ -259,6 +260,11 @@ function BuiltSystemCard({ project }: { project: Project }) {
         ))}
       </div>
 
+      {demoPathFor(project.kind) ? (
+        <Link className="ref-built-link ref-built-link-demo" href={demoPathFor(project.kind)!}>
+          Run the live demo <ArrowUpRight size={14} aria-hidden="true" />
+        </Link>
+      ) : null}
       {/* Routed through wouter so the deployment base path is applied — a plain
           anchor would break on a GitHub Pages project site. */}
       <Link className="ref-built-link" href={`/system/${slugFor(project.title)}`}>
@@ -392,6 +398,9 @@ export default function ReferenceHome() {
           <div className="ref-hero-stats">
             <span>
               <b>{builtSystems.length}</b> applications with source you can read
+            </span>
+            <span>
+              <b>{demos.length}</b> live demos you can run right here
             </span>
             <span>
               <b>{allProjects.length}</b> systems documented in the index
@@ -552,6 +561,11 @@ export default function ReferenceHome() {
                 </div>
                 <div className="ref-project-foot">
                   <EvidenceBadge project={item} />
+                  {demoPathFor(item.kind) ? (
+                    <Link className="ref-project-demo" href={demoPathFor(item.kind)!}>
+                      Run the live demo <ArrowUpRight size={14} aria-hidden="true" />
+                    </Link>
+                  ) : null}
                 </div>
               </article>
             ))}
@@ -597,7 +611,11 @@ export default function ReferenceHome() {
                   "Grounded in the supplied project record; public implementation evidence can be added when available."}
               </p>
               <div className="ref-inspector-actions">
-                
+                {demoPathFor(project.kind) ? (
+                  <Link href={demoPathFor(project.kind)!}>
+                    Run the live demo <ArrowUpRight size={13} aria-hidden="true" />
+                  </Link>
+                ) : null}
                 {project.repo ? (
                   <a href={project.repo} target="_blank" rel="noreferrer">
                     Repository <Github size={13} aria-hidden="true" />
@@ -676,8 +694,11 @@ export default function ReferenceHome() {
                     ))}
                   </div>
                   {item.result ? <small>{item.result}</small> : null}
-                  {item.repo ? (
+                  {item.repo || demoPathFor(item.kind) ? (
                     <div className="ref-archive-links">
+                      {demoPathFor(item.kind) ? (
+                        <Link href={demoPathFor(item.kind)!}>Live demo →</Link>
+                      ) : null}
                       {item.repo ? (
                         <a href={item.repo} target="_blank" rel="noreferrer">
                           Source →
