@@ -108,3 +108,33 @@ describe("portfolio content", () => {
     expect(new Set(numbers).size).toBe(numbers.length);
   });
 });
+
+describe("built software section", () => {
+  it("gives every built system its stat strip and both routes to proof", () => {
+    const { container } = render(<ReferenceHome />);
+
+    // One feature row per built system, each with stats rendered.
+    const features = container.querySelectorAll(".ref-feature");
+    expect(features).toHaveLength(builtSystems.length);
+    for (const system of builtSystems) {
+      expect(system.stats?.length, `${system.title} missing stats`).toBe(3);
+      for (const stat of system.stats!) {
+        expect(container.textContent).toContain(stat.value);
+      }
+    }
+
+    // Every feature row carries a demo CTA and a case-file link.
+    const demoCtas = screen.getAllByRole("link", { name: /run the live demo/i });
+    expect(demoCtas.length).toBeGreaterThanOrEqual(builtSystems.length);
+    expect(screen.getAllByRole("link", { name: /case file/i }).length).toBeGreaterThanOrEqual(
+      builtSystems.length
+    );
+  });
+
+  it("lists all six demos in the strip", () => {
+    const { container } = render(<ReferenceHome />);
+    const strip = container.querySelector(".ref-demo-strip");
+    expect(strip).not.toBeNull();
+    expect(strip!.querySelectorAll("a")).toHaveLength(6);
+  });
+});

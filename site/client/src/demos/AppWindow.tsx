@@ -7,6 +7,7 @@
  * a clock — that makes the surface read as running software.
  */
 import type { ReactNode } from "react";
+import "./demos.css";
 
 export default function AppWindow({
   name,

@@ -23,6 +23,7 @@ import {
   Github,
   Mail,
   Menu,
+  Play,
   RotateCw,
   Sparkles,
   Workflow,
@@ -45,6 +46,7 @@ import {
 import { Link } from "wouter";
 import { simulationFor } from "@/content/simulations";
 import { demoPathFor, demos } from "@/demos/registry";
+import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
 import { slugFor } from "@/pages/SystemCaseFile";
@@ -218,58 +220,80 @@ function MethodSection() {
 }
 
 /* -------------------------------------------------------------------------
- * Shipped software. Given its own treatment because it is the only work on
- * the page whose claims a reader can verify without trusting the author.
+ * Shipped software — full feature rows, alternating sides.
+ *
+ * This is the strongest work on the page, so each system gets the product
+ * treatment: a stat strip of source-checkable numbers, the three sharpest
+ * verifiable claims, and its live pipeline running inside the same
+ * application-window chrome the demos use — one visual language from card to
+ * demo to case file.
  * ----------------------------------------------------------------------- */
-function BuiltSystemCard({ project }: { project: Project }) {
+function BuiltSystemFeature({ project, flipped }: { project: Project; flipped: boolean }) {
+  const demoPath = demoPathFor(project.kind);
   return (
-    <article className={`ref-built-card ref-card-${project.accent}`}>
-      <div className="ref-built-head">
-        <span>
-          {project.number} / {project.subtitle}
-        </span>
-        <EvidenceBadge project={project} />
-      </div>
-      <h3>{project.title}</h3>
-      <p className="ref-built-summary">{project.summary}</p>
+    <article className={`ref-feature ref-card-${project.accent} ${flipped ? "is-flipped" : ""}`}>
+      <div className="ref-feature-copy">
+        <div className="ref-feature-kicker">
+          <span>
+            {project.number} / {project.subtitle}
+          </span>
+          <EvidenceBadge project={project} />
+        </div>
+        <h3>{project.title}</h3>
+        <p className="ref-feature-summary">{project.summary}</p>
 
-      <div className="ref-built-sim">
-        <SystemSimulation
-          spec={simulationFor(project.kind, project.flow, project.accent)}
-          label={`${project.title} pipeline`}
-        />
-      </div>
+        {project.stats ? (
+          <dl className="ref-feature-stats">
+            {project.stats.map((stat) => (
+              <div key={stat.label}>
+                <dt>{stat.label}</dt>
+                <dd>{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
 
-      {project.verifiable ? (
-        <div className="ref-built-verifiable">
-          <span className="ref-built-verifiable-label">What you can check in the source</span>
-          <ul>
-            {project.verifiable.map((fact) => (
+        {project.verifiable ? (
+          <ul className="ref-feature-checks">
+            {project.verifiable.slice(0, 3).map((fact) => (
               <li key={fact}>
                 <Check size={13} aria-hidden="true" />
                 {fact}
               </li>
             ))}
           </ul>
-        </div>
-      ) : null}
+        ) : null}
 
-      <div className="ref-built-tags">
-        {project.tags.map((tag) => (
-          <span key={tag}>{tag}</span>
-        ))}
+        <div className="ref-feature-foot">
+          <div className="ref-project-tags">
+            {project.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </div>
+          <div className="ref-feature-actions">
+            {demoPath ? (
+              <Link className="ref-button ref-button-accent" href={demoPath}>
+                Run the live demo <ArrowUpRight size={15} aria-hidden="true" />
+              </Link>
+            ) : null}
+            {/* Routed through wouter so the deployment base path applies. */}
+            <Link className="ref-text-link" href={`/system/${slugFor(project.title)}`}>
+              Case file <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
       </div>
 
-      {demoPathFor(project.kind) ? (
-        <Link className="ref-built-link ref-built-link-demo" href={demoPathFor(project.kind)!}>
-          Run the live demo <ArrowUpRight size={14} aria-hidden="true" />
-        </Link>
-      ) : null}
-      {/* Routed through wouter so the deployment base path is applied — a plain
-          anchor would break on a GitHub Pages project site. */}
-      <Link className="ref-built-link" href={`/system/${slugFor(project.title)}`}>
-        Open the case file <ArrowUpRight size={14} aria-hidden="true" />
-      </Link>
+      <div className="ref-feature-stage">
+        <AppWindow name={`${project.title} — live model`}>
+          <div className="ref-feature-sim">
+            <SystemSimulation
+              spec={simulationFor(project.kind, project.flow, project.accent)}
+              label={`${project.title} pipeline`}
+            />
+          </div>
+        </AppWindow>
+      </div>
     </article>
   );
 }
@@ -503,10 +527,23 @@ export default function ReferenceHome() {
               tests. Everything claimed below is checkable in the code rather than asserted here.
             </p>
           </div>
-          <div className="ref-built-grid">
-            {builtSystems.map((item) => (
+
+          {/* Every demo, one strip — the fastest route to proof. */}
+          <div className="ref-demo-strip" role="navigation" aria-label="Live demos">
+            <span className="ref-demo-strip-label">
+              <Play size={12} aria-hidden="true" /> {demos.length} LIVE DEMOS
+            </span>
+            {demos.map((demo) => (
+              <Link key={demo.slug} href={`/demo/${demo.slug}`}>
+                {demo.title}
+              </Link>
+            ))}
+          </div>
+
+          <div className="ref-feature-list">
+            {builtSystems.map((item, index) => (
               <Reveal key={item.number}>
-                <BuiltSystemCard project={item} />
+                <BuiltSystemFeature project={item} flipped={index % 2 === 1} />
               </Reveal>
             ))}
           </div>

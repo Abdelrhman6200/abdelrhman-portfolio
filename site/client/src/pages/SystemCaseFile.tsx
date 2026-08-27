@@ -77,6 +77,17 @@ export default function SystemCaseFile() {
               <span key={tag}>{tag}</span>
             ))}
           </div>
+
+          {project.stats ? (
+            <dl className="ref-feature-stats case-stats">
+              {project.stats.map((stat) => (
+                <div key={stat.label}>
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
         </div>
 
         <section className="case-sim-block" aria-labelledby="case-pipeline">

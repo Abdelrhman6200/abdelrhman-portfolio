@@ -45,6 +45,8 @@ export type Project = {
   result?: string;
   /** Facts a reader can check for themselves — only set on `code` projects. */
   verifiable?: string[];
+  /** Three hard numbers for the feature row. Only claims checkable in source. */
+  stats?: Array<{ value: string; label: string }>;
   repo?: string;
 };
 
@@ -272,6 +274,11 @@ export const builtSystems: Project[] = [
     evidence: "code",
     group: "Built software",
     accent: "coral",
+    stats: [
+      { value: "32", label: "automated tests" },
+      { value: "4", label: "authorization roles" },
+      { value: "append-only", label: "audit trail" },
+    ],
     verifiable: [
       "Four authorization roles — analyst, coordinator, manager, administrator — enforced at the application boundary",
       "Immutable audit events recorded for create, update, delete, approval, export and status transitions",
@@ -292,6 +299,11 @@ export const builtSystems: Project[] = [
     evidence: "code",
     group: "Built software",
     accent: "orange",
+    stats: [
+      { value: "34", label: "automated tests" },
+      { value: "2", label: "enforced roles" },
+      { value: "3-state", label: "approval machine" },
+    ],
     verifiable: [
       "Explicit status machine — draft to pending review to approved, with return-to-draft",
       "Teacher and coordinator roles enforced server-side, not only hidden in the UI",
@@ -312,6 +324,11 @@ export const builtSystems: Project[] = [
     evidence: "code",
     group: "Built software",
     accent: "yellow",
+    stats: [
+      { value: "20", label: "automated tests" },
+      { value: "4", label: "persisted workflows" },
+      { value: "evidence-first", label: "AI assistance" },
+    ],
     verifiable: [
       "Renewal, engagement, intervention and business-review workflows backed by persistent storage",
       "AI recommendations are returned together with the evidence they were derived from",
