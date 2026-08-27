@@ -164,7 +164,13 @@
 .ref-proof { margin-top: 2rem; background: var(--ref-panel); }.ref-proof-top { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 1.3rem; border-bottom: 1px solid rgba(var(--ref-on-dark-rgb), .15); }.ref-proof-top > span { color: rgba(var(--ref-on-dark-rgb), .42); font: 700 .52rem/1 "IBM Plex Mono", monospace; letter-spacing: .1em; }.ref-proof-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, .55fr); gap: 4rem; margin-top: 3rem; }.ref-proof h2 { color: var(--ref-on-dark); }.ref-proof h2 em { color: var(--ref-yellow); }.ref-proof-grid p { color: rgba(var(--ref-on-dark-rgb), .64); font-size: .85rem; line-height: 1.7; }.ref-proof-pills { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.8rem; }.ref-proof-pills span { color: var(--ref-on-accent); background: var(--ref-coral); }.ref-proof-pills span:nth-child(2n) { background: var(--ref-yellow); }
 
 .ref-contact { padding-top: clamp(5rem, 9vw, 8rem); padding-bottom: clamp(5rem, 10vw, 9rem); }.ref-contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .5fr); gap: 4rem; margin-top: 2rem; }.ref-contact h2 { margin-bottom: 1rem; }.ref-contact p { max-width: 350px; color: var(--ref-muted); font-size: .9rem; line-height: 1.6; }.ref-contact .ref-button { margin-top: 1.7rem; }.ref-contact-card { align-self: end; padding: 1.5rem; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 24px; box-shadow: 11px 11px 0 rgba(var(--ref-ink-rgb), .08); }.ref-contact-card > span { color: var(--ref-coral-ink); font: 700 .53rem/1.3 "IBM Plex Mono", monospace; letter-spacing: .09em; }.ref-contact-card strong { display: block; margin-top: .55rem; font: 800 1.4rem/.9 "Space Grotesk", sans-serif; }.ref-contact-lines { display: grid; gap: .7rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--ref-line); }.ref-contact-lines span { display: flex; align-items: center; gap: .5rem; color: var(--ref-muted); font: 600 .61rem/1 "IBM Plex Mono", monospace; }.ref-contact-lines svg { color: var(--ref-coral); }.ref-contact-card small { display: block; margin-top: 1.2rem; color: var(--ref-muted); font-size: .64rem; line-height: 1.45; }
-.ref-footer { display: flex; justify-content: space-between; gap: 1rem; max-width: 1280px; margin: 0 auto; padding: 1.2rem clamp(1rem, 5.8vw, 5rem) 1.8rem; color: var(--ref-muted); border-top: 1px solid var(--ref-line); font: 700 .52rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; }
+/* The footer is now a closing plate, not a strip: dark in both themes like
+   the other inverted panels, so the colophon reads as a specification page. */
+.ref-footer {
+  margin-top: clamp(3rem, 7vw, 6rem);
+  background: var(--ref-panel);
+  color: rgba(var(--ref-on-dark-rgb), .72);
+}
 
 .ref-reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }.ref-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
@@ -978,4 +984,211 @@
   .ref-feature.is-flipped .ref-feature-stage .app-window {
     transform: rotateX(1.2deg) rotateY(1.6deg);
   }
+}
+
+/* ===========================================================================
+ * CHARACTER: the engineering document
+ *
+ * The site was precise but anonymous — flat colour fields and unmarked panels.
+ * This gives it one consistent point of view: a technical drawing. A plan grid
+ * under everything, crop marks on the panels that carry the argument, hairline
+ * rules that measure each section, and figures set in tabular numerals so the
+ * numbers this site is full of line up like a spec sheet.
+ *
+ * All of it is drawn from the existing palette tokens, so it costs nothing in
+ * either theme and stays inside the contrast the suite already checks.
+ * ======================================================================== */
+
+/* --- The plan grid --------------------------------------------------------
+ * A drafting-paper dot grid under the whole page, at the threshold of
+ * visibility: it should register as texture, never as pattern. Fixed, so the
+ * page moves over the grid rather than dragging it along. */
+.reference-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, rgba(var(--ref-ink-rgb), .16) 1px, transparent 0);
+  background-size: 26px 26px;
+  /* Fades out down the page so the grid frames the hero without following the
+     reader all the way to the contact section. */
+  /* Only the alpha channel matters for a mask, so this uses a palette token
+     rather than a raw colour — the theme suite forbids literals out here. */
+  mask-image: linear-gradient(to bottom, var(--ref-ink) 0%, var(--ref-ink) 22%, transparent 62%);
+}
+/* Everything else sits above the grid. */
+.reference-page > * { position: relative; z-index: 1; }
+
+/* --- Crop marks -----------------------------------------------------------
+ * The repeated signature. Four corner ticks on the panels that carry the
+ * argument — the method, the feature rows, the open case file — the way a
+ * drawing marks its trim. Drawn with one pseudo-element and no extra markup. */
+.ref-method-panel,
+.ref-feature,
+.ref-file-panel {
+  position: relative;
+}
+.ref-method-panel::after,
+.ref-feature::after,
+.ref-file-panel::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  pointer-events: none;
+  --mark: rgba(var(--ref-ink-rgb), .28);
+  background:
+    linear-gradient(var(--mark), var(--mark)) 0 0 / 11px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 0 / 1px 11px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 0 / 11px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 0 / 1px 11px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 100% / 11px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 100% / 1px 11px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 100% / 11px 1px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 100% / 1px 11px no-repeat;
+}
+
+/* --- Measured section rules ----------------------------------------------
+ * Each section number now sits on a hairline that runs the width of the page
+ * and ends in a tick, so the sections read as plates in a document rather than
+ * as blocks stacked in a scroll. */
+.ref-kicker {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+.ref-kicker::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 24px;
+  background: linear-gradient(to right, var(--ref-line), transparent);
+}
+/* The tick at the start, like a rule origin. */
+.ref-section-heading > div > .ref-kicker::before,
+.ref-dark-heading > div > .ref-kicker::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  flex: 0 0 auto;
+  background: var(--ref-coral);
+  transform: rotate(45deg);
+}
+.ref-kicker-light::after { background: linear-gradient(to right, rgba(var(--ref-on-dark-rgb), .22), transparent); }
+
+/* --- Figures set like a spec sheet ---------------------------------------
+ * This site is full of numbers, and proportional figures made them wobble.
+ * Tabular, slashed-zero where the face offers it. */
+.ref-feature-stats dd,
+.ref-hero-stats b,
+.ref-record-num,
+.demo-stats b,
+.vx-counts b,
+.ops-kpi-value b,
+.sim-meter b,
+.sx-points,
+.ag-source-head i,
+.ref-filter-button span,
+.ref-record-group h3 i {
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+/* --- The hero, framed as a specimen --------------------------------------
+ * Coordinate ticks at the cardinal points, the way a plate is registered. */
+.hero-system { position: relative; }
+.hero-system::before {
+  content: "";
+  position: absolute;
+  inset: -14px -14px auto;
+  height: 1px;
+  background:
+    linear-gradient(var(--ref-line), var(--ref-line)) 0 0 / 18px 1px no-repeat,
+    linear-gradient(var(--ref-line), var(--ref-line)) 100% 0 / 18px 1px no-repeat;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-page::before { mask-image: none; opacity: .5; }
+}
+
+/* --- The colophon ---------------------------------------------------------
+ * The footer states the site's own spec, the way a well-made book does. The
+ * figures come from scripts/colophon.mjs at build time, so this is the page
+ * holding itself to the standard it asks of everything else. */
+.ref-colophon {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+  gap: clamp(1.4rem, 4vw, 3.4rem);
+  align-items: start;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(2.6rem, 6vw, 4.4rem) clamp(1rem, 5.8vw, 5rem) 2rem;
+}
+.ref-colophon-lead .ref-kicker { color: rgba(var(--ref-on-dark-rgb), .6); }
+.ref-colophon-lead .ref-kicker::after { background: linear-gradient(to right, rgba(var(--ref-on-dark-rgb), .22), transparent); }
+.ref-colophon-lead p {
+  margin-top: 1rem;
+  max-width: 58ch;
+  color: rgba(var(--ref-on-dark-rgb), .72);
+  font-size: .86rem;
+  line-height: 1.7;
+}
+
+.ref-colophon-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  background: rgba(var(--ref-on-dark-rgb), .14);
+  border: 1px solid rgba(var(--ref-on-dark-rgb), .14);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.ref-colophon-specs > div {
+  display: grid;
+  gap: .3rem;
+  padding: .95rem 1.1rem;
+  background: var(--ref-panel);
+}
+.ref-colophon-specs dt {
+  color: rgba(var(--ref-on-dark-rgb), .5);
+  font: 700 .44rem/1 "IBM Plex Mono", monospace;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.ref-colophon-specs dd {
+  margin: 0;
+  color: var(--ref-on-dark);
+  font: 800 1.5rem/1 "Space Grotesk", sans-serif;
+  letter-spacing: -.05em;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+.ref-colophon-specs dd em {
+  margin-left: .12rem;
+  color: rgba(var(--ref-on-dark-rgb), .45);
+  font: 700 .62rem/1 "IBM Plex Mono", monospace;
+  font-style: normal;
+}
+
+.ref-footer-rule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.1rem clamp(1rem, 5.8vw, 5rem) 2.4rem;
+  border-top: 1px solid rgba(var(--ref-on-dark-rgb), .16);
+  color: rgba(var(--ref-on-dark-rgb), .55);
+  font: 700 .5rem/1.5 "IBM Plex Mono", monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.ref-footer-rule a { color: rgba(var(--ref-on-dark-rgb), .55); text-transform: none; letter-spacing: .04em; }
+.ref-footer-rule a:hover { color: var(--ref-yellow); }
+
+@media (max-width: 880px) {
+  .ref-colophon { grid-template-columns: minmax(0, 1fr); }
 }
