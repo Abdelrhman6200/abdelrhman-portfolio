@@ -10,6 +10,18 @@ on:
   pull_request:
 
 jobs:
+  # One check across every package, so it is a job rather than a matrix entry.
+  # Plain node with no dependencies — nothing to install.
+  readability:
+    runs-on: ubuntu-latest
+    name: readable source
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-readability.mjs
+
   verify:
     runs-on: ubuntu-latest
     strategy:
