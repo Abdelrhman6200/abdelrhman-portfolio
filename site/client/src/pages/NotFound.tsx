@@ -1,49 +1,52 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle, Home } from "lucide-react";
-import { useLocation } from "wouter";
+/*
+ * 404 — in the site's own voice and palette, with useful exits.
+ *
+ * A portfolio's dead link is most often a shared demo or case-file URL that
+ * got truncated in a chat message, so the page offers those routes back
+ * rather than a bare "go home".
+ */
+import { ArrowLeft, ArrowUpRight, Compass } from "lucide-react";
+import { Link } from "wouter";
+import { demos } from "@/demos/registry";
+import "../reference.css";
+import "../demos/demos.css";
 
 export default function NotFound() {
-  const [, setLocation] = useLocation();
-
-  const handleGoHome = () => {
-    setLocation("/");
-  };
-
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <Card className="w-full max-w-lg mx-4 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-100 rounded-full animate-pulse" />
-              <AlertCircle className="relative h-16 w-16 text-red-500" />
-            </div>
-          </div>
+    <div className="reference-page">
+      <main className="ref-section nf-shell">
+        <div className="ref-kicker">404 / NO SUCH ROUTE</div>
+        <h1>
+          This path leads
+          <br />
+          <em>nowhere.</em>
+        </h1>
+        <p className="nf-copy">
+          <Compass size={14} aria-hidden="true" /> If a shared link brought you here, it was probably
+          truncated. Everything worth seeing is one hop away:
+        </p>
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
+        <div className="nf-routes">
+          <Link className="ref-button ref-button-accent" href="/">
+            <ArrowLeft size={15} aria-hidden="true" /> The portfolio
+          </Link>
+          <Link className="ref-text-link" href="/#work">
+            Built software <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
+          <Link className="ref-text-link" href="/#method">
+            The method <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
+        </div>
 
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
-            Page Not Found
-          </h2>
-
-          <p className="text-slate-600 mb-8 leading-relaxed">
-            Sorry, the page you are looking for doesn't exist.
-            <br />
-            It may have been moved or deleted.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              onClick={handleGoHome}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="ref-demo-strip nf-strip" role="navigation" aria-label="Live demos">
+          <span className="ref-demo-strip-label">OR RUN A LIVE DEMO</span>
+          {demos.map((demo) => (
+            <Link key={demo.slug} href={`/demo/${demo.slug}`}>
+              {demo.title}
+            </Link>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

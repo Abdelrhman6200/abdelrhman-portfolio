@@ -1,0 +1,39 @@
+# Runs every package's type check, tests and build on every push and PR.
+#
+# The portfolio's central claim is that its numbers are checkable — this is
+# where they get checked, in public, on every change.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - site
+          - projects/feedback-copilot
+          - projects/community-success-os
+          - projects/edtech-ops-intelligence-os
+    name: ${{ matrix.package }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.package }}/package-lock.json
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build

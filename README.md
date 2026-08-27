@@ -47,7 +47,7 @@ still frame under `prefers-reduced-motion`. Nothing they show is only available
 as animation — the stage names, the active stage's explanation and the counters
 are all rendered as text.
 
-Six projects carry working in-browser demos under `/demo/*` — each project's core logic re-implemented client-side, tested, and driven by the visitor on synthetic data.
+Seven projects carry working in-browser demos under `/demo/*` — each project's core logic re-implemented client-side, tested, and driven by the visitor on synthetic data.
 
 Dark is the default. A control in the header cycles light, dark and system; the
 choice persists, and "system" follows the OS live. The theme is resolved by an
@@ -79,6 +79,12 @@ Two rules are enforced by tests rather than by discipline:
 
 A reader should never have to guess whether they are looking at software or a
 story about software.
+
+## Continuous integration
+
+Every push runs each package's type check, tests and build in a GitHub
+Actions matrix (`.github/workflows/ci.yml`). The portfolio's claim is that its
+numbers are checkable; CI is where they get checked in public.
 
 ## Test coverage
 

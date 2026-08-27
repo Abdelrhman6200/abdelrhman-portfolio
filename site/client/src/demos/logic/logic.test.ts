@@ -254,3 +254,49 @@ describe("demo batch helpers", () => {
     expect(new Set(codes).size).toBe(codes.length);
   });
 });
+
+/* ------------------------------------------------------------------------- */
+describe("SOP retrieval", () => {
+  it("finds the right procedure for each suggested question", async () => {
+    const { search, suggestedQuestions } = await import("./sopRetrieval");
+    const expected = ["SOP-001", "SOP-002", "SOP-008", "SOP-006", "SOP-003"];
+    suggestedQuestions.forEach((question, index) => {
+      const result = search(question);
+      expect(result.matches[0]?.sop.id, question).toBe(expected[index]);
+    });
+  });
+
+  it("refuses to answer rather than improvising when nothing matches", async () => {
+    const { search } = await import("./sopRetrieval");
+    expect(search("quantum blockchain kubernetes").confidence).toBe("none");
+    expect(search("the and of").confidence).toBe("none");
+  });
+
+  it("weighs rare terms above ubiquitous ones", async () => {
+    const { search } = await import("./sopRetrieval");
+    // "session" appears in most documents; "refund" in one. The rare term wins.
+    const result = search("session refund");
+    expect(result.matches[0].sop.id).toBe("SOP-008");
+  });
+
+  it("always returns a citation snippet containing a matched term", async () => {
+    const { search, tokenize } = await import("./sopRetrieval");
+    const result = search("certificate rubric threshold");
+    for (const match of result.matches) {
+      const snippetTokens = tokenize(match.snippet);
+      const { termMatches } = await import("./sopRetrieval");
+      expect(
+        match.matched.some((term) => snippetTokens.some((token) => termMatches(term, token))),
+        match.sop.id
+      ).toBe(true);
+    }
+  });
+
+  it("caps the sources at three, ranked by score", async () => {
+    const { search } = await import("./sopRetrieval");
+    const result = search("session learner instructor report");
+    expect(result.matches.length).toBeLessThanOrEqual(3);
+    const scores = result.matches.map((match) => match.score);
+    expect([...scores].sort((a, b) => b - a)).toEqual(scores);
+  });
+});

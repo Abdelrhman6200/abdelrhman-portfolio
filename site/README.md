@@ -24,7 +24,7 @@ Everything else on the page is arranged to support or qualify that claim.
 
 ## Live demos
 
-Six projects carry a working demo under `/demo/*` — not walkthroughs, but the
+Seven projects carry a working demo under `/demo/*` — not walkthroughs, but the
 project's core logic re-implemented client-side and driven by the visitor:
 
 - **feedback** — the draft → review → approve machine, with role enforcement.
@@ -40,6 +40,9 @@ project's core logic re-implemented client-side and driven by the visitor:
   run.
 - **report** — a self-validating questionnaire that only fills the template
   from clean answers.
+- **agent** — TF-IDF retrieval over an SOP corpus with the ranked sources,
+  scores and matched terms exposed. When nothing scores it refuses to answer
+  rather than improvising.
 
 Each logic module lives in `client/src/demos/logic/` as pure functions with
 its own tests, so the demos are pinned demonstrations rather than animations.

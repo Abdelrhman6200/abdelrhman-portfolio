@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it, beforeAll } from "vitest";
 import { cleanup, render, screen, within } from "@/testUtils";
 import ReferenceHome from "./ReferenceHome";
 import { allProjects, builtSystems, contact, methodStages } from "@/content/portfolio";
+import { demos } from "@/demos/registry";
 
 beforeAll(() => {
   // jsdom implements neither; the component only needs them not to throw.
@@ -135,6 +136,6 @@ describe("built software section", () => {
     const { container } = render(<ReferenceHome />);
     const strip = container.querySelector(".ref-demo-strip");
     expect(strip).not.toBeNull();
-    expect(strip!.querySelectorAll("a")).toHaveLength(6);
+    expect(strip!.querySelectorAll("a")).toHaveLength(demos.length);
   });
 });

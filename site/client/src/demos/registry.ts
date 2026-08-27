@@ -6,6 +6,7 @@
  * e.g. Feedback Copilot and its AI-Assisted Feedback precursor).
  */
 import type { ComponentType } from "react";
+import AgentDemo from "./AgentDemo";
 import FeedbackDemo from "./FeedbackDemo";
 import OpsDemo from "./OpsDemo";
 import ReportDemo from "./ReportDemo";
@@ -28,6 +29,7 @@ export const demos: DemoEntry[] = [
   { slug: "validation", title: "Smart Excel Validation", component: ValidationDemo, kinds: ["validation"] },
   { slug: "sessions", title: "Session Link Automation", component: SessionsDemo, kinds: ["session-links", "coding"] },
   { slug: "report", title: "Questionnaire to Report", component: ReportDemo, kinds: ["questionnaire"] },
+  { slug: "agent", title: "AI Operational Agent", component: AgentDemo, kinds: ["agent"] },
 ];
 
 export function demoBySlug(slug: string): DemoEntry | undefined {
