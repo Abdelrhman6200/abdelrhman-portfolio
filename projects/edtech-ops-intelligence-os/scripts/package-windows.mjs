@@ -15,6 +15,6 @@ function run(command, args, env = process.env) {
 
 const packageEnv = signingRequested ? process.env : { ...process.env, CSC_IDENTITY_AUTO_DISCOVERY: "false" };
 console.log(signingRequested ? "Building a certificate-signed Windows release from environment-provided certificate references." : "Building an unsigned Windows release. No certificate was supplied; automatic signing is disabled.");
-run("pnpm", ["desktop:build"]);
+run("npm", ["run", "desktop:build"]);
 run("node", ["scripts/stage-desktop.mjs"]);
-run("pnpm", ["exec", "electron-builder", "--project", "desktop-app", "--win", "portable"], packageEnv);
+run("npx", ["electron-builder", "--project", "desktop-app", "--win", "portable"], packageEnv);

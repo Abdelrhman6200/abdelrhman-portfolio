@@ -23,6 +23,17 @@ CREATE TABLE `feedbackEntries` (
 	CONSTRAINT `feedbackEntries_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
+CREATE TABLE `feedbackEvents` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`feedbackId` int NOT NULL,
+	`actorId` int NOT NULL,
+	`actorRole` enum('teacher','coordinator') NOT NULL,
+	`action` varchar(64) NOT NULL,
+	`comment` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `feedbackEvents_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
 CREATE TABLE `sessionRecords` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`studentId` int NOT NULL,
@@ -53,6 +64,15 @@ CREATE TABLE `students` (
 	CONSTRAINT `students_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-UPDATE `users` SET `role` = 'teacher' WHERE `role` IN ('user', 'admin');
---> statement-breakpoint
-ALTER TABLE `users` MODIFY COLUMN `role` enum('teacher','coordinator') NOT NULL DEFAULT 'teacher';
+CREATE TABLE `users` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`email` varchar(320) NOT NULL,
+	`name` text,
+	`passwordHash` varchar(255),
+	`role` enum('teacher','coordinator') NOT NULL DEFAULT 'teacher',
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	`lastSignedIn` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `users_id` PRIMARY KEY(`id`),
+	CONSTRAINT `users_email_unique` UNIQUE(`email`)
+);

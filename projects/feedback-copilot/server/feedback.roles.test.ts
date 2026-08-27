@@ -6,10 +6,9 @@ function createContext(role: "teacher" | "coordinator"): TrpcContext {
   return {
     user: {
       id: 14,
-      openId: `${role}-user`,
       name: `${role} user`,
-      email: null,
-      loginMethod: null,
+      email: `${role}@example.com`,
+      passwordHash: null,
       role,
       createdAt: new Date(),
       updatedAt: new Date(),
