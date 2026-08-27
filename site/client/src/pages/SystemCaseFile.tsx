@@ -10,6 +10,7 @@ import { useState } from "react";
 import { ArrowLeft, Check, FileCode2, Github } from "lucide-react";
 import { Link, useRoute } from "wouter";
 import SystemSimulation from "@/components/SystemSimulation";
+import ThemeToggle from "@/components/ThemeToggle";
 import { builtSystems, evidenceLabels } from "@/content/portfolio";
 import { simulationFor } from "@/content/simulations";
 import "../reference.css";
@@ -54,10 +55,13 @@ export default function SystemCaseFile() {
         <Link className="case-back" href="/#work">
           <ArrowLeft size={15} aria-hidden="true" /> BACK TO THE WORK
         </Link>
-        <span className={`ref-evidence ref-evidence-${project.evidence}`}>
+        <div className="case-nav-right">
+          <ThemeToggle />
+          <span className={`ref-evidence ref-evidence-${project.evidence}`}>
           <FileCode2 size={11} aria-hidden="true" />
           {evidenceLabels[project.evidence].label}
         </span>
+        </div>
       </header>
 
       <main id="case-main" className="ref-section case-shell">

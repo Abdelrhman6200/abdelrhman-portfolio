@@ -6,7 +6,7 @@
  * useful — a working contact route, evidence labelling, and the method section.
  */
 import { afterEach, describe, expect, it, beforeAll } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@/testUtils";
 import ReferenceHome from "./ReferenceHome";
 import { allProjects, builtSystems, contact, methodStages } from "@/content/portfolio";
 

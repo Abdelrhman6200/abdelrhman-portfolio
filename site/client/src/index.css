@@ -44,6 +44,41 @@
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
+/*
+ * Dark theme for the shadcn/ui primitives.
+ *
+ * `@theme` above defines the light palette. Tailwind v4 compiles those tokens
+ * into `--color-*` custom properties, so redefining the same properties under
+ * `:root.dark` re-points every utility built from them — `bg-background`,
+ * `text-muted-foreground`, and the rest — with no utility rewriting.
+ *
+ * The class is set by ThemeProvider, and by the inline boot script in
+ * index.html so the correct theme is painted on the first frame.
+ */
+:root.dark {
+  --color-background: #121213;
+  --color-foreground: #ece9e3;
+  --color-card: #1a1a1c;
+  --color-card-foreground: #ece9e3;
+  --color-popover: #26262a;
+  --color-popover-foreground: #ece9e3;
+  --color-muted: #242427;
+  --color-muted-foreground: #8d8880;
+
+  --color-primary: #ff6a52;
+  --color-primary-foreground: #14140f;
+  --color-secondary: #26262a;
+  --color-secondary-foreground: #ece9e3;
+  --color-accent: #ff9257;
+  --color-accent-foreground: #14140f;
+  --color-destructive: #ff6a52;
+  --color-destructive-foreground: #14140f;
+
+  --color-border: rgba(236, 233, 227, 0.16);
+  --color-input: rgba(236, 233, 227, 0.16);
+  --color-ring: #ff6a52;
+}
+
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   color: var(--color-foreground);
@@ -52,6 +87,11 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  /* Native form controls, scrollbars and focus rings follow the theme. */
+  color-scheme: light;
+}
+:root.dark {
+  color-scheme: dark;
 }
 
 * {

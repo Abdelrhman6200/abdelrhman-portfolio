@@ -3,7 +3,7 @@
  * reachable case file that renders.
  */
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@/testUtils";
 import { Router } from "wouter";
 import { memoryLocation } from "wouter/memory-location";
 import SystemCaseFile, { slugFor } from "./SystemCaseFile";

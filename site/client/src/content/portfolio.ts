@@ -13,16 +13,12 @@
  */
 
 /** How strongly a claim is backed. Drives the badge shown on every card. */
-export type EvidenceTier = "code" | "demo" | "brief";
+export type EvidenceTier = "code" | "brief";
 
 export const evidenceLabels: Record<EvidenceTier, { label: string; note: string }> = {
   code: {
     label: "SOURCE AVAILABLE",
-    note: "Shipped application — architecture and tests readable in source.",
-  },
-  demo: {
-    label: "INTERACTIVE DEMO",
-    note: "Runnable walkthrough built into this site.",
+    note: "Source you can read — in this bundle, or a public repository.",
   },
   brief: {
     label: "REPORTED OUTCOME",
@@ -49,7 +45,6 @@ export type Project = {
   result?: string;
   /** Facts a reader can check for themselves — only set on `code` projects. */
   verifiable?: string[];
-  demo?: string;
   repo?: string;
 };
 
@@ -341,11 +336,10 @@ export const featuredProjects: Project[] = [
     flow: ["Session brief", "Teams", "Naming", "Distribution", "Attendance"],
     tags: ["Power Automate", "Microsoft Teams", "Attendance", "Operations"],
     domains: ["OPERATIONS", "AUTOMATION"],
-    evidence: "demo",
+    evidence: "brief",
     group: "Operational infrastructure",
     accent: "coral",
     result: "Reported: a days-long process reduced to hours, at a scale of thousands of sessions per month.",
-    demo: "/demo/session-links",
   },
   {
     number: "02",
@@ -357,11 +351,10 @@ export const featuredProjects: Project[] = [
     flow: ["Data entry", "Rules", "Exceptions", "Staff review", "Clean record"],
     tags: ["Excel", "Validation", "Conditional logic", "Data quality"],
     domains: ["OPERATIONS", "DATA"],
-    evidence: "demo",
+    evidence: "brief",
     group: "Operational infrastructure",
     accent: "orange",
     result: "Reported: 90% fewer errors and 70% faster review across 40,000+ student records.",
-    demo: "/demo/excel-validation",
   },
   {
     number: "03",
@@ -373,10 +366,9 @@ export const featuredProjects: Project[] = [
     flow: ["Landing", "Checkout", "Enrollment", "Dashboard", "Content"],
     tags: ["Enrollment", "Access control", "Product flow"],
     domains: ["OPERATIONS", "AUTOMATION"],
-    evidence: "demo",
+    evidence: "code",
     group: "Operational infrastructure",
     accent: "yellow",
-    demo: "/demo/cgf",
     repo: "https://github.com/Abdelrhman6200/CGF",
   },
   {
@@ -421,10 +413,9 @@ export const projectArchive: Project[] = [
     flow: ["Questionnaire", "Validation", "Template", "PPTX", "PDF"],
     tags: ["Templating", "Validation", "Reporting"],
     domains: ["AUTOMATION", "DATA"],
-    evidence: "demo",
+    evidence: "code",
     group: "Operational infrastructure",
     accent: "yellow",
-    demo: "/demo/questionnaire",
     repo: "https://github.com/Abdelrhman6200/question-template-fill",
   },
   {

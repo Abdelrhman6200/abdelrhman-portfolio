@@ -6,8 +6,9 @@
     <title>Abdelrhman Shoman — Systems Builder</title>
     <meta name="description" content="I build the systems behind complex work — operations, automation, AI, data and computational workflows. Different problems. Same approach." />
     <meta name="author" content="Abdelrhman Shoman" />
+    <!-- Dark is the default, so the unqualified value is the dark ground. -->
+    <meta name="theme-color" content="#121213" />
     <meta name="theme-color" content="#f1efeb" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#161616" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="https://abdelrhmanshoman.com/" />
 
     <meta property="og:type" content="website" />
@@ -30,6 +31,30 @@
     />
   </head>
   <body>
+    <!--
+      Resolve the theme before first paint. Without this the page paints light,
+      then React applies the stored preference a frame later — a visible flash
+      for anyone who chose dark. Deliberately inline and synchronous, since a
+      deferred script would run after the first paint and defeat the point.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        // Dark is the default, so start dark and only step back to light when a
+        // stored preference says so. A storage failure therefore stays dark.
+        root.classList.add("dark");
+        try {
+          var stored = localStorage.getItem("theme");
+          var light =
+            stored === "light" ||
+            (stored === "system" &&
+              !window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (light) root.classList.remove("dark");
+        } catch (e) {
+          /* Storage blocked — remain on the dark default. */
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

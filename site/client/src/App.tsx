@@ -6,7 +6,6 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ReferenceHome from "@/pages/ReferenceHome";
 import SystemCaseFile from "@/pages/SystemCaseFile";
-import { CGFoundryDemo, ExcelValidationDemo, QuestionnaireDemo, SessionLinksDemo } from "@/pages/DemoPages";
 
 
 function Router() {
@@ -14,10 +13,6 @@ function Router() {
     <Switch>
       <Route path={"/"} component={ReferenceHome} />
       <Route path={"/system/:slug"} component={SystemCaseFile} />
-      <Route path={"/demo/cgf"} component={CGFoundryDemo} />
-      <Route path={"/demo/questionnaire"} component={QuestionnaireDemo} />
-      <Route path={"/demo/session-links"} component={SessionLinksDemo} />
-      <Route path={"/demo/excel-validation"} component={ExcelValidationDemo} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -34,8 +29,8 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider
-        defaultTheme="light"
-        // switchable
+        defaultTheme="dark"
+        switchable
       >
         <TooltipProvider>
           <Toaster />

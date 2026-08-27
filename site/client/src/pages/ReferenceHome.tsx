@@ -44,6 +44,7 @@ import {
 } from "@/content/portfolio";
 import { simulationFor } from "@/content/simulations";
 import SystemSimulation from "@/components/SystemSimulation";
+import ThemeToggle from "@/components/ThemeToggle";
 import { slugFor } from "@/pages/SystemCaseFile";
 import "../reference.css";
 
@@ -317,9 +318,13 @@ export default function ReferenceHome() {
             </a>
           ))}
         </nav>
-        <a className="reference-header-cta" href="#contact">
-          Let&rsquo;s talk <ArrowUpRight size={14} />
-        </a>
+        {/* Grouped so the header stays a three-column grid. */}
+        <div className="reference-header-actions">
+          <ThemeToggle />
+          <a className="reference-header-cta" href="#contact">
+            Let&rsquo;s talk <ArrowUpRight size={14} />
+          </a>
+        </div>
         <button
           className="reference-menu"
           type="button"
@@ -544,11 +549,6 @@ export default function ReferenceHome() {
                 </div>
                 <div className="ref-project-foot">
                   <EvidenceBadge project={item} />
-                  {item.demo ? (
-                    <a className="ref-project-demo" href={item.demo}>
-                      Open demo <ArrowUpRight size={14} aria-hidden="true" />
-                    </a>
-                  ) : null}
                 </div>
               </article>
             ))}
@@ -594,13 +594,7 @@ export default function ReferenceHome() {
                   "Grounded in the supplied project record; public implementation evidence can be added when available."}
               </p>
               <div className="ref-inspector-actions">
-                {project.demo ? (
-                  <a href={project.demo}>
-                    Open demo <ArrowUpRight size={13} aria-hidden="true" />
-                  </a>
-                ) : (
-                  <span>No in-site demo</span>
-                )}
+                
                 {project.repo ? (
                   <a href={project.repo} target="_blank" rel="noreferrer">
                     Repository <Github size={13} aria-hidden="true" />
@@ -679,9 +673,8 @@ export default function ReferenceHome() {
                     ))}
                   </div>
                   {item.result ? <small>{item.result}</small> : null}
-                  {item.demo || item.repo ? (
+                  {item.repo ? (
                     <div className="ref-archive-links">
-                      {item.demo ? <a href={item.demo}>Demo →</a> : null}
                       {item.repo ? (
                         <a href={item.repo} target="_blank" rel="noreferrer">
                           Source →

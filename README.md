@@ -47,14 +47,17 @@ still frame under `prefers-reduced-motion`. Nothing they show is only available
 as animation — the stage names, the active stage's explanation and the counters
 are all rendered as text.
 
+Dark is the default. A control in the header cycles light, dark and system; the
+choice persists, and "system" follows the OS live. The theme is resolved by an
+inline script before first paint, so there is no flash of the wrong one.
+
 ## The evidence model
 
 Work is labelled by how strongly it is backed, and the badge is on every card:
 
 | Tier | Badge | Means |
 | --- | --- | --- |
-| `code` | SOURCE AVAILABLE | Shipped application. The architecture and tests are in `projects/`. |
-| `demo` | INTERACTIVE DEMO | Runnable walkthrough built into the site under `/demo/*`. |
+| `code` | SOURCE AVAILABLE | Source you can read — in `projects/`, or a public repository. |
 | `brief` | REPORTED OUTCOME | Operator-supplied record. Figures are as reported, not independently measured. |
 
 Two rules are enforced by tests rather than by discipline:
@@ -69,7 +72,7 @@ story about software.
 
 | Project | Tests |
 | --- | --- |
-| `site` | 30 |
+| `site` | 71 |
 | `projects/feedback-copilot` | 34 |
 | `projects/edtech-ops-intelligence-os` | 32 |
 | `projects/community-success-os` | 20 |
