@@ -48,7 +48,6 @@ import {
 } from "@/content/portfolio";
 import { Link } from "wouter";
 import { simulationFor } from "@/content/simulations";
-import { colophon } from "@/content/colophon";
 import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
@@ -899,53 +898,10 @@ export default function ReferenceHome() {
         </section>
       </main>
 
-      {/*
-        A colophon, not a copyright line. A site arguing that claims should be
-        checkable ought to state its own — and these are counted from the
-        repository at build time by scripts/colophon.mjs, so they cannot drift.
-      */}
       <footer className="ref-footer">
-        <div className="ref-colophon">
-          <div className="ref-colophon-lead">
-            <span className="ref-kicker">COLOPHON</span>
-            <p>
-              This page is the argument it makes. Built from {colophon.sourceFiles} source files and{" "}
-              {colophon.lines.toLocaleString()} lines, on {colophon.dependencies} runtime dependencies —
-              no UI framework beyond a router, no animation library, no 3D. Every figure below is counted
-              from the repository when the site is built.
-            </p>
-          </div>
-
-          <dl className="ref-colophon-specs">
-            <div>
-              <dt>dependencies</dt>
-              <dd>{colophon.dependencies}</dd>
-            </div>
-            <div>
-              <dt>tests</dt>
-              <dd>{colophon.tests}</dd>
-            </div>
-            <div>
-              <dt>source files</dt>
-              <dd>{colophon.sourceFiles}</dd>
-            </div>
-            {colophon.bundleKb ? (
-              <div>
-                <dt>bundle</dt>
-                <dd>
-                  {colophon.bundleKb}
-                  <em>KB</em>
-                </dd>
-              </div>
-            ) : null}
-          </dl>
-        </div>
-
-        <div className="ref-footer-rule">
-          <span>{colophon.stack.join(" · ")}</span>
-          <span>DIFFERENT PROBLEMS. SAME APPROACH.</span>
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
-        </div>
+        <span>ABDELRHMAN SHOMAN / SYSTEMS BUILDER</span>
+        <span>DIFFERENT PROBLEMS. SAME APPROACH.</span>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
       </footer>
     </div>
   );

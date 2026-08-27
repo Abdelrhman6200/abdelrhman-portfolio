@@ -5,15 +5,14 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "node scripts/sitemap.mjs && node scripts/colophon.mjs && vite build",
+    "build": "node scripts/sitemap.mjs && vite build && node scripts/prerender.mjs",
     "start": "vite preview --host",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
     "og": "node scripts/og.mjs",
-    "sitemap": "node scripts/sitemap.mjs",
-    "colophon": "node scripts/colophon.mjs"
+    "sitemap": "node scripts/sitemap.mjs"
   },
   "dependencies": {
     "@radix-ui/react-tooltip": "^1.2.8",

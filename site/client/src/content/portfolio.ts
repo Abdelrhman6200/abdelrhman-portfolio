@@ -47,6 +47,13 @@ export type Project = {
   verifiable?: string[];
   /** Three hard numbers for the feature row. Only claims checkable in source. */
   stats?: Array<{ value: string; label: string }>;
+  /**
+   * Real screenshots of the running application. Drop images into
+   * client/public/screens/<slug>/ and list them here — the case file renders
+   * a gallery only when this is non-empty, so the seam costs nothing until
+   * genuine captures exist. Same rule as linkedin/cv: left empty, not faked.
+   */
+  screenshots?: Array<{ src: string; alt: string; caption: string }>;
   repo?: string;
 };
 

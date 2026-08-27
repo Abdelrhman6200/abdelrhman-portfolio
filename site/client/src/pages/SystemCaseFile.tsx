@@ -146,6 +146,20 @@ export default function SystemCaseFile() {
           </section>
         ) : null}
 
+        {project.screenshots?.length ? (
+          <section className="case-screens" aria-labelledby="case-screens-heading">
+            <h2 id="case-screens-heading">The application itself.</h2>
+            <div className="case-screens-grid">
+              {project.screenshots.map((shot) => (
+                <figure key={shot.src}>
+                  <img src={shot.src} alt={shot.alt} loading="lazy" />
+                  <figcaption>{shot.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         {demoPathFor(project.kind) ? (
           <section className="case-demo-callout">
             <div>

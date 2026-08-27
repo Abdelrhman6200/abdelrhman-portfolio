@@ -164,13 +164,7 @@
 .ref-proof { margin-top: 2rem; background: var(--ref-panel); }.ref-proof-top { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 1.3rem; border-bottom: 1px solid rgba(var(--ref-on-dark-rgb), .15); }.ref-proof-top > span { color: rgba(var(--ref-on-dark-rgb), .42); font: 700 .52rem/1 "IBM Plex Mono", monospace; letter-spacing: .1em; }.ref-proof-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, .55fr); gap: 4rem; margin-top: 3rem; }.ref-proof h2 { color: var(--ref-on-dark); }.ref-proof h2 em { color: var(--ref-yellow); }.ref-proof-grid p { color: rgba(var(--ref-on-dark-rgb), .64); font-size: .85rem; line-height: 1.7; }.ref-proof-pills { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.8rem; }.ref-proof-pills span { color: var(--ref-on-accent); background: var(--ref-coral); }.ref-proof-pills span:nth-child(2n) { background: var(--ref-yellow); }
 
 .ref-contact { padding-top: clamp(5rem, 9vw, 8rem); padding-bottom: clamp(5rem, 10vw, 9rem); }.ref-contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .5fr); gap: 4rem; margin-top: 2rem; }.ref-contact h2 { margin-bottom: 1rem; }.ref-contact p { max-width: 350px; color: var(--ref-muted); font-size: .9rem; line-height: 1.6; }.ref-contact .ref-button { margin-top: 1.7rem; }.ref-contact-card { align-self: end; padding: 1.5rem; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 24px; box-shadow: 11px 11px 0 rgba(var(--ref-ink-rgb), .08); }.ref-contact-card > span { color: var(--ref-coral-ink); font: 700 .53rem/1.3 "IBM Plex Mono", monospace; letter-spacing: .09em; }.ref-contact-card strong { display: block; margin-top: .55rem; font: 800 1.4rem/.9 "Space Grotesk", sans-serif; }.ref-contact-lines { display: grid; gap: .7rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--ref-line); }.ref-contact-lines span { display: flex; align-items: center; gap: .5rem; color: var(--ref-muted); font: 600 .61rem/1 "IBM Plex Mono", monospace; }.ref-contact-lines svg { color: var(--ref-coral); }.ref-contact-card small { display: block; margin-top: 1.2rem; color: var(--ref-muted); font-size: .64rem; line-height: 1.45; }
-/* The footer is now a closing plate, not a strip: dark in both themes like
-   the other inverted panels, so the colophon reads as a specification page. */
-.ref-footer {
-  margin-top: clamp(3rem, 7vw, 6rem);
-  background: var(--ref-panel);
-  color: rgba(var(--ref-on-dark-rgb), .72);
-}
+.ref-footer { display: flex; justify-content: space-between; gap: 1rem; max-width: 1280px; margin: 0 auto; padding: 1.2rem clamp(1rem, 5.8vw, 5rem) 1.8rem; color: var(--ref-muted); border-top: 1px solid var(--ref-line); font: 700 .52rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; }
 
 .ref-reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); }.ref-reveal.is-visible { opacity: 1; transform: translateY(0); }
 
@@ -1112,83 +1106,18 @@
   .reference-page::before { mask-image: none; opacity: .5; }
 }
 
-/* --- The colophon ---------------------------------------------------------
- * The footer states the site's own spec, the way a well-made book does. The
- * figures come from scripts/colophon.mjs at build time, so this is the page
- * holding itself to the standard it asks of everything else. */
-.ref-colophon {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
-  gap: clamp(1.4rem, 4vw, 3.4rem);
-  align-items: start;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: clamp(2.6rem, 6vw, 4.4rem) clamp(1rem, 5.8vw, 5rem) 2rem;
-}
-.ref-colophon-lead .ref-kicker { color: rgba(var(--ref-on-dark-rgb), .6); }
-.ref-colophon-lead .ref-kicker::after { background: linear-gradient(to right, rgba(var(--ref-on-dark-rgb), .22), transparent); }
-.ref-colophon-lead p {
-  margin-top: 1rem;
-  max-width: 58ch;
-  color: rgba(var(--ref-on-dark-rgb), .72);
-  font-size: .86rem;
-  line-height: 1.7;
-}
 
-.ref-colophon-specs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0;
-  background: rgba(var(--ref-on-dark-rgb), .14);
-  border: 1px solid rgba(var(--ref-on-dark-rgb), .14);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.ref-colophon-specs > div {
-  display: grid;
-  gap: .3rem;
-  padding: .95rem 1.1rem;
-  background: var(--ref-panel);
-}
-.ref-colophon-specs dt {
-  color: rgba(var(--ref-on-dark-rgb), .5);
-  font: 700 .44rem/1 "IBM Plex Mono", monospace;
-  letter-spacing: .13em;
-  text-transform: uppercase;
-}
-.ref-colophon-specs dd {
-  margin: 0;
-  color: var(--ref-on-dark);
-  font: 800 1.5rem/1 "Space Grotesk", sans-serif;
-  letter-spacing: -.05em;
-  font-variant-numeric: tabular-nums slashed-zero;
-}
-.ref-colophon-specs dd em {
-  margin-left: .12rem;
-  color: rgba(var(--ref-on-dark-rgb), .45);
-  font: 700 .62rem/1 "IBM Plex Mono", monospace;
-  font-style: normal;
-}
 
-.ref-footer-rule {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.4rem;
-  flex-wrap: wrap;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1.1rem clamp(1rem, 5.8vw, 5rem) 2.4rem;
-  border-top: 1px solid rgba(var(--ref-on-dark-rgb), .16);
-  color: rgba(var(--ref-on-dark-rgb), .55);
-  font: 700 .5rem/1.5 "IBM Plex Mono", monospace;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+/* Screenshot gallery on case files — renders only when real captures exist. */
+.case-screens h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.05; font-weight: 800; }
+.case-screens-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem; margin-top: 1.4rem;
 }
-.ref-footer-rule a { color: rgba(var(--ref-on-dark-rgb), .55); text-transform: none; letter-spacing: .04em; }
-.ref-footer-rule a:hover { color: var(--ref-yellow); }
-
-@media (max-width: 880px) {
-  .ref-colophon { grid-template-columns: minmax(0, 1fr); }
+.case-screens-grid figure {
+  margin: 0; display: grid; gap: .5rem;
+  padding: .6rem; border: 1px solid var(--ref-line); border-radius: 16px;
+  background: var(--ref-card);
 }
+.case-screens-grid img { width: 100%; height: auto; border-radius: 10px; display: block; }
+.case-screens-grid figcaption { padding: 0 .3rem .3rem; color: var(--ref-muted); font-size: .72rem; line-height: 1.5; }
