@@ -25,7 +25,7 @@ npm install
 npm run dev      # development server
 npm run check    # TypeScript, no emit
 npm test         # vitest
-npm run build    # production build
+npm run build    # production build (the site builds to site/dist/)
 ```
 
 Start with `site/`. It needs no database and no environment variables.
@@ -50,6 +50,16 @@ are all rendered as text.
 Dark is the default. A control in the header cycles light, dark and system; the
 choice persists, and "system" follows the OS live. The theme is resolved by an
 inline script before first paint, so there is no flash of the wrong one.
+
+## Publishing the site
+
+The site is fully static — no server, no API. `npm run build` in `site/`
+writes it to `site/dist/`; upload that directory to any static host.
+
+A single-page app needs every path served by `index.html`, or a link straight
+to `/system/...` returns 404. That is already configured: `_redirects` covers
+Netlify and Cloudflare Pages, `vercel.json` covers Vercel, and the Pages
+workflow writes a `404.html` copy for GitHub Pages.
 
 ## The evidence model
 

@@ -8,8 +8,8 @@ npm install
 npm run dev      # http://localhost:3000
 npm run check    # TypeScript, no emit
 npm test         # vitest
-npm run build    # dist/public (client) + dist/index.js (server)
-npm start        # serve the production build
+npm run build    # static site -> dist/
+npm run preview  # serve the built site locally
 ```
 
 ## What the site argues

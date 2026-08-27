@@ -12,7 +12,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: false,
-    include: ["client/src/**/*.test.{ts,tsx}", "server/**/*.test.ts"],
+    include: ["client/src/**/*.test.{ts,tsx}"],
     // Stylesheets are imported by the components under test; jsdom does not
     // need them parsed, and skipping keeps the run fast.
     css: false,
