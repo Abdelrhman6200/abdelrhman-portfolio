@@ -77,12 +77,20 @@ const projectFilters: Array<{ key: Category; label: string }> = [
   { key: "RESEARCH", label: "Research" },
 ];
 
-const reportedProjects = [...featuredProjects, ...projectArchive];
+/**
+ * The record excludes the three built systems: they already have full feature
+ * rows above, and repeating them here was what made eighteen projects read as
+ * twenty-six impressions.
+ */
+const recordProjects = [...featuredProjects, ...projectArchive];
+
+/** Group order — the progression the section claims to show. */
+const recordGroups = Array.from(new Set(recordProjects.map((project) => project.group)));
 
 /** How many systems fall under a filter. "ALL" counts everything. */
 function countIn(category: Category): number {
-  if (category === "ALL") return allProjects.length;
-  return allProjects.filter((item) => item.domains.includes(category)).length;
+  if (category === "ALL") return recordProjects.length;
+  return recordProjects.filter((item) => item.domains.includes(category)).length;
 }
 
 /** Reveals children once on first intersection. No-ops under reduced motion via CSS. */
@@ -317,7 +325,7 @@ export default function ReferenceHome() {
 
   const service = services.find((item) => item.key === activeService) ?? services[0];
   const project = featuredProjects[activeProject];
-  const visibleProjects = allProjects.filter(
+  const visibleProjects = recordProjects.filter(
     (item) => activeCategory === "ALL" || item.domains.includes(activeCategory)
   );
   const closeMenu = () => setMenuOpen(false);
@@ -326,6 +334,20 @@ export default function ReferenceHome() {
   const selectProject = (index: number) => {
     setActiveProject(index);
     setActiveStep(0);
+  };
+
+  /** Roving-tabindex arrow keys for the case-file picker, per the tabs pattern. */
+  const onFileKeyDown = (event: React.KeyboardEvent, index: number) => {
+    const last = featuredProjects.length - 1;
+    let next: number | null = null;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = index === last ? 0 : index + 1;
+    if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = index === 0 ? last : index - 1;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = last;
+    if (next === null) return;
+    event.preventDefault();
+    selectProject(next);
+    document.getElementById(`file-tab-${featuredProjects[next].number}`)?.focus();
   };
 
   const copyEmail = async () => {
@@ -594,102 +616,89 @@ export default function ReferenceHome() {
             </p>
           </div>
 
-          <div className="ref-project-grid ref-featured-grid">
+          {/* One selector, one panel. Five full cards — each running its own
+              simulation — competed with the built-software rows above and made
+              eighteen projects feel like twenty-six. */}
+          <div className="ref-file-picker" role="tablist" aria-label="Operational case files">
             {featuredProjects.map((item, index) => (
-              <article
+              <button
                 key={item.number}
-                className={`ref-project-card ${activeProject === index ? "is-active" : ""} ref-card-${item.accent}`}
-                onMouseEnter={() => selectProject(index)}
+                type="button"
+                role="tab"
+                id={`file-tab-${item.number}`}
+                aria-selected={activeProject === index}
+                aria-controls="file-panel"
+                tabIndex={activeProject === index ? 0 : -1}
+                className={`ref-file-tab ${activeProject === index ? "is-active" : ""} ref-card-${item.accent}`}
+                onClick={() => selectProject(index)}
+                onKeyDown={(event) => onFileKeyDown(event, index)}
               >
-                <div className="ref-project-card-head">
-                  <span>
-                    {item.number} / {item.subtitle}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => selectProject(index)}
-                    onFocus={() => selectProject(index)}
-                    aria-pressed={activeProject === index}
-                  >
-                    {activeProject === index ? "INSPECTING" : "INSPECT"} <ArrowUpRight size={14} aria-hidden="true" />
-                  </button>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                <SystemSimulation
-                  spec={simulationFor(item.kind, item.flow, item.accent)}
-                  label={`${item.title} pipeline`}
-                />
-                <div className="ref-project-tags">
-                  {item.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-                <div className="ref-project-foot">
-                  <EvidenceBadge project={item} />
-                  {demoPathFor(item.kind) ? (
-                    <Link className="ref-project-demo" href={demoPathFor(item.kind)!}>
-                      Run the live demo <ArrowUpRight size={14} aria-hidden="true" />
-                    </Link>
-                  ) : null}
-                </div>
-              </article>
+                <i>{item.number}</i>
+                <span>
+                  <b>{item.title}</b>
+                  <small>{item.subtitle}</small>
+                </span>
+              </button>
             ))}
           </div>
 
-          <div className="ref-project-inspector" aria-live="polite">
-            <div className="ref-inspector-title">
-              <span>ACTIVE FILE / {project.number}</span>
-              <strong>{project.title}</strong>
-              <small>
-                {project.group} / {evidenceLabels[project.evidence].label}
-              </small>
-            </div>
+          <div className="ref-file-panel" id="file-panel" role="tabpanel" aria-labelledby={`file-tab-${project.number}`} key={project.number}>
+            <div className="ref-file-copy">
+              <div className="ref-file-head">
+                <EvidenceBadge project={project} />
+                <span>{project.group}</span>
+              </div>
+              <h3>{project.title}</h3>
+              <p className="ref-file-summary">{project.summary}</p>
 
-            {/* Each stage is selectable, so the rail explains the system rather
-                than decorating it. */}
-            <div className="ref-inspector-flow" role="group" aria-label={`${project.title} stages`}>
-              {project.flow.map((step, index) => (
-                <button
-                  key={step}
-                  type="button"
-                  className={index === activeStep ? "is-active" : index < activeStep ? "is-past" : ""}
-                  onClick={() => setActiveStep(index)}
-                  aria-pressed={index === activeStep}
-                >
-                  <i>{String(index + 1).padStart(2, "0")}</i>
-                  {step}
-                  {index < project.flow.length - 1 && <b aria-hidden="true">→</b>}
-                </button>
-              ))}
-            </div>
+              <div className="ref-inspector-flow" role="group" aria-label={`${project.title} stages`}>
+                {project.flow.map((step, index) => (
+                  <button
+                    key={step}
+                    type="button"
+                    className={index === activeStep ? "is-active" : index < activeStep ? "is-past" : ""}
+                    onClick={() => setActiveStep(index)}
+                    aria-pressed={index === activeStep}
+                  >
+                    <i>{String(index + 1).padStart(2, "0")}</i>
+                    {step}
+                    {index < project.flow.length - 1 && <b aria-hidden="true">→</b>}
+                  </button>
+                ))}
+              </div>
 
-            {/* The selected stage explains itself, using the same stage copy
-                that drives the running simulation on the card. */}
-            <p className="ref-inspector-step">
-              <span>STAGE {String(activeStep + 1).padStart(2, "0")}</span>
-              {simulationFor(project.kind, project.flow, project.accent).stages[activeStep]?.detail}
-            </p>
-
-            <div className="ref-inspector-bottom">
-              <p>
-                {project.result ??
-                  "Grounded in the supplied project record; public implementation evidence can be added when available."}
+              <p className="ref-inspector-step">
+                <span>STAGE {String(activeStep + 1).padStart(2, "0")}</span>
+                {simulationFor(project.kind, project.flow, project.accent).stages[activeStep]?.detail}
               </p>
-              <div className="ref-inspector-actions">
+
+              {project.result ? <p className="ref-file-result">{project.result}</p> : null}
+
+              <div className="ref-file-actions">
                 {demoPathFor(project.kind) ? (
-                  <Link href={demoPathFor(project.kind)!}>
-                    Run the live demo <ArrowUpRight size={13} aria-hidden="true" />
+                  <Link className="ref-button ref-button-accent" href={demoPathFor(project.kind)!}>
+                    Run the live demo <ArrowUpRight size={15} aria-hidden="true" />
                   </Link>
                 ) : null}
                 {project.repo ? (
-                  <a href={project.repo} target="_blank" rel="noreferrer">
-                    Repository <Github size={13} aria-hidden="true" />
+                  <a className="ref-text-link" href={project.repo} target="_blank" rel="noreferrer">
+                    Repository <Github size={14} aria-hidden="true" />
                   </a>
                 ) : (
-                  <span>Internal system — no public repository</span>
+                  <span className="demo-hint">Internal system — no public repository</span>
                 )}
               </div>
+            </div>
+
+            <div className="ref-file-stage">
+              <AppWindow name={`${project.title} — live model`}>
+                <div className="ref-feature-sim">
+                  <SystemSimulation
+                    spec={simulationFor(project.kind, project.flow, project.accent)}
+                    label={`${project.title} pipeline`}
+                  />
+                </div>
+              </AppWindow>
             </div>
           </div>
         </section>
@@ -697,21 +706,22 @@ export default function ReferenceHome() {
         <section id="index" className="ref-project-index ref-section">
           <div className="ref-section-heading">
             <div>
-              <div className="ref-kicker">06 / FULL INDEX</div>
+              <div className="ref-kicker">06 / THE REST OF THE RECORD</div>
               <h2>
-                Every system,
+                The range behind
                 <br />
-                <em>with its evidence.</em>
+                <em>the three.</em>
               </h2>
             </div>
             <p>
-              Not every project is a software product. Together they show the progression from operational
-              infrastructure, through organizational control, to AI transformation and shipped software.
+              The systems above get the space because they are the strongest evidence. These are the rest —
+              grouped by what they were for, so the progression from infrastructure to organizational control
+              to AI is readable at a glance rather than buried in a wall of cards.
             </p>
           </div>
 
           <div className="ref-index-toolbar">
-            <div className="ref-filter-list" role="group" aria-label="Filter projects by domain">
+            <div className="ref-filter-list" role="group" aria-label="Filter by domain">
               {projectFilters.map((filter) => (
                 <button
                   key={filter.key}
@@ -726,61 +736,57 @@ export default function ReferenceHome() {
               ))}
             </div>
             <span className="ref-index-status" aria-live="polite">
-              {visibleProjects.length} systems / {activeCategory === "ALL" ? "ALL DOMAINS" : activeCategory}
+              {visibleProjects.length} of {recordProjects.length} shown
             </span>
           </div>
 
-          <div className="ref-archive-grid">
-            {visibleProjects.map((item, index) => (
-              <article
-                key={`${activeCategory}-${item.number}`}
-                className={`ref-archive-card ref-card-${item.accent} ref-archive-enter`}
-                style={{ "--archive-delay": `${Math.min(index, 8) * 45}ms` } as CSSProperties}
-              >
-                <div className="ref-archive-top">
-                  <span>
-                    {item.number} / {item.group}
-                  </span>
-                  <EvidenceBadge project={item} />
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                <div className="ref-archive-flow">
-                  {item.flow.map((step, stepIndex) => (
-                    <span key={step}>
-                      {step}
-                      {stepIndex < item.flow.length - 1 && <b aria-hidden="true">→</b>}
-                    </span>
-                  ))}
-                </div>
-                <div className="ref-archive-footer">
-                  <div className="ref-project-tags">
-                    {item.tags.slice(0, 3).map((tag) => (
-                      <span key={tag}>{tag}</span>
+          {/* Grouped rows, not cards. Eighteen 280px cards read as a wall and
+              buried the three that matter; the same information as one line
+              each fits in the height of two of them. */}
+          <div className="ref-record">
+            {recordGroups.map((group) => {
+              const rows = visibleProjects.filter((item) => item.group === group);
+              if (rows.length === 0) return null;
+              return (
+                <section key={group} className="ref-record-group" aria-label={group}>
+                  <h3>
+                    {group}
+                    <i>{rows.length}</i>
+                  </h3>
+                  <ul>
+                    {rows.map((item) => (
+                      <li key={item.number} className={`ref-record-row ref-card-${item.accent}`}>
+                        <span className="ref-record-num">{item.number}</span>
+                        <span className="ref-record-body">
+                          <b>{item.title}</b>
+                          <small>{item.summary}</small>
+                        </span>
+                        <span className="ref-record-meta">
+                          <EvidenceBadge project={item} />
+                          {item.result ? <em>{item.result.replace(/^Reported: /, "")}</em> : null}
+                          <span className="ref-record-links">
+                            {demoPathFor(item.kind) ? (
+                              <Link href={demoPathFor(item.kind)!}>Demo →</Link>
+                            ) : null}
+                            {item.repo ? (
+                              <a href={item.repo} target="_blank" rel="noreferrer">
+                                Source →
+                              </a>
+                            ) : null}
+                          </span>
+                        </span>
+                      </li>
                     ))}
-                  </div>
-                  {item.result ? <small>{item.result}</small> : null}
-                  {item.repo || demoPathFor(item.kind) ? (
-                    <div className="ref-archive-links">
-                      {demoPathFor(item.kind) ? (
-                        <Link href={demoPathFor(item.kind)!}>Live demo →</Link>
-                      ) : null}
-                      {item.repo ? (
-                        <a href={item.repo} target="_blank" rel="noreferrer">
-                          Source →
-                        </a>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
-              </article>
-            ))}
+                  </ul>
+                </section>
+              );
+            })}
           </div>
 
           <p className="ref-index-note">
-            {reportedProjects.length} of these are operational case files described from the operator&rsquo;s
-            record; {builtSystems.length} are applications whose source is available. The badges say which is
-            which, on every card.
+            Every line is labelled by evidence tier in the same way as the work above: {builtSystems.length}{" "}
+            applications have readable source, and the rest are outcomes reported by the organizations they ran
+            inside. Nothing here is presented as more than it is.
           </p>
         </section>
 

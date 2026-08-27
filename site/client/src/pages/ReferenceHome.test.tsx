@@ -214,3 +214,48 @@ describe("method tablist keyboard navigation", () => {
     expect(container).toBeDefined();
   });
 });
+
+describe("information architecture", () => {
+  it("shows each project once — no project appears in both a spotlight and the record", () => {
+    const { container } = render(<ReferenceHome />);
+
+    // The three built systems get feature rows; they must not be repeated as
+    // record rows, which is what made 18 projects read as 26 impressions.
+    const recordTitles = Array.from(container.querySelectorAll(".ref-record-body b")).map(
+      (node) => node.textContent
+    );
+    for (const system of builtSystems) {
+      expect(recordTitles, `${system.title} is duplicated in the record`).not.toContain(system.title);
+    }
+  });
+
+  it("renders one case file at a time instead of five full cards", () => {
+    const { container } = render(<ReferenceHome />);
+    expect(container.querySelectorAll(".ref-file-panel")).toHaveLength(1);
+    expect(container.querySelectorAll('[role="tab"][aria-controls="file-panel"]')).toHaveLength(5);
+  });
+
+  it("keeps the page's running simulations to a readable number", () => {
+    // Previously eight ran at once: three feature rows plus five case cards.
+    const { container } = render(<ReferenceHome />);
+    expect(container.querySelectorAll(".sim").length).toBeLessThanOrEqual(4);
+  });
+
+  it("groups the record and covers every non-built project exactly once", () => {
+    const { container } = render(<ReferenceHome />);
+    const rows = container.querySelectorAll(".ref-record-row");
+    const expected = allProjects.length - builtSystems.length;
+    expect(rows).toHaveLength(expected);
+
+    const groups = container.querySelectorAll(".ref-record-group");
+    expect(groups.length).toBeGreaterThan(1);
+  });
+
+  it("still labels every record row with its evidence tier", () => {
+    const { container } = render(<ReferenceHome />);
+    const rows = container.querySelectorAll(".ref-record-row");
+    for (const row of Array.from(rows)) {
+      expect(row.querySelector(".ref-evidence")).not.toBeNull();
+    }
+  });
+});
