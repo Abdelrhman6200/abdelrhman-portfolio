@@ -110,3 +110,40 @@ describe("validation demo", () => {
     expect(screen.queryAllByText(/id-format/)).toHaveLength(0);
   });
 });
+
+describe("feedback demo roster", () => {
+  it("seeds the full lifecycle: a draft, one in review, one approved", () => {
+    render(<FeedbackDemo />);
+    expect(screen.getByText("in review")).toBeDefined();
+    expect(screen.getByText("approved")).toBeDefined();
+    // The coordinator sees the queue count without hunting for it.
+    act(() => {
+      screen.getByRole("button", { name: "coordinator" }).click();
+    });
+    expect(screen.getByText(/1 in queue/)).toBeDefined();
+  });
+});
+
+describe("validation demo import", () => {
+  it("importing the batch surfaces a cross-batch duplicate", () => {
+    render(<ValidationDemo />);
+    act(() => {
+      screen.getByRole("button", { name: /import batch/i }).click();
+    });
+    // ST-1046 exists in both the seed sheet and the imported batch.
+    const dupes = screen.getAllByText(/duplicate-id/);
+    expect(dupes.length).toBeGreaterThanOrEqual(4);
+    // The import is one-shot.
+    expect((screen.getByRole("button", { name: /import batch/i }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it("locate moves focus to the offending cell", () => {
+    render(<ValidationDemo />);
+    act(() => {
+      screen.getAllByRole("button", { name: /^Locate row/ })[0].click();
+    });
+    const active = document.activeElement as HTMLInputElement;
+    expect(active.tagName).toBe("INPUT");
+    expect(active.getAttribute("aria-label")).toMatch(/row \d+$/);
+  });
+});

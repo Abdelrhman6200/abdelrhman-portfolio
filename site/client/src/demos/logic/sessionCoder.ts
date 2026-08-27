@@ -71,3 +71,18 @@ export function tickBatch(runs: SessionRun[]): SessionRun[] {
   if (index < 0) return runs;
   return runs.map((run, i) => (i === index ? advanceRun(run) : run));
 }
+
+/**
+ * Deterministic batch of varied sessions — cycles the option lists rather than
+ * randomising, so every demo run (and every test) sees the same batch.
+ */
+export function variedRequests(count: number, startCohort = 4): SessionRequest[] {
+  const slots = ["SAT 13:00", "SUN 19:00", "MON 18:00", "TUE 17:00", "WED 16:00"];
+  return Array.from({ length: count }, (_v, i) => ({
+    governorate: GOVERNORATES[i % GOVERNORATES.length],
+    vendor: VENDORS[(i + 1) % VENDORS.length],
+    track: TRACKS[i % TRACKS.length],
+    cohort: startCohort + i,
+    slot: slots[i % slots.length],
+  }));
+}

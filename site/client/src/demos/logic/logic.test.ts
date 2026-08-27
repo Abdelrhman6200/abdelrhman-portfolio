@@ -232,3 +232,25 @@ describe("report builder", () => {
     expect(validateAnswers(bad)).toHaveLength(2);
   });
 });
+
+/* ------------------------------------------------------------------------- */
+describe("demo batch helpers", () => {
+  it("messyBatch carries fresh failure modes and creates a cross-batch duplicate", async () => {
+    const { messyBatch } = await import("./validationRules");
+    const combined = validate([...seedRows, ...messyBatch]);
+    // Findings in the appended rows…
+    expect(combined.some((finding) => finding.rowIndex >= seedRows.length)).toBe(true);
+    // …including the duplicate created against the original sheet (ST-1046).
+    const dupRows = combined.filter((finding) => finding.rule === "duplicate-id").map((finding) => finding.rowIndex);
+    expect(dupRows.some((row) => row >= seedRows.length)).toBe(true);
+    expect(dupRows.some((row) => row < seedRows.length)).toBe(true);
+  });
+
+  it("variedRequests is deterministic and produces unique codes", async () => {
+    const { variedRequests } = await import("./sessionCoder");
+    const a = variedRequests(5);
+    expect(a).toEqual(variedRequests(5));
+    const codes = a.map(sessionCode);
+    expect(new Set(codes).size).toBe(codes.length);
+  });
+});

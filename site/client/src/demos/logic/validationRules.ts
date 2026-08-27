@@ -132,3 +132,11 @@ export const seedRows: StudentRow[] = [
   { id: "ST-1045", name: "", phone: "01155512345", track: "Robotics", slot: "17:00 THU" },
   { id: "ST-1046", name: "Youssef Samir", phone: "", track: "Digital Design", slot: "WED 16:00" },
 ];
+
+/** A second batch to import mid-demo — fresh failure modes, one clean row. */
+export const messyBatch: StudentRow[] = [
+  { id: "ST-1047", name: "Laila Fathy", phone: "01234567890", track: "Data Analysis", slot: "SAT 13:00" },
+  { id: "ST-1046", name: "Yousef S.", phone: "0122334455667788", track: "Digital Design", slot: "WED 16:00" },
+  { id: "ST-1048", name: "Hana Adel", phone: "01099887766", track: "Cybersecurity", slot: "FRIDAY 5PM" },
+  { id: "", name: "Walk-in (no form)", phone: "", track: "Web Development", slot: "MON 18:00" },
+];
