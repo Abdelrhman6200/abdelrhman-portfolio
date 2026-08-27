@@ -567,6 +567,23 @@ export const projectArchive: Project[] = [
   },
 ];
 
+/**
+ * The shared application core.
+ *
+ * These four modules are byte-identical across all three applications — one
+ * standalone auth core, applied to three unrelated problems. It is the site's
+ * thesis demonstrated in code rather than in operations anecdotes, and unlike
+ * most claims here a reader can check it with a checksum.
+ */
+export const sharedCore = {
+  files: ["password.ts", "session.ts", "rateLimit.ts", "cookies.ts"],
+  lines: 288,
+  appCount: 3,
+  path: "server/_core/",
+  claim:
+    "scrypt password hashing, stateless session JWTs, a sliding-window rate limiter and the cookie policy — 288 lines, byte-identical in all three applications.",
+} as const;
+
 export const allProjects: Project[] = [...builtSystems, ...featuredProjects, ...projectArchive];
 
 export const services = [

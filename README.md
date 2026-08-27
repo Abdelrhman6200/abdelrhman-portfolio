@@ -1,6 +1,13 @@
 # Abdelrhman Shoman — Portfolio
 
+**Live site:** https://ashomanportfolio.vercel.app · **Contact:** abdelrhman.shoman62@gmail.com
+
+[![CI](https://github.com/Abdelrhman6200/abdelrhman-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/Abdelrhman6200/abdelrhman-portfolio/actions/workflows/ci.yml)
+
 One bundle: the portfolio site, and the software it points at.
+
+Every number the site states is checked here on every push — the type check,
+the tests and the build run for all four packages in CI.
 
 ```
 site/                              The portfolio web app
@@ -85,6 +92,14 @@ story about software.
 Every push runs each package's type check, tests and build in a GitHub
 Actions matrix (`.github/workflows/ci.yml`). The portfolio's claim is that its
 numbers are checkable; CI is where they get checked in public.
+
+## One core, three applications
+
+`server/_core/password.ts`, `session.ts`, `rateLimit.ts` and `cookies.ts` are
+**byte-identical across all three applications** — 288 lines of scrypt hashing,
+stateless session JWTs, sliding-window rate limiting and cookie policy, applied
+to three unrelated problems. A test in `site/` compares their checksums, so the
+claim cannot quietly become false.
 
 ## Test coverage
 

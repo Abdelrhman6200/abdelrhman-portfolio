@@ -46,3 +46,19 @@ await mkdir(dirname(out), { recursive: true });
 await sharp(Buffer.from(svg)).png().toFile(out);
 const meta = await sharp(out).metadata();
 console.log(`wrote ${out} — ${meta.width}x${meta.height}`);
+
+/* Touch icon and PNG favicon fallback — same mark, so the tab, the home screen
+ * and the social card stay one identity. Older Safari and some feed readers do
+ * not render an SVG favicon. */
+const mark = `
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#121213"/>
+  <text x="256" y="330" font-family="Arial, sans-serif" font-size="215" font-weight="800"
+        fill="#ece9e3" text-anchor="middle" letter-spacing="-12">AS</text>
+</svg>`;
+
+for (const [name, size] of [["apple-touch-icon.png", 180], ["favicon-96.png", 96]]) {
+  const file = join(dirname(fileURLToPath(import.meta.url)), "..", "client", "public", name);
+  await sharp(Buffer.from(mark)).resize(size, size).png().toFile(file);
+  console.log(`wrote ${name} — ${size}x${size}`);
+}

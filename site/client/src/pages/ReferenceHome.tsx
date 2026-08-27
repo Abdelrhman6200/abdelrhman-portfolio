@@ -39,6 +39,7 @@ import {
   methodStages,
   projectArchive,
   services,
+  sharedCore,
   type Domain,
   type Project,
   type ServiceKey,
@@ -545,6 +546,26 @@ export default function ReferenceHome() {
               </Link>
             ))}
           </div>
+
+          <aside className="ref-shared-core">
+            <div className="ref-shared-core-copy">
+              <span className="ref-kicker">THE SAME CORE, THREE TIMES</span>
+              <p>
+                These three products solve unrelated problems, and underneath they run the same{" "}
+                <strong>{sharedCore.lines} lines</strong> — {sharedCore.claim.split(" — ")[0]} — {" "}
+                <strong>byte-identical</strong> in all {sharedCore.appCount}. Different problems, same
+                approach, stated where it can be checked with a checksum rather than taken on trust.
+              </p>
+            </div>
+            <ul className="ref-shared-core-files">
+              {sharedCore.files.map((file) => (
+                <li key={file}>
+                  <span>{sharedCore.path}</span>
+                  {file}
+                </li>
+              ))}
+            </ul>
+          </aside>
 
           <div className="ref-feature-list">
             {builtSystems.map((item, index) => (

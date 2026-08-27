@@ -33,7 +33,9 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ matrix.package }}/package-lock.json
 
-      - run: npm ci
+      # --omit=optional skips sharp: it exists only for `npm run og`, and the
+      # generated PNGs are committed, so CI never needs the native binary.
+      - run: npm ci --omit=optional
       - run: npm run check
       - run: npm test
       - run: npm run build
