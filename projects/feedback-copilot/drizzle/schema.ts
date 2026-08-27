@@ -72,6 +72,23 @@ export const feedbackEntries = mysqlTable("feedbackEntries", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
+/**
+ * Append-only transition log for a feedback entry: who moved it, where, and
+ * with what note. Nothing in the application updates or deletes rows here —
+ * the API surface only ever inserts and reads.
+ */
+export const feedbackEvents = mysqlTable("feedbackEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  feedbackId: int("feedbackId").notNull(),
+  actorId: int("actorId").notNull(),
+  actorRole: mysqlEnum("actorRole", ["teacher", "coordinator"]).notNull(),
+  action: varchar("action", { length: 64 }).notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type FeedbackEvent = typeof feedbackEvents.$inferSelect;
+
 export const feedbackComments = mysqlTable("feedbackComments", {
   id: int("id").autoincrement().primaryKey(),
   feedbackId: int("feedbackId").notNull(),

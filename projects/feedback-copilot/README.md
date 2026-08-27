@@ -10,7 +10,7 @@ npm install
 npm run db:push
 npm run dev             # http://localhost:3000
 npm run check           # TypeScript
-npm test                # 34 tests
+npm test                # 47 tests
 npm run build
 ```
 
@@ -40,6 +40,11 @@ courtesy; the boundary is `server/routers.ts`.
 **Generation failures surface.** If the streaming LLM call fails, the teacher is
 told. There is no fallback to fabricated output — a plausible invented draft
 about a real student is worse than no draft.
+
+**Every transition is logged.** Each save, submission, approval, return and
+comment writes an append-only event with its actor to `feedbackEvents` —
+there is no API to update or delete a log row. `feedback.events` reads the
+trail back, scoped: a coordinator sees any entry, a teacher only their own.
 
 ## Authentication
 

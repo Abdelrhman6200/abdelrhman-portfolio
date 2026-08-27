@@ -42,7 +42,10 @@ export function getSessionCookieOptions(
   return {
     httpOnly: true,
     path: "/",
-    sameSite: "none",
+    // Lax, not none: the app is no longer embedded cross-site, and Lax means
+    // the browser refuses to attach the session cookie to cross-site POSTs —
+    // CSRF protection for every state-changing endpoint, for free.
+    sameSite: "lax",
     secure: isSecureRequest(req),
   };
 }

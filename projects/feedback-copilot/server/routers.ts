@@ -15,6 +15,8 @@ import {
   studentBelongsToTeacher,
   updateFeedbackEntry,
   updateTeacherFeedbackEntry,
+  recordFeedbackEvent,
+  getFeedbackEvents,
 } from "./db";
 import { buildFeedbackMessages, feedbackJsonSchema, feedbackSectionsSchema, feedbackStatusValues } from "./feedback";
 import { invokeLLM } from "./_core/llm";
@@ -91,6 +93,12 @@ export const appRouter = router({
           nextSteps: input.sections.nextSteps,
           status: input.status,
         });
+        await recordFeedbackEvent({
+          feedbackId: Number(feedbackId),
+          actorId: ctx.user.id,
+          actorRole: "teacher",
+          action: input.status === "draft" ? "created draft" : "created and submitted",
+        });
         return { feedbackId };
       }),
     edit: teacherProcedure
@@ -108,6 +116,12 @@ export const appRouter = router({
       .input(z.object({ feedbackId: z.number().int().positive() }))
       .mutation(async ({ ctx, input }) => {
         await updateTeacherFeedbackEntry(input.feedbackId, ctx.user.id, { status: "pending review" });
+        await recordFeedbackEvent({
+          feedbackId: input.feedbackId,
+          actorId: ctx.user.id,
+          actorRole: "teacher",
+          action: "submitted for review",
+        });
         return { status: "pending review" as const };
       }),
     review: coordinatorProcedure
@@ -120,6 +134,13 @@ export const appRouter = router({
           coordinatorId: ctx.user.id,
           coordinatorComment: input.comment || null,
         });
+        await recordFeedbackEvent({
+          feedbackId: input.feedbackId,
+          actorId: ctx.user.id,
+          actorRole: "coordinator",
+          action: input.decision === "approved" ? "approved" : "returned to draft",
+          comment: input.comment || null,
+        });
         return { status: input.decision };
       }),
     comment: coordinatorProcedure
@@ -129,8 +150,20 @@ export const appRouter = router({
           coordinatorId: ctx.user.id,
           coordinatorComment: input.comment,
         });
+        await recordFeedbackEvent({
+          feedbackId: input.feedbackId,
+          actorId: ctx.user.id,
+          actorRole: "coordinator",
+          action: "commented",
+          comment: input.comment,
+        });
         return { saved: true as const };
       }),
+    events: protectedProcedure
+      .input(z.object({ feedbackId: z.number().int().positive() }))
+      .query(({ ctx, input }) =>
+        getFeedbackEvents(input.feedbackId, { id: ctx.user.id, role: ctx.user.role })
+      ),
   }),
 });
 

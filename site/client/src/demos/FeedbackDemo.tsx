@@ -341,7 +341,7 @@ export default function FeedbackDemo() {
 
             <div className="fb-timeline" aria-label="Transition history">
               {state.history.length === 0 ? (
-                <span className="demo-hint">Every transition lands here with its actor.</span>
+                <span className="demo-hint">Every transition lands here with its actor — the shipped app persists these as append-only events.</span>
               ) : (
                 state.history.map((entry, index) => (
                   <span key={index} className="fb-timeline-item">

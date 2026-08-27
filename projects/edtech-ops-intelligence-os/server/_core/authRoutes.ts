@@ -15,6 +15,7 @@ import * as db from "../db";
 import { getSessionCookieOptions } from "./cookies";
 import { hashPassword, verifyPassword } from "./password";
 import { createSessionToken } from "./session";
+import { loginLimiter, registerLimiter } from "./rateLimit";
 
 const roles = ["user", "admin"] as const;
 
@@ -38,6 +39,14 @@ function setSessionCookie(req: Request, res: Response, token: string) {
 
 export function registerAuthRoutes(app: Express) {
   app.post("/api/auth/register", async (req: Request, res: Response) => {
+    if (!registerLimiter.attempt(req.ip ?? "unknown")) {
+      res
+        .status(429)
+        .set("Retry-After", String(registerLimiter.retryAfterSeconds(req.ip ?? "unknown")))
+        .json({ error: "Too many accounts created from this address. Try again later." });
+      return;
+    }
+
     const parsed = registration.safeParse(req.body);
     if (!parsed.success) {
       res.status(400).json({ error: "Invalid registration details", issues: parsed.error.issues });
@@ -76,6 +85,16 @@ export function registerAuthRoutes(app: Express) {
 
     const { email, password } = parsed.data;
 
+    // Keyed by IP + email so an attacker elsewhere cannot lock a victim out.
+    const limiterKey = `${req.ip ?? "unknown"}:${email}`;
+    if (!loginLimiter.attempt(limiterKey)) {
+      res
+        .status(429)
+        .set("Retry-After", String(loginLimiter.retryAfterSeconds(limiterKey)))
+        .json({ error: "Too many attempts. Try again in a few minutes." });
+      return;
+    }
+
     try {
       const user = await db.getUserByEmail(email);
 
@@ -88,7 +107,8 @@ export function registerAuthRoutes(app: Express) {
         return;
       }
 
-      await db.touchLastSignedIn(user.id);
+            loginLimiter.reset(limiterKey);
+await db.touchLastSignedIn(user.id);
       setSessionCookie(req, res, await createSessionToken(user.id));
       res.json({ ok: true });
     } catch (error) {

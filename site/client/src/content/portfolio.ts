@@ -275,14 +275,15 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "coral",
     stats: [
-      { value: "32", label: "automated tests" },
+      { value: "40", label: "automated tests" },
       { value: "4", label: "authorization roles" },
       { value: "append-only", label: "audit trail" },
     ],
     verifiable: [
       "Four authorization roles — analyst, coordinator, manager, administrator — enforced at the application boundary",
       "Immutable audit events recorded for create, update, delete, approval, export and status transitions",
-      "26 automated tests covering authorization, SOP version publication, KPI calculation and session-conflict detection",
+      "40 automated tests covering authorization, SOP version publication, KPI calculation, session-conflict detection and auth hardening",
+      "Login rate-limited per identity; sessions are httpOnly, SameSite-Lax signed JWTs",
       "Ships as a packaged Windows desktop application via an Electron shell",
     ],
   },
@@ -300,14 +301,15 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "orange",
     stats: [
-      { value: "34", label: "automated tests" },
+      { value: "47", label: "automated tests" },
       { value: "2", label: "enforced roles" },
       { value: "3-state", label: "approval machine" },
     ],
     verifiable: [
+      "Every status transition persisted as an append-only event with its actor — nothing updates or deletes log rows",
       "Explicit status machine — draft to pending review to approved, with return-to-draft",
       "Teacher and coordinator roles enforced server-side, not only hidden in the UI",
-      "22 automated tests across grading logic, rubric handling, role boundaries and history filtering",
+      "47 automated tests across the approval machine, role boundaries, auth hardening and the transition log",
       "Streaming generation failures surface to the teacher rather than silently falling back to fabricated output",
     ],
   },
@@ -325,7 +327,7 @@ export const builtSystems: Project[] = [
     group: "Built software",
     accent: "yellow",
     stats: [
-      { value: "20", label: "automated tests" },
+      { value: "28", label: "automated tests" },
       { value: "4", label: "persisted workflows" },
       { value: "evidence-first", label: "AI assistance" },
     ],
@@ -334,6 +336,7 @@ export const builtSystems: Project[] = [
       "AI recommendations are returned together with the evidence they were derived from",
       "Protected procedures verified to reject unauthenticated callers",
       "Admin-only operational audit boundary tested for both admin and non-admin users",
+      "Login rate-limited per identity; sessions are httpOnly, SameSite-Lax signed JWTs",
     ],
   },
 ];

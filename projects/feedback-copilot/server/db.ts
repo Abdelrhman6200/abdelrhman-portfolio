@@ -2,6 +2,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {
   feedbackEntries,
+  feedbackEvents,
   InsertUser,
   sessionRecords,
   students,
@@ -184,4 +185,41 @@ export async function updateTeacherFeedbackEntry(
     .update(feedbackEntries)
     .set(values)
     .where(and(eq(feedbackEntries.id, feedbackId), eq(feedbackEntries.teacherId, teacherId)));
+}
+
+/** Append one transition to the feedback log. Insert-only by design. */
+export async function recordFeedbackEvent(values: typeof feedbackEvents.$inferInsert) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  await db.insert(feedbackEvents).values(values);
+}
+
+export async function getFeedbackEntryById(feedbackId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  const result = await db.select().from(feedbackEntries).where(eq(feedbackEntries.id, feedbackId)).limit(1);
+  return result[0];
+}
+
+/**
+ * The transition log for one entry, oldest first. A coordinator may read any
+ * entry; a teacher only their own — the same boundary every other feedback
+ * read enforces.
+ */
+export async function getFeedbackEvents(
+  feedbackId: number,
+  requester: { id: number; role: "teacher" | "coordinator" }
+) {
+  const entry = await getFeedbackEntryById(feedbackId);
+  if (!entry) return [];
+  if (requester.role === "teacher" && entry.teacherId !== requester.id) {
+    throw new Error("Feedback entry is outside this teacher's scope");
+  }
+  const db = await getDb();
+  if (!db) throw new Error("Database is not available");
+  return db
+    .select()
+    .from(feedbackEvents)
+    .where(eq(feedbackEvents.feedbackId, feedbackId))
+    .orderBy(feedbackEvents.id);
 }

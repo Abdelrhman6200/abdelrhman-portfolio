@@ -85,9 +85,9 @@ story about software.
 | Project | Tests |
 | --- | --- |
 | `site` | 109 |
-| `projects/feedback-copilot` | 34 |
-| `projects/edtech-ops-intelligence-os` | 32 |
-| `projects/community-success-os` | 20 |
+| `projects/feedback-copilot` | 47 |
+| `projects/edtech-ops-intelligence-os` | 40 |
+| `projects/community-success-os` | 28 |
 
 Run `npm test` in any of them.
 
@@ -106,6 +106,10 @@ The three applications share one local authentication implementation:
 Both layers are covered by tests that pin the properties that matter: wrong
 passwords fail, hashes are salted, tampered and expired tokens are rejected, and
 an account with no password set cannot be signed into.
+
+Credential endpoints are rate-limited (sliding window, keyed by IP and
+identity, reset on success), and session cookies are httpOnly and
+SameSite-Lax, so cross-site POSTs never carry a session.
 
 Set `SESSION_SECRET` in production — the apps refuse to start with the
 development fallback when `NODE_ENV=production`.
