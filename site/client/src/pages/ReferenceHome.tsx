@@ -27,6 +27,7 @@ import {
   Menu,
   Play,
   RotateCw,
+  Search,
   Sparkles,
   Workflow,
   X,
@@ -53,9 +54,22 @@ import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
 import HeroSystem from "@/components/HeroSystem";
 import ThemeToggle from "@/components/ThemeToggle";
+import { openCommandPalette } from "@/components/CommandPalette";
 import { slugFor } from "@/content/slugs";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import "../reference.css";
+
+const navSectionIds = [
+  "about",
+  "method",
+  "services",
+  "work",
+  "case-files",
+  "index",
+  "experience",
+  "contact",
+];
 
 const navItems = [
   { href: "#about", label: "About" },
@@ -323,6 +337,7 @@ export default function ReferenceHome() {
   const [activeStep, setActiveStep] = useState(0);
   const [activeCategory, setActiveCategory] = useState<Category>("ALL");
   const [copied, setCopied] = useState(false);
+  const activeSection = useActiveSection(navSectionIds);
 
   const service = services.find((item) => item.key === activeService) ?? services[0];
   const project = featuredProjects[activeProject];
@@ -377,14 +392,32 @@ export default function ReferenceHome() {
           </span>
         </a>
         <nav id="primary-nav" className={menuOpen ? "is-open" : ""} aria-label="Primary">
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href} onClick={closeMenu}>
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const current = item.href.slice(1) === activeSection;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={closeMenu}
+                // Announced to screen readers and styled for everyone else by
+                // the same attribute, so the two can never disagree.
+                aria-current={current ? "true" : undefined}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
         {/* Grouped so the header stays a three-column grid. */}
         <div className="reference-header-actions">
+          <button
+            type="button"
+            className="reference-header-search"
+            onClick={openCommandPalette}
+            aria-label="Jump to a system, demo or section"
+          >
+            <Search size={13} aria-hidden="true" /> JUMP TO <kbd>&#8984;K</kbd>
+          </button>
           <ThemeToggle />
           <a className="reference-header-cta" href="#contact">
             Let&rsquo;s talk <ArrowUpRight size={14} />
@@ -881,9 +914,9 @@ export default function ReferenceHome() {
                   </a>
                 ) : null}
                 {contact.cv ? (
-                  <a href={contact.cv} download>
-                    <FileDown size={14} aria-hidden="true" /> Download CV
-                  </a>
+                  <Link href={contact.cv}>
+                    <FileDown size={14} aria-hidden="true" /> Curriculum vitae
+                  </Link>
                 ) : null}
               </div>
               <button type="button" className="ref-copy-button" onClick={copyEmail}>

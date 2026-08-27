@@ -38,6 +38,9 @@ export default function NotFound() {
           <Link className="ref-text-link" href="/#work">
             Built software <ArrowUpRight size={14} aria-hidden="true" />
           </Link>
+          <Link className="ref-text-link" href="/cv">
+            The CV <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
           <Link className="ref-text-link" href="/#method">
             The method <ArrowUpRight size={14} aria-hidden="true" />
           </Link>

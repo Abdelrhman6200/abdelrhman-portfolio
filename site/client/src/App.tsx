@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Router as WouterRouter, Switch } from "wouter";
+import CommandPalette from "./components/CommandPalette";
 import ErrorBoundary from "./components/ErrorBoundary";
 import RouteAnnouncer from "./components/RouteAnnouncer";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -11,6 +12,9 @@ import DemoPage, { PageLoading } from "@/pages/DemoPage";
 import { Suspense, lazy } from "react";
 
 const SystemCaseFile = lazy(() => import("@/pages/SystemCaseFile"));
+// The CV is its own document with its own stylesheet — kept out of the home
+// page bundle, since most visitors never open it.
+const Curriculum = lazy(() => import("@/pages/Curriculum"));
 
 
 /**
@@ -26,6 +30,8 @@ function Router() {
   return (
     <WouterRouter base={routerBase}>
       <RouteAnnouncer />
+      {/* Inside the Router: the palette navigates, so it needs the location. */}
+      <CommandPalette />
       <Switch>
         <Route path={"/"} component={ReferenceHome} />
         <Route path={"/system/:slug"}>
@@ -34,6 +40,11 @@ function Router() {
           </Suspense>
         </Route>
         <Route path={"/demo/:slug"} component={DemoPage} />
+        <Route path={"/cv"}>
+          <Suspense fallback={<PageLoading />}>
+            <Curriculum />
+          </Suspense>
+        </Route>
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />

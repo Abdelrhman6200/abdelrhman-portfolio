@@ -51,6 +51,13 @@ export function routes() {
       description: system.summary,
       priority: "0.8",
     })),
+    {
+      path: "/cv",
+      title: "Curriculum vitae — Abdelrhman Shoman",
+      description:
+        "Abdelrhman Shoman — systems builder. Shipped applications, operational systems and the record behind them, each labelled by evidence tier.",
+      priority: "0.9",
+    },
     ...demos.map((demo) => ({
       path: `/demo/${demo.slug}`,
       title: `${demo.title} — live demo — Abdelrhman Shoman`,

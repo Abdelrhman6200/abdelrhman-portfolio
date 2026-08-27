@@ -1121,3 +1121,47 @@
 }
 .case-screens-grid img { width: 100%; height: auto; border-radius: 10px; display: block; }
 .case-screens-grid figcaption { padding: 0 .3rem .3rem; color: var(--ref-muted); font-size: .72rem; line-height: 1.5; }
+
+/* --- Command palette -------------------------------------------------------
+   A dialog over the page rather than a route, so it opens from anywhere
+   without losing where the reader was. The panel is deliberately narrow and
+   monospaced: it reads as a tool, which is what it is. */
+.cmdk-backdrop { position: fixed; inset: 0; z-index: 120; display: grid; align-items: start; justify-items: center; padding: clamp(3rem, 12vh, 8rem) 1rem 1rem; background: rgba(var(--ref-bg-rgb), .72); backdrop-filter: blur(6px); animation: cmdk-fade .14s ease both; }
+.cmdk-panel { width: min(38rem, 100%); max-height: min(30rem, 72vh); display: flex; flex-direction: column; overflow: hidden; background: var(--ref-card); border: 1px solid var(--ref-line); border-radius: 10px; box-shadow: 0 24px 60px rgba(var(--ref-ink-rgb), .22), 6px 6px 0 rgba(var(--ref-ink-rgb), .06); animation: cmdk-rise .18s var(--ease-out) both; }
+.cmdk-field { display: flex; align-items: center; gap: .6rem; padding: .85rem 1rem; border-bottom: 1px solid var(--ref-line); color: var(--ref-muted); }
+.cmdk-field input { flex: 1; min-width: 0; border: 0; outline: none; background: none; color: var(--ref-ink); font: 500 .92rem/1.4 "Manrope", sans-serif; }
+.cmdk-field input::placeholder { color: var(--ref-muted); }
+.cmdk-list { flex: 1; overflow-y: auto; padding: .4rem; }
+.cmdk-group { padding: .6rem .65rem .3rem; color: var(--ref-muted); font: 600 .56rem/1 "IBM Plex Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.cmdk-item { display: flex; align-items: center; gap: .6rem; padding: .55rem .65rem; border-radius: 6px; color: var(--ref-body); cursor: pointer; }
+.cmdk-item[data-active="true"] { color: var(--ref-on-accent); background: var(--ref-coral); }
+.cmdk-item[data-active="true"] .cmdk-item-hint { color: var(--ref-on-accent); opacity: .74; }
+.cmdk-item-label { flex: 0 0 auto; color: var(--ref-ink); font: 600 .84rem/1.3 "Manrope", sans-serif; }
+.cmdk-item[data-active="true"] .cmdk-item-label { color: var(--ref-on-accent); }
+.cmdk-item-hint { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; color: var(--ref-muted); font: 400 .7rem/1.3 "IBM Plex Mono", monospace; }
+.cmdk-empty { margin: 0; padding: 1.6rem .65rem; color: var(--ref-muted); text-align: center; font-size: .85rem; }
+.cmdk-foot { display: flex; gap: 1rem; padding: .6rem 1rem; border-top: 1px solid var(--ref-line); color: var(--ref-muted); font: 500 .6rem/1 "IBM Plex Mono", monospace; letter-spacing: .06em; }
+.cmdk-foot span { display: inline-flex; align-items: center; gap: .3rem; }
+.cmdk-field kbd, .cmdk-foot kbd { display: inline-grid; place-items: center; min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; color: var(--ref-muted); background: var(--ref-bg-2); border: 1px solid var(--ref-line); border-radius: 4px; font: 600 .58rem/1 "IBM Plex Mono", monospace; }
+
+/* The header's discoverability affordance for the shortcut above. */
+.reference-header-search { display: inline-flex; align-items: center; gap: .45rem; padding: .6rem .7rem; color: rgba(var(--ref-on-dark-rgb), .72); background: rgba(var(--ref-on-dark-rgb), .07); border: 1px solid rgba(var(--ref-on-dark-rgb), .14); border-radius: 999px; font: 600 .58rem/1 "IBM Plex Mono", monospace; letter-spacing: .06em; cursor: pointer; transition: color .18s ease, background .18s ease; }
+.reference-header-search:hover { color: var(--ref-on-dark); background: rgba(var(--ref-on-dark-rgb), .14); }
+.reference-header-search kbd { font: inherit; }
+
+@keyframes cmdk-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cmdk-rise { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cmdk-backdrop, .cmdk-panel { animation: none; }
+}
+
+@media (max-width: 720px) {
+  .cmdk-item-hint { display: none; }
+  .reference-header-search { display: none; }
+}
+
+/* The section the reader is currently in. Same attribute the screen reader
+   uses, so the visible state and the announced state cannot drift apart. */
+.reference-header nav a[aria-current] { color: var(--ref-on-dark); background: rgba(var(--ref-on-dark-rgb), .13); }
+.reference-header nav a[aria-current]::after { content: ""; display: block; height: 2px; margin-top: .28rem; border-radius: 2px; background: var(--ref-coral); }

@@ -1,0 +1,297 @@
+/*
+ * The CV sheet.
+ *
+ * Screen and print are the same document, not two designs: on screen it is a
+ * sheet floating on the site's ground and inherits the theme; on paper the
+ * chrome disappears, the ground goes white, and the type drops to a size that
+ * fits A4 without reflowing the structure. Page-break rules keep an entry
+ * from splitting across a page boundary, which is the one thing that makes a
+ * printed CV look careless.
+ */
+
+.cv-root {
+  min-height: 100vh;
+  background: var(--ref-bg);
+  padding-bottom: 4rem;
+}
+
+/* --- Screen-only chrome ---------------------------------------------------- */
+.cv-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+.cv-bar-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  color: var(--ref-muted);
+  text-decoration: none;
+}
+
+.cv-bar-back:hover { color: var(--ref-ink); }
+
+/* --- The sheet ------------------------------------------------------------- */
+.cv-sheet {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 3.25rem);
+  background: var(--ref-paper);
+  border: 1px solid var(--ref-line);
+  border-radius: 4px;
+  color: var(--ref-body);
+  font-size: .93rem;
+  line-height: 1.6;
+}
+
+.cv-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid var(--ref-ink);
+}
+
+.cv-head h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: var(--ref-ink);
+  margin: 0;
+}
+
+.cv-title {
+  margin: .35rem 0 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ref-muted);
+}
+
+.cv-contact {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .3rem;
+  font-size: .8rem;
+}
+
+.cv-contact li {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  color: var(--ref-body);
+}
+
+.cv-contact a { color: var(--ref-ink); text-decoration: none; }
+.cv-contact a:hover { text-decoration: underline; }
+
+.cv-lede p {
+  margin: 1.25rem 0 0;
+  font-size: 1rem;
+  color: var(--ref-body);
+}
+
+/* --- Sections -------------------------------------------------------------- */
+.cv-section { margin-top: 2rem; }
+
+.cv-section > h2 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ref-ink);
+  margin: 0 0 .25rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--ref-line);
+}
+
+.cv-section-note {
+  margin: .5rem 0 1rem;
+  font-size: .8rem;
+  color: var(--ref-muted);
+}
+
+.cv-section-note code {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .95em;
+}
+
+.cv-entry {
+  margin-top: 1.05rem;
+  /* Never split one system or one role across a page break. */
+  break-inside: avoid;
+}
+
+.cv-entry h3 {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  flex-wrap: wrap;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.02rem;
+  color: var(--ref-ink);
+  margin: 0;
+}
+
+.cv-tier,
+.cv-period {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ref-muted);
+  border: 1px solid var(--ref-line);
+  border-radius: 2px;
+  padding: .1rem .35rem;
+}
+
+.cv-entry-sub {
+  margin: .15rem 0 .35rem;
+  font-size: .8rem;
+  color: var(--ref-muted);
+}
+
+.cv-entry p { margin: .3rem 0; }
+
+.cv-bullets {
+  margin: .5rem 0 0;
+  padding-left: 1.05rem;
+  display: grid;
+  gap: .22rem;
+  font-size: .87rem;
+}
+
+.cv-stack {
+  margin: .5rem 0 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: var(--ref-muted);
+}
+
+.cv-stack-wide { margin-top: 1rem; }
+
+.cv-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .7rem;
+}
+
+.cv-list li {
+  display: grid;
+  gap: .1rem;
+  break-inside: avoid;
+}
+
+.cv-list b { color: var(--ref-ink); font-weight: 600; }
+.cv-list span { font-size: .87rem; }
+
+.cv-list em {
+  font-style: normal;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: var(--ref-coral-ink);
+}
+
+.cv-capabilities {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-top: 1rem;
+}
+
+.cv-capabilities h3 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ref-ink);
+  margin: 0 0 .25rem;
+}
+
+.cv-capabilities p { margin: 0; font-size: .84rem; }
+
+.cv-record {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: .4rem;
+  font-size: .85rem;
+}
+
+.cv-record b { color: var(--ref-ink); font-weight: 600; }
+
+.cv-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.25rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--ref-line);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: .62rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ref-muted);
+}
+
+/* --- Print ----------------------------------------------------------------- */
+@page {
+  size: A4;
+  margin: 14mm 13mm;
+}
+
+@media print {
+  /* Paper is white whatever the reader's theme; the sheet stops being a card. */
+  .cv-root,
+  .cv-sheet {
+    background: #fff;
+    color: #1a1a1a;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  .cv-bar,
+  .skip-link { display: none; }
+
+  .cv-sheet { font-size: 9.4pt; line-height: 1.42; }
+  .cv-head h1 { font-size: 20pt; color: #000; }
+  .cv-head { border-bottom-color: #000; }
+  .cv-section > h2 { color: #000; }
+  .cv-entry h3,
+  .cv-list b,
+  .cv-record b,
+  .cv-capabilities h3,
+  .cv-contact a { color: #000; }
+  .cv-lede p { font-size: 9.8pt; }
+
+  /* A heading stranded at the foot of a page reads as a mistake. */
+  .cv-section { break-inside: auto; page-break-inside: auto; }
+  .cv-section > h2 { break-after: avoid; page-break-after: avoid; }
+  .cv-section-record { break-before: auto; }
+
+  /* Links print as text; the addresses are already spelled out in the header. */
+  a { text-decoration: none; }
+}

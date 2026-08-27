@@ -636,6 +636,7 @@ export const experiences = [
     number: "01",
     name: "DECI",
     role: "Senior Project Coordinator",
+    period: "",
     body: "Education operations, coordination, quality and reporting — where complex delivery first became a systems problem rather than a staffing one.",
     accent: "coral",
   },
@@ -643,6 +644,7 @@ export const experiences = [
     number: "02",
     name: "iSkyTech",
     role: "Operational Systems",
+    period: "",
     body: "Microsoft 365, process design, automation, data and reporting connected into a single operating picture.",
     accent: "orange",
   },
@@ -650,6 +652,7 @@ export const experiences = [
     number: "03",
     name: "Independent",
     role: "Systems & Software",
+    period: "",
     body: "Designing and shipping the operations, AI-assist and learner-success applications listed above, end to end.",
     accent: "yellow",
   },
@@ -665,8 +668,11 @@ export const contact = {
    * Left blank rather than guessed.
    */
   linkedin: "",
-  /** Put a PDF at client/public/cv.pdf and set this to "/cv.pdf". */
-  cv: "",
+  /**
+   * The CV is a route, not a file: /cv renders from this module and prints to
+   * PDF from the browser, so it can never fall out of step with the site.
+   */
+  cv: "/cv",
   location: "Cairo, Egypt",
   availability: "Available for selected opportunities",
 } as const;
