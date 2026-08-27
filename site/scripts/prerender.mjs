@@ -28,7 +28,21 @@ function shellFor(route) {
   const description = escapeHtml(route.description);
   const url = `${origin}${route.path}`;
 
+  // Page-level structured data, alongside the site-level Person the shell
+  // already carries. mainEntityOfPage ties the entity to this URL, so the two
+  // blocks describe one page rather than competing for it.
+  const schema = route.schema
+    ? `<script type="application/ld+json">${JSON.stringify({
+        "@context": "https://schema.org",
+        ...route.schema,
+        url,
+        mainEntityOfPage: url,
+        author: { "@type": "Person", name: "Abdelrhman Shoman" },
+      })}</script>`
+    : "";
+
   return shell
+    .replace("</head>", `${schema}</head>`)
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${description}$2`)
     .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${title}$2`)

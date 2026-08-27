@@ -8,12 +8,11 @@
 import type { ReactElement } from "react";
 import { render, type RenderOptions } from "@testing-library/react";
 import { ThemeProvider } from "@/contexts/ThemeContext";
-import { TooltipProvider } from "@/components/ui/tooltip";
 
 function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider defaultTheme="system" switchable>
-      <TooltipProvider>{children}</TooltipProvider>
+      {children}
     </ThemeProvider>
   );
 }

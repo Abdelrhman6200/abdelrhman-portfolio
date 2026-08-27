@@ -170,6 +170,27 @@ describe("CommandPalette", () => {
     expect(backdrop?.classList.contains("reference-page")).toBe(true);
   });
 
+  it("keeps Tab inside itself, since it declares aria-modal", () => {
+    // The panel has one focusable child, so the trap is achieved by never
+    // handing focus onward — and Tab is repurposed to move the selection
+    // rather than to do nothing at all.
+    pressHotkey();
+    fireEvent.keyDown(input(), { key: "Tab" });
+    expect(document.activeElement).toBe(input());
+    expect(screen.queryAllByRole("option")[1].getAttribute("aria-selected")).toBe("true");
+
+    fireEvent.keyDown(input(), { key: "Tab", shiftKey: true });
+    expect(screen.queryAllByRole("option")[0].getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("stops the page behind it scrolling, and gives the scroll back on close", () => {
+    expect(document.body.style.overflow).toBe("");
+    pressHotkey();
+    expect(document.body.style.overflow).toBe("hidden");
+    fireEvent.keyDown(input(), { key: "Escape" });
+    expect(document.body.style.overflow).toBe("");
+  });
+
   it("marks itself as a modal dialog for assistive technology", () => {
     pressHotkey();
     expect(screen.getByRole("dialog").getAttribute("aria-modal")).toBe("true");

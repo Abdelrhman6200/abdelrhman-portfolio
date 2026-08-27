@@ -191,7 +191,16 @@ export default function CommandPalette() {
   }, [show]);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (!open) return;
+    inputRef.current?.focus();
+
+    // Restore whatever the page had rather than assuming "visible": the
+    // value is read back so a future page-level lock is not clobbered.
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
   }, [open]);
 
   // Keep the highlighted row in view while arrowing through a long list.
@@ -234,6 +243,12 @@ export default function CommandPalette() {
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setActive((value) => (results.length ? (value - 1 + results.length) % results.length : 0));
+    } else if (event.key === "Tab") {
+      event.preventDefault();
+      const direction = event.shiftKey ? -1 : 1;
+      setActive((value) =>
+        results.length ? (value + direction + results.length) % results.length : 0
+      );
     } else if (event.key === "Enter") {
       event.preventDefault();
       const item = results[active];

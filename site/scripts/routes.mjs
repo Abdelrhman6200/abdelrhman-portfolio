@@ -50,6 +50,15 @@ export function routes() {
       title: `${system.title} — case file — Abdelrhman Shoman`,
       description: system.summary,
       priority: "0.8",
+      // A case file is about a piece of software, so say so in the markup a
+      // crawler reads rather than leaving it to infer from prose.
+      schema: {
+        "@type": "SoftwareApplication",
+        name: system.title,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web",
+        description: system.summary,
+      },
     })),
     {
       path: "/cv",
@@ -57,12 +66,23 @@ export function routes() {
       description:
         "Abdelrhman Shoman — systems builder. Shipped applications, operational systems and the record behind them, each labelled by evidence tier.",
       priority: "0.9",
+      schema: { "@type": "ProfilePage", name: "Curriculum vitae — Abdelrhman Shoman" },
     },
     ...demos.map((demo) => ({
       path: `/demo/${demo.slug}`,
       title: `${demo.title} — live demo — Abdelrhman Shoman`,
       description: `Live in-browser demo of ${demo.title}: the system's core logic re-implemented client-side, on synthetic data, driven by you.`,
       priority: "0.7",
+      schema: {
+        "@type": "WebApplication",
+        name: `${demo.title} — live demo`,
+        applicationCategory: "BusinessApplication",
+        browserRequirements: "Requires JavaScript",
+        operatingSystem: "Web",
+        // Stated because it is true, and because it is the reassurance a
+        // reader wants before running someone else's code in their browser.
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      },
     })),
   ];
 }
