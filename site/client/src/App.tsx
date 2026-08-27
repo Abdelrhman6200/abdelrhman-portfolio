@@ -1,22 +1,33 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ReferenceHome from "@/pages/ReferenceHome";
 import SystemCaseFile from "@/pages/SystemCaseFile";
 
 
+/**
+ * Deployment base path, injected by Vite from the build's `base`.
+ *
+ * "/" when served from a domain root (Netlify, Vercel, Cloudflare, a custom
+ * domain), "/<repo>/" for a GitHub Pages project site. wouter wants it without
+ * the trailing slash, and empty at the root, so routes resolve either way.
+ */
+const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 function Router() {
   return (
-    <Switch>
-      <Route path={"/"} component={ReferenceHome} />
-      <Route path={"/system/:slug"} component={SystemCaseFile} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <WouterRouter base={routerBase}>
+      <Switch>
+        <Route path={"/"} component={ReferenceHome} />
+        <Route path={"/system/:slug"} component={SystemCaseFile} />
+        <Route path={"/404"} component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </WouterRouter>
   );
 }
 

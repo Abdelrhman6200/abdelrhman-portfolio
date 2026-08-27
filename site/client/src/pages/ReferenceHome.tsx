@@ -42,6 +42,7 @@ import {
   type Project,
   type ServiceKey,
 } from "@/content/portfolio";
+import { Link } from "wouter";
 import { simulationFor } from "@/content/simulations";
 import SystemSimulation from "@/components/SystemSimulation";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -258,9 +259,11 @@ function BuiltSystemCard({ project }: { project: Project }) {
         ))}
       </div>
 
-      <a className="ref-built-link" href={`/system/${slugFor(project.title)}`}>
+      {/* Routed through wouter so the deployment base path is applied — a plain
+          anchor would break on a GitHub Pages project site. */}
+      <Link className="ref-built-link" href={`/system/${slugFor(project.title)}`}>
         Open the case file <ArrowUpRight size={14} aria-hidden="true" />
-      </a>
+      </Link>
     </article>
   );
 }

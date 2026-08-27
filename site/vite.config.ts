@@ -4,6 +4,10 @@ import path from "node:path";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  // Static hosts serve from the domain root, so "/" is right for Netlify,
+  // Vercel, Cloudflare Pages and a custom domain. GitHub Pages serves a project
+  // site from /<repo>/, so set BASE_PATH=/<repo>/ when building for it.
+  base: process.env.BASE_PATH ?? "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

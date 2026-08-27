@@ -1,0 +1,75 @@
+# Builds and publishes the portfolio site to GitHub Pages.
+#
+# Only `site/` is deployed — the applications under `projects/` are source, not
+# something to host.
+#
+# Enable once, in the repository: Settings -> Pages -> Source -> GitHub Actions.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+    # Nothing under projects/ affects the published site.
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy-site.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+
+      # Fail the deploy rather than publish a broken page.
+      - run: npm run check
+      - run: npm test
+
+      - name: Build
+        # A project site is served from https://<user>.github.io/<repo>/, so the
+        # asset base must include the repository name. A user/organisation site
+        # (<user>.github.io) or a custom domain serves from the root instead —
+        # set BASE_PATH to "/" for those.
+        run: npm run build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+
+      # GitHub Pages serves 404.html for unknown paths. Making it a copy of
+      # index.html gives the single-page app its fallback, so /system/... works
+      # on a direct visit.
+      - run: cp dist/public/index.html dist/public/404.html
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/dist/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

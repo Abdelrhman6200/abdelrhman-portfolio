@@ -1,0 +1,3 @@
+# Single-page app: every path is served by index.html so client-side routes
+# such as /system/feedback-copilot survive a hard refresh or a shared link.
+/*  /index.html  200
