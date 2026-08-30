@@ -104,8 +104,14 @@
 .reference-page h1, .reference-page h2, .reference-page h3, .reference-page p { margin: 0; }
 .reference-page h1, .reference-page h2, .reference-page h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -.075em; }
 .reference-page em { color: var(--ref-coral); font-style: normal; }
-.reference-page a { color: inherit; text-decoration: none; }
-.reference-page button { color: inherit; font: inherit; }
+/* :where() so these carry zero specificity. `.reference-page a` and
+   `.reference-page button` are (0,1,1) — enough to beat every single-class
+   component rule below, so `.reference-menu`, `.ref-button-accent` and
+   `.skip-link` were all silently rendering `inherit` instead of the colour
+   they name. These are defaults for unstyled links and buttons; anything
+   carrying a class must win. */
+:where(.reference-page) a { color: inherit; text-decoration: none; }
+:where(.reference-page) button { color: inherit; font: inherit; }
 .reference-page a:focus-visible, .reference-page button:focus-visible { outline: 3px solid var(--ref-coral); outline-offset: 4px; }
 
 .reference-header { position: sticky; top: 0; z-index: 50; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem; max-width: 1280px; margin: 0 auto; padding: 1rem clamp(1rem, 4vw, 3.3rem); background: rgba(var(--ref-bg-rgb), .92); backdrop-filter: blur(18px); }
@@ -175,8 +181,13 @@
 
 
 
+/* The header nav becomes a dropped panel below 980px. It is absolutely
+   positioned, but its containing block is its grid area, and the desktop rule
+   centres it there — so left/right were measured against a ~108px cell and the
+   menu opened as a narrow strip in the middle of the hero. Spanning the header
+   and dropping the centring makes the inset mean what it says. */
 @media (max-width: 980px) {
-  .reference-header { grid-template-columns: auto auto; justify-content: space-between; }.reference-header nav { position: absolute; top: calc(100% + .4rem); right: 1rem; left: 1rem; display: none; flex-direction: column; align-items: stretch; padding: .55rem; border-radius: 20px; }.reference-header nav.is-open { display: flex; }.reference-header nav a { padding: .85rem 1rem; }.reference-header-cta { display: none; }.reference-menu { display: inline-flex; }
+  .reference-header { grid-template-columns: auto auto; justify-content: space-between; }.reference-header nav { position: absolute; grid-column: 1 / -1; justify-self: stretch; top: calc(100% + .4rem); right: 1rem; left: 1rem; display: none; flex-direction: column; align-items: stretch; padding: .55rem; border-radius: 20px; }.reference-header nav.is-open { display: flex; }.reference-header nav a { padding: .85rem 1rem; }.reference-header-cta { display: none; }.reference-menu { display: inline-flex; }
   .ref-hero { grid-template-columns: 1fr; min-height: auto; gap: 4rem; }.ref-hero-copy { max-width: 780px; }.ref-hero-side { grid-template-columns: minmax(260px, .75fr) minmax(220px, .45fr); align-items: center; }.ref-hero-note { width: 100%; }.ref-hero-stats { margin-top: 1rem; }
   .ref-dark-heading, .ref-section-heading, .ref-contact-grid, .ref-proof-grid { grid-template-columns: 1fr; }.ref-dark-heading, .ref-section-heading { display: grid; align-items: start; }.ref-section-heading > .ref-button { justify-self: start; }
 }
@@ -1101,8 +1112,12 @@
      rather than a raw colour — the theme suite forbids literals out here. */
   mask-image: linear-gradient(to bottom, var(--ref-ink) 0%, var(--ref-ink) 22%, transparent 62%);
 }
-/* Everything else sits above the grid. */
-.reference-page > * { position: relative; z-index: 1; }
+/* Everything else sits above the grid — except the header, which brings its
+   own position and z-index. This rule is a later (0,1,0), so it used to win
+   on source order and quietly reset `position: sticky; z-index: 50` to
+   `relative; z-index: 1`: the header did not stick, and the mobile menu it
+   drops opened *underneath* the hero. */
+.reference-page > *:not(.reference-header) { position: relative; z-index: 1; }
 
 /* --- Crop marks -----------------------------------------------------------
  * The repeated signature. Four corner ticks on the panels that carry the
@@ -1235,8 +1250,12 @@
 .cmdk-field kbd, .cmdk-foot kbd { display: inline-grid; place-items: center; min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; color: var(--ref-muted); background: var(--ref-bg-2); border: 1px solid var(--ref-line); border-radius: 4px; font: 600 .58rem/1 "IBM Plex Mono", monospace; }
 
 /* The header's discoverability affordance for the shortcut above. */
-.reference-header-search { display: inline-flex; align-items: center; gap: .45rem; padding: .6rem .7rem; color: rgba(var(--ref-on-dark-rgb), .72); background: rgba(var(--ref-on-dark-rgb), .07); border: 1px solid rgba(var(--ref-on-dark-rgb), .14); border-radius: 999px; font: 600 .58rem/1 "IBM Plex Mono", monospace; letter-spacing: .06em; cursor: pointer; transition: color .18s ease, background .18s ease; }
-.reference-header-search:hover { color: var(--ref-on-dark); background: rgba(var(--ref-on-dark-rgb), .14); }
+/* Page ink, not on-dark ink. The nav pill beside this is a dark plate in
+   both themes, so it takes --ref-on-dark; this button sits directly on the
+   header ground, which follows the theme — on-dark ink here is invisible in
+   light mode. Same treatment as .theme-toggle, its neighbour. */
+.reference-header-search { display: inline-flex; align-items: center; gap: .45rem; padding: .6rem .7rem; color: rgba(var(--ref-ink-rgb), .72); background: rgba(var(--ref-ink-rgb), .07); border: 1px solid rgba(var(--ref-ink-rgb), .14); border-radius: 999px; font: 600 .58rem/1 "IBM Plex Mono", monospace; letter-spacing: .06em; cursor: pointer; transition: color .18s ease, background .18s ease; }
+.reference-header-search:hover { color: var(--ref-ink); background: rgba(var(--ref-ink-rgb), .14); }
 .reference-header-search kbd { font: inherit; }
 
 @keyframes cmdk-fade { from { opacity: 0; } to { opacity: 1; } }

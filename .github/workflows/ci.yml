@@ -45,9 +45,13 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ matrix.package }}/package-lock.json
 
-      # --omit=optional skips sharp: it exists only for `npm run og`, and the
-      # generated PNGs are committed, so CI never needs the native binary.
-      - run: npm ci --omit=optional
+      # A full install. --omit=optional was here to skip sharp (it exists only
+      # for `npm run og`, and the generated PNGs are committed) — but rollup
+      # ships its own platform binary as an optional dependency too, so the
+      # flag took @rollup/rollup-linux-x64-gnu with it and every `npm test`
+      # died before the first test ran. Installing sharp costs seconds; not
+      # running the tests cost the whole point of this workflow.
+      - run: npm ci
       - run: npm run check
       - run: npm test
       - run: npm run build

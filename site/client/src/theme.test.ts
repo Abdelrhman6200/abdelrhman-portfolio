@@ -71,6 +71,24 @@ describe("reference.css theme tokens", () => {
     expect(reference).not.toMatch(/rgba\(var\(--ref-paper-rgb\)/);
   });
 
+  /*
+   * Element defaults must not outrank component classes.
+   *
+   * `.reference-page a` and `.reference-page button` are (0,1,1) selectors.
+   * Every component rule below them — `.reference-menu`, `.ref-button-accent`,
+   * `.skip-link` — is (0,1,0), so `color: inherit` and `font: inherit` beat
+   * the colour and type those rules name, and beat them silently: the page
+   * still renders, just in the inherited ink. That shipped a cream hamburger
+   * on a cream circle and a 2.33:1 primary CTA. Wrapped in `:where()` the
+   * defaults carry zero specificity and anything with a class wins.
+   */
+  it("keeps the link and button defaults at zero specificity", () => {
+    const raw = reference.match(/(?:^|[,}])\s*\.reference-page\s+(?:a|button)\s*[,{]/gm) ?? [];
+    expect(raw, `must be wrapped in :where() — found: ${raw.join(", ")}`).toEqual([]);
+    expect(reference).toMatch(/:where\(\.reference-page\) a\s*\{/);
+    expect(reference).toMatch(/:where\(\.reference-page\) button\s*\{/);
+  });
+
   it("leaves no raw colour outside the two palette blocks", () => {
     // Strip both palette declaration blocks, then look for literal colours.
     const withoutPalettes = reference
