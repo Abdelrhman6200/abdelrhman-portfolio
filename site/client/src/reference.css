@@ -1355,3 +1355,16 @@
   .tilt-stage .app-window::after { display: none; }
   .scroll-progress { transition: none; }
 }
+
+/* The four disciplines, under the hero sentence. Not decoration: they are the
+   words someone would actually search for, said once, in order. */
+.ref-hero-disciplines {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  margin: 1.1rem 0 0; padding: 0; list-style: none;
+}
+.ref-hero-disciplines li {
+  padding: .42rem .7rem;
+  color: var(--ref-body); background: var(--ref-card);
+  border: 1px solid var(--ref-line); border-radius: 999px;
+  font: 700 .56rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase;
+}

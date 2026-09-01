@@ -93,7 +93,6 @@ const projectFilters: Array<{ key: Category; label: string }> = [
   { key: "AUTOMATION", label: "Automation" },
   { key: "AI", label: "AI" },
   { key: "DATA", label: "Data" },
-  { key: "RESEARCH", label: "Research" },
 ];
 
 /**
@@ -306,7 +305,7 @@ export default function ReferenceHome() {
   useDocumentMeta({
     title: "",
     description:
-      "I build the systems behind complex work — operations, automation, AI, data and computational workflows. Different problems. Same approach.",
+      "I turn messy business operations into structured, automated systems that are easier to run, scale and improve. Operations design, AI automation, workflow engineering.",
   });
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState<ServiceKey>("operations");
@@ -427,9 +426,15 @@ export default function ReferenceHome() {
               <em>systems.</em>
             </h1>
             <p>
-              I design and build the structures behind complex work — operations, automation, AI, data and
-              computational workflows. The domain changes. The approach doesn&rsquo;t.
+              I turn messy business operations into structured, automated systems that are easier to run,
+              scale and improve.
             </p>
+            <ul className="ref-hero-disciplines">
+              <li>Operations design</li>
+              <li>AI automation</li>
+              <li>Workflow engineering</li>
+              <li>Business systems</li>
+            </ul>
             <div className="ref-hero-actions">
               <a className="ref-button ref-button-accent" href="#work">
                 See the work <ArrowUpRight size={15} />
@@ -450,7 +455,10 @@ export default function ReferenceHome() {
                 <br />
                 <em>by adding more tools.</em>
               </strong>
-              <p>From pharmacy and research through operations, automation and AI — the loop is the work.</p>
+              <p>
+                Most operational problems are not people working badly. They are systems that were never
+                designed.
+              </p>
             </div>
           </div>
 
@@ -483,8 +491,10 @@ export default function ReferenceHome() {
             </h2>
             <div>
               <p>
-                I work in the space between a messy process and a useful operating picture. My background moves
-                from pharmacy and research into computation, operations, automation and AI.
+                I work in the space between a messy process and a useful operating picture. I learned where
+                operations break by running them at scale — thousands of sessions, hundreds of coordinators,
+                tens of thousands of learner records — and most of what breaks is not people. It is handoffs,
+                repeated work, disconnected tools and information stranded in spreadsheets.
               </p>
               <p>
                 Adding software to a process nobody understands only makes the wrong outcome arrive faster. So I
@@ -785,9 +795,9 @@ export default function ReferenceHome() {
             <div>
               <div className="ref-kicker">07 / THE PROGRESSION</div>
               <h2>
-                From pharmacy
+                From running operations
                 <br />
-                <em>to systems.</em>
+                <em>to building them.</em>
               </h2>
             </div>
             <p>
@@ -836,11 +846,11 @@ export default function ReferenceHome() {
                 ran inside — and each card says which.
               </p>
               <div className="ref-proof-pills">
-                <span>PHARMACY</span>
-                <span>RESEARCH</span>
                 <span>OPERATIONS</span>
+                <span>PROCESS DESIGN</span>
                 <span>AUTOMATION</span>
-                <span>AI</span>
+                <span>AI SYSTEMS</span>
+                <span>DATA</span>
               </div>
             </div>
           </Reveal>

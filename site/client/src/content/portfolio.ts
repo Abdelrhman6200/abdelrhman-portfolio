@@ -26,7 +26,7 @@ export const evidenceLabels: Record<EvidenceTier, { label: string; note: string 
   },
 };
 
-export type Domain = "OPERATIONS" | "AUTOMATION" | "AI" | "DATA" | "RESEARCH";
+export type Domain = "OPERATIONS" | "AUTOMATION" | "AI" | "DATA";
 
 export type Project = {
   number: string;
@@ -496,7 +496,7 @@ export const projectArchive: Project[] = [
     summary: "Operational, marketing and HR procedures made consistent and findable through one shared reference layer.",
     flow: ["Task", "Procedure", "Owner", "Reference", "Repeat"],
     tags: ["SOPs", "Policy", "Knowledge management"],
-    domains: ["OPERATIONS", "RESEARCH"],
+    domains: ["OPERATIONS"],
     evidence: "brief",
     group: "Organizational control",
     accent: "yellow",
@@ -553,7 +553,7 @@ export const projectArchive: Project[] = [
     summary: "A full operational reference covering preparation, execution, quality assurance and reporting.",
     flow: ["Prepare", "Execute", "Assure", "Report", "Repeat"],
     tags: ["Process mapping", "Documentation", "Standardization"],
-    domains: ["OPERATIONS", "RESEARCH"],
+    domains: ["OPERATIONS"],
     evidence: "brief",
     group: "Organizational control",
     accent: "yellow",
@@ -567,7 +567,7 @@ export const projectArchive: Project[] = [
     summary: "A regional AI education initiative run with institutional stakeholders, focused on immersive youth training.",
     flow: ["Partners", "Program", "Cohorts", "Delivery", "Reach"],
     tags: ["Program coordination", "Stakeholders", "AI education"],
-    domains: ["AI", "RESEARCH"],
+    domains: ["AI", "OPERATIONS"],
     evidence: "brief",
     group: "Strategic execution",
     accent: "orange",

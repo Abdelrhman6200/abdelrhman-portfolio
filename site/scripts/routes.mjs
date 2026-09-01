@@ -21,7 +21,7 @@ const read = (rel) => readFileSync(join(root, rel), "utf8");
 const slugFor = (title) => title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const HOME_DESCRIPTION =
-  "I build the systems behind complex work — operations, automation, AI, data and computational workflows. Different problems. Same approach.";
+  "I turn messy business operations into structured, automated systems that are easier to run, scale and improve. Operations design, AI automation, workflow engineering.";
 
 export function routes() {
   const portfolio = read("client/src/content/portfolio.ts");
@@ -41,7 +41,7 @@ export function routes() {
   return [
     {
       path: "/",
-      title: "Abdelrhman Shoman — Systems Builder",
+      title: "Abdelrhman Shoman — Systems Builder for Operations & AI Automation",
       description: HOME_DESCRIPTION,
       priority: "1.0",
       image: "/og.png",
