@@ -1368,3 +1368,29 @@
   border: 1px solid var(--ref-line); border-radius: 999px;
   font: 700 .56rem/1 "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase;
 }
+
+/* --- Reported outcomes -----------------------------------------------------
+   The first thing after the hero's claim is the evidence for it. Figures are
+   large because they are the point; the source under each one is small but
+   present, because a number without an origin is the thing this site refuses
+   to publish. */
+.ref-outcomes { padding-block: clamp(2.4rem, 5vw, 3.6rem); }
+.ref-outcomes ul {
+  display: grid; gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin: 0; padding: 0; list-style: none;
+}
+.ref-outcomes li { display: grid; gap: .3rem; padding-left: 1rem; border-left: 2px solid var(--ref-coral); }
+.ref-outcomes b {
+  color: var(--ref-ink);
+  font: 800 clamp(2.4rem, 5.5vw, 3.4rem)/1 "Space Grotesk", sans-serif; letter-spacing: -.05em;
+}
+.ref-outcomes span { color: var(--ref-body); font-size: .88rem; line-height: 1.45; }
+.ref-outcomes small {
+  color: var(--ref-muted);
+  font: 600 .55rem/1.4 "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase;
+}
+.ref-outcomes > p {
+  margin: 1.6rem 0 0;
+  color: var(--ref-muted); font-size: .74rem;
+}

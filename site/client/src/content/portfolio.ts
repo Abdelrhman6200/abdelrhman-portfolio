@@ -601,6 +601,21 @@ export const sharedCore = {
   appCount: 3,
 } as const;
 
+/*
+ * The headline outcomes, for the band under the hero.
+ *
+ * Every figure here is already stated on a project below, in that project's own
+ * `result` line — this is the same claim promoted, not a new one. All four are
+ * `brief` tier: reported by the organization the work ran inside, which is why
+ * the band says so rather than presenting them as measured here.
+ */
+export const outcomes = [
+  { value: "40K+", label: "learner records coordinated", source: "Smart Excel Validation" },
+  { value: "90%", label: "fewer validation errors", source: "Smart Excel Validation" },
+  { value: "5K+", label: "certificates issued automatically", source: "Certification Dashboard" },
+  { value: "60%", label: "faster feedback creation", source: "AI-Assisted Feedback Management" },
+] as const;
+
 export const allProjects: Project[] = [...builtSystems, ...featuredProjects, ...projectArchive];
 
 export const services = [
@@ -643,26 +658,26 @@ export type ServiceKey = (typeof services)[number]["key"];
 export const experiences = [
   {
     number: "01",
-    name: "DECI",
-    role: "Senior Project Coordinator",
+    name: "I learned how operations break at scale",
+    role: "DECI — Senior Project Coordinator",
     period: "",
-    body: "Education operations, coordination, quality and reporting — where complex delivery first became a systems problem rather than a staffing one.",
+    body: "Tens of thousands of learner records, thousands of sessions, hundreds of instructors and coordinators, and a great deal of repeated manual work. It taught me the thing the rest of this page is built on: most operational problems are not people working badly, they are systems that were never designed.",
     accent: "coral",
   },
   {
     number: "02",
-    name: "iSkyTech",
-    role: "Operational Systems",
+    name: "So I started replacing manual work with systems",
+    role: "iSkyTech — Operational Systems",
     period: "",
-    body: "Microsoft 365, process design, automation, data and reporting connected into a single operating picture.",
+    body: "Instead of adding people or spreadsheets, the questions became: can this be standardised, validated automatically, triggered by itself, or seen from one place? That is where process design, Microsoft 365, automation platforms, APIs and reporting stopped being tools and became the answer to problems I had already lived through.",
     accent: "orange",
   },
   {
     number: "03",
-    name: "Independent",
-    role: "Systems & Software",
+    name: "Now I build AI-native operations",
+    role: "Independent — Systems & Software",
     period: "",
-    body: "Designing and shipping the operations, AI-assist and learner-success applications listed above, end to end.",
+    body: "Manual work, then standardised process, then automated workflow, then AI in the loop. The applications above are that last step shipped end to end: AI that drafts and retrieves, with a person still owning the decision, and the whole path auditable afterwards.",
     accent: "yellow",
   },
 ] as const;

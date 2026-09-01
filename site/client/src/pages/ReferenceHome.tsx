@@ -40,6 +40,7 @@ import {
   experiences,
   featuredProjects,
   methodStages,
+  outcomes,
   projectArchive,
   services,
   type Domain,
@@ -479,6 +480,22 @@ export default function ReferenceHome() {
           </div>
         </section>
 
+        {/* Outcomes before argument. Each figure is promoted from a project
+            below rather than invented here, and the tier is stated, because an
+            unattributed number is the thing this whole site refuses to do. */}
+        <section className="ref-outcomes ref-section" aria-label="Reported outcomes">
+          <ul>
+            {outcomes.map((outcome) => (
+              <Reveal as="li" key={outcome.label} delay={outcomes.indexOf(outcome) * 80}>
+                <b>{outcome.value}</b>
+                <span>{outcome.label}</span>
+                <small>{outcome.source}</small>
+              </Reveal>
+            ))}
+          </ul>
+          <p>Reported by the organizations the work ran inside — each figure is stated again on its project below.</p>
+        </section>
+
         <section id="about" className="ref-intro ref-section">
           <div className="ref-kicker">01 / THE BUILDER</div>
           <Reveal variant="depth" className="ref-intro-grid">
@@ -558,56 +575,20 @@ export default function ReferenceHome() {
           </div>
         </section>
 
-        <section id="work" className="ref-work ref-section">
-          <Reveal variant="depth" className="ref-section-heading">
-            <div>
-              <div className="ref-kicker">04 / BUILT SOFTWARE</div>
-              <h2>
-                Systems you can
-                <br />
-                <em>read the source of.</em>
-              </h2>
-            </div>
-            <p>
-              Three full applications — role-aware authorization, persistent state, audit trails and automated
-              tests. Everything claimed below is checkable in the code rather than asserted here.
-            </p>
-          </Reveal>
-
-          {/* Every demo, one strip — the fastest route to proof. */}
-          <div className="ref-demo-strip" role="navigation" aria-label="Live demos">
-            <span className="ref-demo-strip-label">
-              <Play size={12} aria-hidden="true" /> {demos.length} LIVE DEMOS
-            </span>
-            {demos.map((demo) => (
-              <Link key={demo.slug} href={`/demo/${demo.slug}`}>
-                {demo.title}
-              </Link>
-            ))}
-          </div>
-
-          <div className="ref-feature-list">
-            {builtSystems.map((item, index) => (
-              <Reveal key={item.number} variant="depth" delay={index * 90}>
-                <BuiltSystemFeature project={item} flipped={index % 2 === 1} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
         <section id="case-files" className="ref-work ref-section ref-work-secondary">
           <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker">05 / OPERATIONAL CASE FILES</div>
+              <div className="ref-kicker">04 / OPERATIONS AT SCALE</div>
               <h2>
-                Work that ran
+                Where businesses
                 <br />
-                <em>inside organizations.</em>
+                <em>actually break.</em>
               </h2>
             </div>
             <p>
-              Systems built inside operating companies, where the output was a working process rather than a
-              public repository. Figures here are reported by the operator, and labelled as such.
+              Systems built inside operating companies — the bottleneck found, the process redesigned, the
+              repetitive work automated. The output was a working operation rather than a public repository,
+              so figures here are reported by the operator and labelled as such.
             </p>
           </Reveal>
 
@@ -698,20 +679,58 @@ export default function ReferenceHome() {
           </div>
         </section>
 
-        <section id="index" className="ref-project-index ref-section">
+        <section id="work" className="ref-work ref-section">
           <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker">06 / THE REST OF THE RECORD</div>
+              <div className="ref-kicker">05 / AND I SHIP THE SOFTWARE</div>
               <h2>
-                The range behind
+                Not just designed.
                 <br />
-                <em>the three.</em>
+                <em>Built and running.</em>
               </h2>
             </div>
             <p>
-              The systems above get the space because they are the strongest evidence. These are the rest —
-              grouped by what they were for, so the progression from infrastructure to organizational control
-              to AI is readable at a glance rather than buried in a wall of cards.
+              When the process needs software that does not exist yet, I build it. Three full applications —
+              role-aware authorization, persistent state, audit trails and automated tests. Everything claimed
+              below is checkable in the code rather than asserted here.
+            </p>
+          </Reveal>
+
+          {/* Every demo, one strip — the fastest route to proof. */}
+          <div className="ref-demo-strip" role="navigation" aria-label="Live demos">
+            <span className="ref-demo-strip-label">
+              <Play size={12} aria-hidden="true" /> {demos.length} LIVE DEMOS
+            </span>
+            {demos.map((demo) => (
+              <Link key={demo.slug} href={`/demo/${demo.slug}`}>
+                {demo.title}
+              </Link>
+            ))}
+          </div>
+
+          <div className="ref-feature-list">
+            {builtSystems.map((item, index) => (
+              <Reveal key={item.number} variant="depth" delay={index * 90}>
+                <BuiltSystemFeature project={item} flipped={index % 2 === 1} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section id="index" className="ref-project-index ref-section">
+          <Reveal variant="depth" className="ref-section-heading">
+            <div>
+              <div className="ref-kicker">06 / SYSTEMS LAB</div>
+              <h2>
+                The smaller
+                <br />
+                <em>builds.</em>
+              </h2>
+            </div>
+            <p>
+              The rest of the record — the automations, dashboards, databases and AI assists that made the
+              larger systems possible. Grouped by what they were for, so the progression from operational
+              infrastructure to organizational control to AI reads at a glance.
             </p>
           </Reveal>
 
@@ -801,8 +820,8 @@ export default function ReferenceHome() {
               </h2>
             </div>
             <p>
-              Each chapter added a layer: evidence, computation, coordination, automation, intelligence — and the
-              need to make the whole loop understandable to someone else.
+              Operations, then automation, then AI — in that order, and for a reason. Each step exists because
+              the one before it ran into a limit I had already hit myself.
             </p>
           </Reveal>
           <div className="ref-timeline">
