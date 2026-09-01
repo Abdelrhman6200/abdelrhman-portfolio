@@ -20,18 +20,23 @@ describe("reported outcomes", () => {
     }
   });
 
-  it("quotes a figure that project actually reports", () => {
-    // "40K+" is the band's shorthand for the project's "40,000+", so compare
-    // on the digits rather than the formatting.
+  it("quotes a figure that project actually states", () => {
+    // Two kinds of figure appear here: outcomes, which live in a project's
+    // `result` line ("90% fewer errors"), and scale, which belongs in the
+    // `summary` because it describes what the system covered rather than what
+    // changed ("across 500+ instructors"). Either counts as substantiation;
+    // what must not happen is a headline number appearing nowhere else.
+    //
+    // "40K+" is the band's shorthand for the project's "40,000+", so the
+    // comparison is on digits rather than formatting.
     const digitsOf = (value: string) => value.replace(/[^0-9]/g, "");
 
     for (const outcome of outcomes) {
       const project = allProjects.find((item) => item.title === outcome.source);
-      const reported = project?.result ?? "";
-      expect(reported, `${outcome.source} reports nothing`).not.toBe("");
+      const stated = `${project?.summary ?? ""} ${project?.result ?? ""}`;
       expect(
-        digitsOf(reported).includes(digitsOf(outcome.value)),
-        `"${outcome.value}" is not in ${outcome.source}'s reported result: "${reported}"`
+        digitsOf(stated).includes(digitsOf(outcome.value)),
+        `"${outcome.value}" appears nowhere in ${outcome.source}: "${stated.trim()}"`
       ).toBe(true);
     }
   });

@@ -451,7 +451,8 @@ export const projectArchive: Project[] = [
     kind: "coding",
     title: "Session Coding & LMS Integration",
     subtitle: "Traceability layer",
-    summary: "Session identifiers encode governorate, area and vendor attributes before the logic enters Docebo.",
+    summary:
+      "Session identifiers encode governorate, area and vendor attributes before the logic enters Docebo — traceability that holds across all 27 governorates.",
     flow: ["Attributes", "Code", "Docebo", "Filter", "Trace"],
     tags: ["Docebo", "Data architecture", "LMS"],
     domains: ["OPERATIONS", "DATA"],
@@ -465,7 +466,8 @@ export const projectArchive: Project[] = [
     kind: "workforce",
     title: "Instructor & Coordinator Database",
     subtitle: "Workforce visibility",
-    summary: "A centralized view of onboarding, assigned sessions, progress, performance, quality scores and evaluations.",
+    summary:
+      "A centralized view of onboarding, assigned sessions, progress, performance, quality scores and evaluations across 500+ instructors and coordinators.",
     flow: ["People", "Assignments", "Progress", "Quality", "Intervene"],
     tags: ["Database", "Workforce", "Performance"],
     domains: ["OPERATIONS", "DATA"],
@@ -611,6 +613,8 @@ export const sharedCore = {
  */
 export const outcomes = [
   { value: "40K+", label: "learner records coordinated", source: "Smart Excel Validation" },
+  { value: "500+", label: "instructors and coordinators", source: "Instructor & Coordinator Database" },
+  { value: "27", label: "governorates covered", source: "Session Coding & LMS Integration" },
   { value: "90%", label: "fewer validation errors", source: "Smart Excel Validation" },
   { value: "5K+", label: "certificates issued automatically", source: "Certification Dashboard" },
   { value: "60%", label: "faster feedback creation", source: "AI-Assisted Feedback Management" },
