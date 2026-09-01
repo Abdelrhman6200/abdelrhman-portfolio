@@ -681,7 +681,7 @@ export const experiences = [
     name: "Now I build AI-native operations",
     role: "Independent — Systems & Software",
     period: "",
-    body: "Manual work, then standardised process, then automated workflow, then AI in the loop. The applications above are that last step shipped end to end: AI that drafts and retrieves, with a person still owning the decision, and the whole path auditable afterwards.",
+    body: "Manual work, then standardised process, then automated workflow, then AI in the loop. The applications below are that last step shipped end to end: AI that drafts and retrieves, with a person still owning the decision, and the whole path auditable afterwards.",
     accent: "yellow",
   },
 ] as const;

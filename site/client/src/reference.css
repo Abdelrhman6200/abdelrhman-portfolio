@@ -1394,3 +1394,13 @@
   margin: 1.6rem 0 0;
   color: var(--ref-muted); font-size: .74rem;
 }
+
+/* The line that carries a reader from one section into the next, so the page
+   reads as an argument rather than as a stack of panels. */
+.ref-section-handoff {
+  display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+  margin: clamp(1.8rem, 3vw, 2.6rem) 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--ref-line);
+  color: var(--ref-muted); font-size: .86rem;
+}

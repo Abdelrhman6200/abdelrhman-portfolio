@@ -45,12 +45,12 @@ type Item = {
 
 const sections: Array<[string, string]> = [
   ["about", "The builder"],
+  ["experience", "Operations, then automation, then AI"],
+  ["case-files", "Operations at scale"],
+  ["work", "The shipped software"],
+  ["index", "Systems lab"],
   ["method", "The eight-stage method"],
   ["services", "What I do"],
-  ["work", "Built software"],
-  ["case-files", "Operational case files"],
-  ["index", "The rest of the record"],
-  ["experience", "The progression"],
   ["contact", "Get in touch"],
 ];
 

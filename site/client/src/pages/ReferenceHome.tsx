@@ -67,22 +67,22 @@ import "../reference.css";
 
 const navSectionIds = [
   "about",
+  "experience",
+  "case-files",
+  "work",
+  "index",
   "method",
   "services",
-  "work",
-  "case-files",
-  "index",
-  "experience",
   "contact",
 ];
 
 const navItems = [
   { href: "#about", label: "About" },
+  { href: "#experience", label: "Story" },
+  { href: "#case-files", label: "Operations" },
+  { href: "#work", label: "Software" },
+  { href: "#index", label: "Lab" },
   { href: "#method", label: "Method" },
-  { href: "#services", label: "Services" },
-  { href: "#work", label: "Work" },
-  { href: "#index", label: "Index" },
-  { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -153,7 +153,7 @@ function MethodSection() {
     <section id="method" className="ref-method ref-section">
       <Reveal variant="depth" className="ref-section-heading">
         <div>
-          <div className="ref-kicker">02 / THE METHOD</div>
+          <div className="ref-kicker">06 / THE METHOD</div>
           <h2>
             Different problems.
             <br />
@@ -450,7 +450,7 @@ export default function ReferenceHome() {
             <HeroSystem />
 
             <div className="ref-hero-note">
-              <span>01 / POSITION</span>
+              <span>THE THESIS</span>
               <strong>
                 Complexity is rarely solved
                 <br />
@@ -496,6 +496,7 @@ export default function ReferenceHome() {
           <p>Reported by the organizations the work ran inside — each figure is stated again on its project below.</p>
         </section>
 
+
         <section id="about" className="ref-intro ref-section">
           <div className="ref-kicker">01 / THE BUILDER</div>
           <Reveal variant="depth" className="ref-intro-grid">
@@ -518,67 +519,61 @@ export default function ReferenceHome() {
                 understand the work first, map where it actually breaks, build the smallest coherent system, and
                 keep the learning that comes back out of it.
               </p>
-              <a className="ref-text-link" href="#method">
-                See how that runs in practice <ArrowRight size={15} />
+              <a className="ref-text-link" href="#experience">
+                How I got here <ArrowRight size={15} />
               </a>
             </div>
           </Reveal>
         </section>
 
-        <MethodSection />
-
-        <section id="services" className="ref-dark-section ref-section">
-          <div className="ref-dark-heading">
+        <section id="experience" className="ref-experience ref-section">
+          <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker ref-kicker-light">03 / WHAT I DO</div>
+              <div className="ref-kicker">02 / THE STORY</div>
               <h2>
-                Tools are the layer.
+                From running operations
                 <br />
-                <em>Systems are the skill.</em>
+                <em>to building them.</em>
               </h2>
             </div>
-            <p>The work starts before the software. Select a domain to see the kind of system I make visible.</p>
+            <p>
+              Operations, then automation, then AI — in that order, and for a reason. Each step exists because
+              the one before it ran into a limit I had already hit myself.
+            </p>
+          </Reveal>
+          <div className="ref-timeline">
+            {experiences.map((item, index) => (
+              <Reveal
+                as="article"
+                key={item.number}
+                delay={index * 120}
+                className={`ref-timeline-item ref-timeline-${item.accent}`}
+              >
+                <div className="ref-timeline-mark">
+                  <span>{item.number}</span>
+                  <i />
+                </div>
+                <div className="ref-timeline-copy">
+                  <span>{item.role}</span>
+                  <h3>{item.name}</h3>
+                  <p>{item.body}</p>
+                </div>
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Reveal>
+            ))}
           </div>
-          <div className="ref-service-layout">
-            <div className="ref-service-list">
-              {services.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  className={`ref-service-tab ${activeService === item.key ? "is-active" : ""}`}
-                  aria-pressed={activeService === item.key}
-                  onClick={() => setActiveService(item.key)}
-                >
-                  <span>{item.short}</span>
-                  <strong>{item.label}</strong>
-                  <ArrowRight size={15} aria-hidden="true" />
-                </button>
-              ))}
-            </div>
-            <div className="ref-service-detail" key={service.key}>
-              <div className="ref-service-detail-top">
-                <span>ACTIVE SYSTEM / {service.short}</span>
-                <i /> <span>READOUT</span>
-              </div>
-              <h3>{service.title}</h3>
-              <p>{service.body}</p>
-              <div className="ref-tool-list">
-                {service.tools.map((tool) => (
-                  <span key={tool}>{tool}</span>
-                ))}
-              </div>
-              <div className="ref-service-loop">
-                <Workflow size={16} aria-hidden="true" />
-                <span>Understand → Map → Build → Improve</span>
-              </div>
-            </div>
-          </div>
+          <p className="ref-section-handoff">
+            What follows is that story as work: the operations first, then the software it turned into.{" "}
+            <a className="ref-text-link" href="#case-files">
+              Start with the operations <ArrowRight size={15} aria-hidden="true" />
+            </a>
+          </p>
         </section>
 
         <section id="case-files" className="ref-work ref-section ref-work-secondary">
           <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker">04 / OPERATIONS AT SCALE</div>
+              <div className="ref-kicker">03 / OPERATIONS AT SCALE</div>
               <h2>
                 Where businesses
                 <br />
@@ -593,7 +588,7 @@ export default function ReferenceHome() {
           </Reveal>
 
           {/* One selector, one panel. Five full cards — each running its own
-              simulation — competed with the built-software rows above and made
+              simulation — competed with the built-software rows and made
               eighteen projects feel like twenty-six. */}
           <div className="ref-file-picker" role="tablist" aria-label="Operational case files">
             {featuredProjects.map((item, index) => (
@@ -682,7 +677,7 @@ export default function ReferenceHome() {
         <section id="work" className="ref-work ref-section">
           <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker">05 / AND I SHIP THE SOFTWARE</div>
+              <div className="ref-kicker">04 / AND I SHIP THE SOFTWARE</div>
               <h2>
                 Not just designed.
                 <br />
@@ -720,7 +715,7 @@ export default function ReferenceHome() {
         <section id="index" className="ref-project-index ref-section">
           <Reveal variant="depth" className="ref-section-heading">
             <div>
-              <div className="ref-kicker">06 / SYSTEMS LAB</div>
+              <div className="ref-kicker">05 / SYSTEMS LAB</div>
               <h2>
                 The smaller
                 <br />
@@ -809,43 +804,56 @@ export default function ReferenceHome() {
           </p>
         </section>
 
-        <section id="experience" className="ref-experience ref-section">
-          <Reveal variant="depth" className="ref-section-heading">
+        <MethodSection />
+
+        <section id="services" className="ref-dark-section ref-section">
+          <div className="ref-dark-heading">
             <div>
-              <div className="ref-kicker">07 / THE PROGRESSION</div>
+              <div className="ref-kicker ref-kicker-light">07 / WHAT I DO</div>
               <h2>
-                From running operations
+                Tools are the layer.
                 <br />
-                <em>to building them.</em>
+                <em>Systems are the skill.</em>
               </h2>
             </div>
-            <p>
-              Operations, then automation, then AI — in that order, and for a reason. Each step exists because
-              the one before it ran into a limit I had already hit myself.
-            </p>
-          </Reveal>
-          <div className="ref-timeline">
-            {experiences.map((item, index) => (
-              <Reveal
-                as="article"
-                key={item.number}
-                delay={index * 120}
-                className={`ref-timeline-item ref-timeline-${item.accent}`}
-              >
-                <div className="ref-timeline-mark">
-                  <span>{item.number}</span>
-                  <i />
-                </div>
-                <div className="ref-timeline-copy">
-                  <span>{item.role}</span>
-                  <h3>{item.name}</h3>
-                  <p>{item.body}</p>
-                </div>
-                <ArrowUpRight size={16} aria-hidden="true" />
-              </Reveal>
-            ))}
+            <p>The work starts before the software. Select a domain to see the kind of system I make visible.</p>
+          </div>
+          <div className="ref-service-layout">
+            <div className="ref-service-list">
+              {services.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={`ref-service-tab ${activeService === item.key ? "is-active" : ""}`}
+                  aria-pressed={activeService === item.key}
+                  onClick={() => setActiveService(item.key)}
+                >
+                  <span>{item.short}</span>
+                  <strong>{item.label}</strong>
+                  <ArrowRight size={15} aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+            <div className="ref-service-detail" key={service.key}>
+              <div className="ref-service-detail-top">
+                <span>ACTIVE SYSTEM / {service.short}</span>
+                <i /> <span>READOUT</span>
+              </div>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+              <div className="ref-tool-list">
+                {service.tools.map((tool) => (
+                  <span key={tool}>{tool}</span>
+                ))}
+              </div>
+              <div className="ref-service-loop">
+                <Workflow size={16} aria-hidden="true" />
+                <span>Understand → Map → Build → Improve</span>
+              </div>
+            </div>
           </div>
         </section>
+
 
         <section className="ref-proof ref-section">
           <div className="ref-proof-top">
