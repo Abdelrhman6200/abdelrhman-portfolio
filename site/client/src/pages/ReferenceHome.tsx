@@ -52,7 +52,7 @@ import { simulationFor } from "@/content/simulations";
 import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
-import HeroSystem from "@/components/HeroSystem";
+import ControlRoomHero from "@/components/ControlRoomHero";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import { openCommandPalette } from "@/components/CommandPalette";
@@ -448,7 +448,7 @@ export default function ReferenceHome() {
           </div>
 
           <div className="ref-hero-side">
-            <HeroSystem />
+            <ControlRoomHero />
 
             <div className="ref-hero-note">
               <span>THE THESIS</span>
