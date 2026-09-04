@@ -60,6 +60,7 @@ import Reveal from "@/components/Reveal";
 import TiltStage from "@/components/TiltStage";
 import CountUp from "@/components/CountUp";
 import ScrollProgress from "@/components/ScrollProgress";
+import StoryMachine from "@/components/StoryMachine";
 import { slugFor } from "@/content/slugs";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -569,6 +570,8 @@ export default function ReferenceHome() {
             </a>
           </p>
         </section>
+
+        <StoryMachine />
 
         <section id="case-files" className="ref-work ref-section ref-work-secondary">
           <Reveal variant="depth" className="ref-section-heading">
