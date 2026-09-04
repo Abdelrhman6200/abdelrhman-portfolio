@@ -15,6 +15,12 @@ from mathutils import Vector
 def material(name, color, metallic=0.0, roughness=0.42):
     item = bpy.data.materials.new(name)
     item.diffuse_color = (*color, 1.0)
+    item.use_nodes = True
+    shader = item.node_tree.nodes.get("Principled BSDF")
+    if shader:
+        shader.inputs["Base Color"].default_value = (*color, 1.0)
+        shader.inputs["Metallic"].default_value = metallic
+        shader.inputs["Roughness"].default_value = roughness
     item.metallic = metallic
     item.roughness = roughness
     return item
@@ -49,7 +55,11 @@ def build():
     orange = material("Automation / Orange", (0.95, 0.52, 0.16), metallic=0.05)
     yellow = material("AI / Yellow", (0.94, 0.76, 0.22), metallic=0.05)
 
-    bpy.world.color = (0.012, 0.014, 0.017)
+    world = bpy.context.scene.world
+    world.color = (0.012, 0.014, 0.017)
+    world.use_nodes = True
+    world.node_tree.nodes["Background"].inputs["Color"].default_value = (0.012, 0.014, 0.017, 1.0)
+    world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.18
     bpy.ops.mesh.primitive_plane_add(size=24, location=(0, 0, -0.12))
     bpy.context.object.data.materials.append(ink)
 
@@ -64,8 +74,10 @@ def build():
     # A physical rail joins the three stages; the glowing signal travels this route in animation.
     for x in (-1.8, 1.8):
         cylinder("Connection_Rail", (x, 0.3, 0.25), 0.055, 2.45, paper).rotation_euler[1] = math.radians(90)
-    signal = bpy.data.objects.new("Signal", None)
-    bpy.context.collection.objects.link(signal)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=32, ring_count=16, radius=0.11, location=(-3.6, 0, 0.92))
+    signal = bpy.context.object
+    signal.name = "Signal"
+    signal.data.materials.append(coral)
     signal.location = (-3.6, 0, 0.92)
     signal.keyframe_insert(data_path="location", frame=1)
     signal.location = (0, 0.65, 1.25)
@@ -74,9 +86,9 @@ def build():
     signal.keyframe_insert(data_path="location", frame=96)
     signal.location = (-3.6, 0, 0.92)
     signal.keyframe_insert(data_path="location", frame=144)
-    for curve in signal.animation_data.action.fcurves:
-        for key in curve.keyframe_points:
-            key.interpolation = "BEZIER"
+    # Blender 5.x stores action curves behind layered animation data. The
+    # default keyframe interpolation is already BEZIER, so no API-specific
+    # curve walk is needed here.
     bpy.context.scene.frame_start = 1
     bpy.context.scene.frame_end = 144
     bpy.context.scene.render.fps = 24
@@ -92,7 +104,7 @@ def build():
     bpy.context.object.data.energy = 1100
     bpy.context.object.data.shape = "DISK"
     bpy.context.object.data.size = 8
-    bpy.ops.wm.save_as_mainfile(filepath="operations-story-machine.blend")
+    bpy.ops.wm.save_as_mainfile(filepath="D:/portoflio/final/site/scene/operations_story_machine.blend")
 
 
 if __name__ == "__main__":
