@@ -52,7 +52,7 @@ import { simulationFor } from "@/content/simulations";
 import { demoPathFor, demos } from "@/demos/registry";
 import AppWindow from "@/demos/AppWindow";
 import SystemSimulation from "@/components/SystemSimulation";
-import ControlRoomHero from "@/components/ControlRoomHero";
+import HeroSystem from "@/components/HeroSystem";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import { openCommandPalette } from "@/components/CommandPalette";
@@ -60,7 +60,6 @@ import Reveal from "@/components/Reveal";
 import TiltStage from "@/components/TiltStage";
 import CountUp from "@/components/CountUp";
 import ScrollProgress from "@/components/ScrollProgress";
-import StoryMachine from "@/components/StoryMachine";
 import { slugFor } from "@/content/slugs";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -448,7 +447,7 @@ export default function ReferenceHome() {
           </div>
 
           <div className="ref-hero-side">
-            <ControlRoomHero />
+            <HeroSystem />
 
             <div className="ref-hero-note">
               <span>THE THESIS</span>
@@ -570,8 +569,6 @@ export default function ReferenceHome() {
             </a>
           </p>
         </section>
-
-        <StoryMachine />
 
         <section id="case-files" className="ref-work ref-section ref-work-secondary">
           <Reveal variant="depth" className="ref-section-heading">
