@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, CircleDot, RotateCw } from "lucide-react";
+import { ArrowRight, RotateCw } from "lucide-react";
 
 const stages = [
   {
@@ -48,19 +48,9 @@ export default function StoryMachine() {
 
       <div className="story-machine-layout">
         <div className="story-machine-scene" aria-hidden="true">
-          <div className="story-machine-grid" />
-          <div className="story-machine-orbit story-machine-orbit-a" />
-          <div className="story-machine-orbit story-machine-orbit-b" />
-          <div className="story-machine-track story-machine-track-a" />
-          <div className="story-machine-track story-machine-track-b" />
-          <div className="story-machine-node story-machine-node-a"><CircleDot size={14} /></div>
-          <div className="story-machine-node story-machine-node-b"><CircleDot size={14} /></div>
-          <div className="story-machine-node story-machine-node-c"><CircleDot size={14} /></div>
-          <div className="story-machine-core">
-            <span className="story-machine-core-mark">AS</span>
-            <span>SYSTEM LOOP</span>
-          </div>
-          <div className="story-machine-signal"><span /></div>
+          <img src="/scene/control-room.png" alt="" className="story-machine-room" />
+          <div className="story-machine-scanline" />
+          <div className="story-machine-live-dot" />
         </div>
 
         <div className="story-machine-copy">

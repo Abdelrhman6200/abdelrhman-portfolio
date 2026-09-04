@@ -189,6 +189,15 @@
   .reference-page *, .reference-page *::before, .reference-page *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
+/* Blender-backed room render. The image is the cinematic layer; the small
+   scan and live point keep it feeling like a running system on the web. */
+.story-machine-room { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.story-machine-scanline { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, transparent 0%, transparent 47%, rgba(255,255,255,.18) 50%, transparent 53%, transparent 100%); background-size: 100% 220%; mix-blend-mode: screen; opacity: .28; animation: room-scan 8s ease-in-out infinite; }
+.story-machine-live-dot { position: absolute; right: 1.1rem; bottom: 1.1rem; z-index: 3; width: 8px; height: 8px; border-radius: 50%; background: var(--ref-coral); box-shadow: 0 0 0 5px rgba(var(--ref-coral-rgb), .14), 0 0 18px var(--ref-coral); animation: room-pulse 2.4s ease-in-out infinite; }
+@keyframes room-scan { 0%, 100% { background-position: 0 -80%; } 50% { background-position: 0 80%; } }
+@keyframes room-pulse { 0%, 100% { opacity: .55; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.15); } }
+@media (prefers-reduced-motion: reduce) { .story-machine-scanline, .story-machine-live-dot { animation: none; } }
+
 /* Supplied-project visual language: operational dashboards, validation traces, and compact archive index. */
 .ref-project-demo.is-static { color: var(--ref-muted); cursor: default; }
 .ref-project-index { padding-top: clamp(5rem, 9vw, 8rem); }.ref-project-index .ref-section-heading { margin-bottom: 3rem; }
